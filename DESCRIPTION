@@ -26,5 +26,5 @@ Imports:
     glue
 Remotes:
     jeroen/jsonlite,
-    ropensci/codemetar#dev
+    ropensci/codemetar@44236ea
 RoxygenNote: 6.1.0.9000
