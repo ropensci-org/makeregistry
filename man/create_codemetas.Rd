@@ -4,7 +4,13 @@
 \alias{create_codemetas}
 \title{Create the codemetas for all files}
 \usage{
-create_codemetas()
+create_codemetas(old_cm)
+}
+\arguments{
+\item{old_cm}{path to latest CodeMeta version}
+}
+\value{
+A JSON codemeta
 }
 \description{
 Create the codemetas for all files

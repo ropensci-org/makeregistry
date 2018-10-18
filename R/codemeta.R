@@ -22,11 +22,13 @@ create_cm <- memoise::memoise(.create_cm)
 
 #' Create the codemetas for all files
 #'
-#' @return
+#' @param old_cm path to latest CodeMeta version
+#'
+#' @return A JSON codemeta
 #' @export
 #'
 #' @examples
-create_codemetas <- function(){
+create_codemetas <- function(old_cm){
   folders <- rbind(tibble::tibble(folder = dir("repos/other", full.names = TRUE),
                                   org = "other"),
                    tibble::tibble(folder = dir("repos/ropenscilabs", full.names = TRUE),
