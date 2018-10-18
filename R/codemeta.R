@@ -10,15 +10,7 @@
       info$codeRepository <- paste0("https://github.com/",
                                     org, "/", info$identifier)
     }
-    # deduce development status from org if needed
-    if(is.null(info$developmentStatus)){
-      if(org == "ropenscilabs"){
-        info$developmentStatus <- "http://www.repostatus.org/#concept"
-      }else{
-        info$developmentStatus <- "http://www.repostatus.org/#active"
 
-      }
-    }
     return(info)
   }else{
     message(pkg)
