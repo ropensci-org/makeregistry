@@ -1,0 +1,30 @@
+Package: makeregistry
+Type: Package
+Title: Creates JSON registry from cloned repos.
+Version: 0.1.0
+Description: Creates JSON registry from cloned repos.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+Authors@R: 
+    c(person(given = "Maëlle",
+             family = "Salmon",
+             role = "aut",
+             email = "maelle.salmon@yahoo.se",
+             comment = c(ORCID = "0000-0002-2815-0399")),
+      person(given = "rOpenSci",
+             role = "fnd",
+             comment = "https://ropensci.org/"))
+Imports: 
+    codemetar,
+    magrittr,
+    memoise,
+    jsonlite (>= 1.6.0),
+    dplyr,
+    tibble,
+    purrr,
+    glue
+Remotes:
+    jeroen/jsonlite,
+    ropensci/codemetar#dev
+RoxygenNote: 6.1.0.9000

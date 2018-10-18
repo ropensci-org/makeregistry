@@ -1,0 +1,51 @@
+.create_cm <- function(pkg, org){
+  info <- try(codemetar::create_codemeta(pkg = pkg, verbose = FALSE,
+                                         force_update = TRUE),
+              silent = TRUE)
+  if(!inherits(info, "try-error")){
+    info <- info[!names(info) %in% c("@context", "@type", "programmingLanguage", "runtimePlatform")]
+
+    # for other repos, the URLs in DESCRIPTION have to be right
+    if(org %in% c("ropensci", "ropenscilabs")){
+      info$codeRepository <- paste0("https://github.com/",
+                                    org, "/", info$identifier)
+    }
+    # deduce development status from org if needed
+    if(is.null(info$developmentStatus)){
+      if(org == "ropenscilabs"){
+        info$developmentStatus <- "http://www.repostatus.org/#concept"
+      }else{
+        info$developmentStatus <- "http://www.repostatus.org/#active"
+
+      }
+    }
+    return(info)
+  }else{
+    message(pkg)
+    NULL
+  }
+
+}
+create_cm <- memoise::memoise(.create_cm)
+
+#' Create the codemetas for all files
+#'
+#' @return
+#' @export
+#'
+#' @examples
+create_codemetas <- function(){
+  folders <- rbind(tibble::tibble(folder = dir("repos/other", full.names = TRUE),
+                                  org = "other"),
+                   tibble::tibble(folder = dir("repos/ropenscilabs", full.names = TRUE),
+                                  org = "ropenscilabs"),
+                   tibble::tibble(folder = dir("repos/ropensci", full.names = TRUE),
+                                  org = "ropensci"))
+  folders <- dplyr::rowwise(folders)
+  folders <- dplyr::mutate(folders, is_package = is_package(folder))
+
+  packages <- dplyr::filter(folders, is_package)
+
+  purrr::map2(packages$folder,
+              packages$org, create_cm)
+}
