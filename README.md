@@ -5,7 +5,7 @@ The goal of makeregistry is to create the JSON that's used to display packages o
 ## Installation
 
 ``` r
-remotes::install_github("rosadmin/makeregistry")
+remotes::install_github("maelle/makeregistry")
 ```
 
 ## Example
@@ -14,7 +14,9 @@ This is a basic example which shows you how to solve a common problem. Currently
 
 ``` r
 codemeta <- makeregistry::create_codemetas()
+
 makeregistry:::write_json(codemeta, path = "raw_cm.json", pretty=TRUE,             auto_unbox = TRUE)
+
 makeregistry::create_registry(cm = "raw_cm.json",
                               outpat = "registry.json")
 ```
