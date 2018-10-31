@@ -14,7 +14,14 @@
     return(info)
   }else{
     message(pkg)
-    NULL
+    if(!is.null(old_cm[purrr::map_chr(old_cm$name) ==
+                      gsub(".*\\/", pkg)])){
+      old_cm[purrr::map_chr(old_cm$name) ==
+               gsub(".*\\/", pkg)]
+
+    }else{
+      NULL
+    }
   }
 
 }
@@ -28,7 +35,11 @@ create_cm <- memoise::memoise(.create_cm)
 #' @export
 #'
 #' @examples
-create_codemetas <- function(old_cm){
+create_codemetas <- function(old_cm = NULL){
+  if(!is.null(old_cm)){
+    old_cm <- jsonlite::read_json(old_cm)
+  }
+
   folders <- rbind(tibble::tibble(folder = dir("repos/other", full.names = TRUE),
                                   org = "other"),
                    tibble::tibble(folder = dir("repos/ropenscilabs", full.names = TRUE),
