@@ -3,13 +3,15 @@ get_review <- function(entry){
     if(grepl("ropensci\\/onboarding", entry$review$url)){
       issue <- gsub("https\\:\\/\\/github\\.com\\/ropensci\\/onboarding\\/issues\\/",
                     "", entry$review$url)
-      badge <- glue::glue('<a target="_blank" href="https://github.com/ropensci/onboarding/issues/{issue}"><p class="label active">Peer review</p></a>')
+      badge <- glue::glue('<a target="_blank" href="https://github.com/ropensci/onboarding/issues/{issue}"><p class="label icon-notebook" style = "color: #01dc0b"></p></a>')
 
     }else{
-      badge <- ""
+      badge <- glue::glue('<p class="label icon-notebook" style = "color: #dfe3eb"></p>')
+
     }
   }else{
-    badge <- ""
+    badge <- glue::glue('<p class="label icon-notebook" style = "color: #dfe3eb"></p>')
+
   }
 
   return(list(badge = badge,
@@ -77,6 +79,11 @@ guess_status <- function(entry){
     "http://www.repostatus.org/#active"
   }
 }
+
+create_details <- function(url, on_cran, onboarding){
+  glue::glue('{on_cran$badge} {onboarding$badge } <a target="_blank" href="{url}"><p class="label icon-github"></p></a> ')
+}
+
 get_cran <- function(pkg, cran, bioc_names){
   on_cran <- pkg %in% cran
   if(on_cran){
@@ -148,7 +155,11 @@ create_registry <- function(cm, outpat){
   website_info <- dplyr::left_join(website_info,
                                    old_info, by = "name")
 
-  #readr::write_csv(website_info, path = "output/table_for_website.csv")
+
+  website_info <- dplyr::rowwise(website_info)
+  website_info <- dplyr::mutate(website_info,
+                                details = create_details(url, on_cran, onboarding))
+
 
   list(packages = website_info,
        date = format(Sys.time(), format = "%F %R %Z")) %>%
