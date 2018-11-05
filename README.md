@@ -13,9 +13,18 @@ remotes::install_github("maelle/makeregistry")
 This is a basic example which shows you how to solve a common problem. Currently you need to run it from inside the RStudio thing, where the repos/ live.
 
 ``` r
-codemeta <- makeregistry::create_codemetas()
 
-makeregistry:::write_json(codemeta, path = "raw_cm.json", pretty=TRUE,             auto_unbox = TRUE)
+if(!file.exists("old_cm.json")){
+  old_cm <- "https://github.com/ropensci/roregistry/blob/ex/codemeta.json?raw=true"
+}else{
+  old_cm <- "raw_cm.json"
+}
+
+codemeta <- makeregistry::create_codemetas(old_cm = old_cm)
+
+makeregistry:::write_json(codemeta, path = "raw_cm.json",
+                          pretty=TRUE,
+                          auto_unbox = TRUE)
 
 makeregistry::create_registry(cm = "raw_cm.json",
                               outpat = "registry.json")
