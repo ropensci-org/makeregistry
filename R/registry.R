@@ -136,7 +136,6 @@ create_registry <- function(cm, outpat){
 
   bioc_names <- rownames(available_packages(repos = repos))
 
-
   website_info$on_cran <- purrr::map(website_info$name,
                                      get_cran, cran,
                                      bioc_names)
@@ -147,13 +146,10 @@ create_registry <- function(cm, outpat){
   website_info$description <- trimws(website_info$description)
 
   # add categories
-  old_registry <- jsonlite::read_json("https://raw.githubusercontent.com/ropensci/roregistry/gh-pages/registry.json")
-  old_registry <- old_registry$packages
-  old_info <- tibble::tibble(name = purrr::map_chr(old_registry, "name"),
-                             ropensci_category = purrr::map_chr(old_registry, "ropensci_category"))
+  category_info <- readr::read_csv("https://raw.githubusercontent.com/ropensci/roregistry/gh-pages/final_categories.csv")
 
   website_info <- dplyr::left_join(website_info,
-                                   old_info, by = "name")
+                                   category_info, by = "name")
 
 
   website_info <- dplyr::rowwise(website_info)

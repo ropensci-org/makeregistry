@@ -3,7 +3,9 @@
                                          force_update = TRUE),
               silent = TRUE)
   if(!inherits(info, "try-error")){
-    info <- info[!names(info) %in% c("@context", "@type", "programmingLanguage", "runtimePlatform")]
+    info <- info[!names(info) %in% c("@context", "@type",
+                                     "programmingLanguage",
+                                     "runtimePlatform")]
 
     # for other repos, the URLs in DESCRIPTION have to be right
     if(org %in% c("ropensci", "ropenscilabs")){
@@ -11,10 +13,8 @@
                                     org, "/", info$identifier)
     }
 
-    print(pkg)
     return(info)
   }else{
-    print(toupper(pkg))
     if(!is.null(old_cm[purrr::map_chr(old_cm$name) ==
                       gsub(".*\\/", pkg)])){
       old_cm[purrr::map_chr(old_cm$name) ==
@@ -51,8 +51,6 @@ create_codemetas <- function(old_cm = NULL){
   folders <- dplyr::mutate(folders, is_package = is_package(folder))
 
   packages <- dplyr::filter(folders, is_package)
-
-  message("ready")
 
   purrr::map2(packages$folder,
               packages$org, create_cm)
