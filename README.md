@@ -12,7 +12,7 @@ remotes::install_github("maelle/makeregistry")
 
 This is a basic example which shows you how to solve a common problem. Currently you need to run it from inside the RStudio thing, where the repos/ live.
 
-The codemeta creation needs to be run in RStudio cloud where we have a repos/ folder with all clones. The `old_cm` parameter allows to use older entries for packages for which CodeMeta creation fails for some reason.s
+The codemeta creation needs to be run in RStudio cloud where we have a repos/ folder with all clones. The `old_cm` parameter allows to use older entries for packages for which CodeMeta creation fails for some reason.
 
 ``` r
 
