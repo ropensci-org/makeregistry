@@ -52,6 +52,8 @@ create_codemetas <- function(old_cm = NULL){
 
   packages <- dplyr::filter(folders, is_package)
 
+  message("ready")
+
   purrr::map2(packages$folder,
               packages$org, create_cm)
 }
