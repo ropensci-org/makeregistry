@@ -11,9 +11,10 @@
                                     org, "/", info$identifier)
     }
 
+    message(pkg)
     return(info)
   }else{
-    message(pkg)
+    message(toupper(pkg))
     if(!is.null(old_cm[purrr::map_chr(old_cm$name) ==
                       gsub(".*\\/", pkg)])){
       old_cm[purrr::map_chr(old_cm$name) ==
