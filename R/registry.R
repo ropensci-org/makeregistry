@@ -3,14 +3,14 @@ get_review <- function(entry){
     if(grepl("ropensci\\/onboarding", entry$review$url)){
       issue <- gsub("https\\:\\/\\/github\\.com\\/ropensci\\/onboarding\\/issues\\/",
                     "", entry$review$url)
-      badge <- glue::glue('<a target="_blank" href="https://github.com/ropensci/onboarding/issues/{issue}"><i class="fa fa-comments" style="font-size:1.2rem;color: #01dc0b;float: right;padding-right: 5px;"></i></a>')
+      badge <- glue::glue('<a target="_blank" href="https://github.com/ropensci/onboarding/issues/{issue}"><i class="fa fa-comments" title = "rOpenSci peer-review" style="font-size:1.2rem;color: #01dc0b;float: right;"></i></a>')
 
     }else{
-      badge <- glue::glue('<i class="fa fa-comments" style="font-size:1.2rem;color: #dfe3eb;float: right;padding-right: 5px;"></i>')
+      badge <- glue::glue('<i class="fa fa-comments" style="font-size:1.2rem;color: #dfe3eb;float: right;"></i>')
 
     }
   }else{
-    badge <- glue::glue('<i class="fa fa-comments" style="font-size:1.2rem;color: #dfe3eb;float: right;padding-right: 5px;"></i>')
+    badge <- glue::glue('<i class="fa fa-comments" style="font-size:1.2rem;color: #dfe3eb;float: right;"></i>')
 
   }
 
@@ -73,6 +73,7 @@ get_status <- function(entry){
 }
 
 guess_status <- function(entry){
+
   if(grepl("ropenscilabs", entry$codeRepository)){
     "http://www.repostatus.org/#concept"
   }else{
@@ -81,7 +82,7 @@ guess_status <- function(entry){
 }
 
 create_details <- function(url, on_cran, onboarding){
-  glue::glue('{on_cran$badge} <p> <a target="_blank" href="{url}"><i class="fa fa-github" style="font-size:1.2rem;color: #01dc0b;padding-left: 5px;padding-right: 5px;"></i></a> {onboarding$badge }</p>')
+  glue::glue('{on_cran$badge} <a target="_blank" href="{url}"><i class="fa fa-github" style="font-size:1.2rem;color: #01dc0b;padding-left:5px;"></i></a> {onboarding$badge }')
 }
 
 get_cran <- function(pkg, cran, bioc_names){
