@@ -3,7 +3,7 @@
                                          force_update = TRUE),
               silent = TRUE)
   if(!inherits(info, "try-error")){
-
+print(pkg)
     # for other repos, the URLs in DESCRIPTION have to be right
     if(org %in% c("ropensci", "ropenscilabs")){
       info$codeRepository <- paste0("https://github.com/",
@@ -12,6 +12,7 @@
 
     return(info)
   }else{
+    print(toupper(pkg))
     if(length(old_cm[purrr::map_chr(old_cm, "identifier") ==
                       gsub("repos\\/.*\\/", "", pkg)]) > 0){
       old_cm[purrr::map_chr(old_cm, "identifier") ==
