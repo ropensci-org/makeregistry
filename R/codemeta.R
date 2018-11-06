@@ -3,9 +3,6 @@
                                          force_update = TRUE),
               silent = TRUE)
   if(!inherits(info, "try-error")){
-    info <- info[!names(info) %in% c("@context", "@type",
-                                     "programmingLanguage",
-                                     "runtimePlatform")]
 
     # for other repos, the URLs in DESCRIPTION have to be right
     if(org %in% c("ropensci", "ropenscilabs")){
