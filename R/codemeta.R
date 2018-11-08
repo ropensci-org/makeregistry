@@ -1,4 +1,4 @@
-.create_cm <- function(pkg, org){
+.create_cm <- function(pkg, org, old_cm){
   info <- try(codemetar::create_codemeta(pkg = pkg, verbose = FALSE,
                                          force_update = TRUE),
               silent = TRUE)
@@ -13,14 +13,20 @@ print(pkg)
     return(info)
   }else{
     print(toupper(pkg))
-    if(length(old_cm[purrr::map_chr(old_cm, "identifier") ==
-                      gsub("repos\\/.*\\/", "", pkg)]) > 0){
-      old_cm[purrr::map_chr(old_cm, "identifier") ==
-               gsub("repos\\/.*\\/", "", pkg)]
 
+    if(!is.null(old_cm)){
+      if(length(old_cm[purrr::map_chr(old_cm, "identifier") ==
+                       gsub("repos\\/.*\\/", "", pkg)]) > 0){
+        old_cm[purrr::map_chr(old_cm, "identifier") ==
+                 gsub("repos\\/.*\\/", "", pkg)]
+
+      }else{
+        NULL
+      }
     }else{
       NULL
     }
+
   }
 
 }
@@ -52,5 +58,6 @@ create_codemetas <- function(old_cm = NULL){
   packages <- dplyr::filter(folders, is_package)
 
   purrr::map2(packages$folder,
-              packages$org, create_cm)
+              packages$org, create_cm,
+              old_cm = old_cm)
 }
