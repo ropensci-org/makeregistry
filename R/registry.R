@@ -3,7 +3,7 @@ get_review <- function(entry){
     if(grepl("ropensci\\/onboarding", entry$review$url)){
       issue <- gsub("https\\:\\/\\/github\\.com\\/ropensci\\/onboarding\\/issues\\/",
                     "", entry$review$url)
-      badge <- glue::glue('<a target="_blank" href="https://github.com/ropensci/onboarding/issues/{issue}"><i class="fa fa-comments" title = "rOpenSci peer-review" style="font-size:1.2rem;color: #01dc0b;float: right;"></i></a>')
+      badge <- glue::glue('<a target="_blank" href="https://github.com/ropensci/onboarding/issues/{issue}"><i class="fa fa-comments" title = "rOpenSci software review" style="font-size:1.2rem;color: #01dc0b;float: right;"></i></a>')
 
     }else{
       badge <- glue::glue('<i class="fa fa-comments" style="font-size:1.2rem;color: #dfe3eb;float: right;"></i>')
