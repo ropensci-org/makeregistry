@@ -1,16 +1,28 @@
+status_colors <- function(){
+  status_colors <- c("#40BA12", "#E9E9E9",
+                     "#CDA61A", "#F27E40",
+                     "#4BC51D", "#A1A328",
+                     "#9D9D9D", "#D7624B")
+  names(status_colors) <- c("abandoned", "concept",
+                            "wip", "suspended",
+                            "active", "inactive",
+                            "unsupported", "moved")
+  status_colors
+}
+
 get_review <- function(entry){
   if(!is.null(entry$review)){
     if(grepl("ropensci\\/onboarding", entry$review$url)){
       issue <- gsub("https\\:\\/\\/github\\.com\\/ropensci\\/onboarding\\/issues\\/",
                     "", entry$review$url)
-      badge <- glue::glue('<a target="_blank" href="https://github.com/ropensci/onboarding/issues/{issue}"><i class="fa fa-comments" title = "rOpenSci software review" style="font-size:1.2rem;color: #01dc0b;float: right;"></i></a>')
+      badge <- glue::glue('<a target="_blank" href="https://github.com/ropensci/onboarding/issues/{issue}"><i class="fa fa-comments" title = "rOpenSci software review" style="font-size:1.2rem;color: #01dc0b;float: right;padding-right: 5px;"></i></a>')
 
     }else{
-      badge <- glue::glue('<i class="fa fa-comments" style="font-size:1.2rem;color: #dfe3eb;float: right;"></i>')
+      badge <- glue::glue('<i class="fa fa-comments" style="font-size:1.2rem;color: #dfe3eb;float: right;padding-right: 5px;"></i>')
 
     }
   }else{
-    badge <- glue::glue('<i class="fa fa-comments" style="font-size:1.2rem;color: #dfe3eb;float: right;"></i>')
+    badge <- glue::glue('<i class="fa fa-comments" style="font-size:1.2rem;color: #dfe3eb;float: right;padding-right: 5px;"></i>')
 
   }
 
@@ -67,9 +79,7 @@ get_status <- function(entry){
   }
   status <- gsub("http(s)?\\:\\/\\/www\\.repostatus\\.org\\/\\#",
                  "", status)
-  badge <- glue::glue('<a target="_blank" href="https://www.repostatus.org/#{status}"><p class="label {status}">{status}</p></a>')
-  return(list(status = status,
-              badge = badge))
+  return(status)
 }
 
 guess_status <- function(entry){
@@ -81,8 +91,13 @@ guess_status <- function(entry){
   }
 }
 
+create_name <- function(url, name, status,
+                        status_colors){
+  glue::glue('<a href=\"{url}\">{name}</a> <a target=\"_blank\" href=\"https://www.repostatus.org/#{status}"><i class=\"fa fa-circle\" title = \"{status} package\" style=\"font-size:0.8rem;color: {status_colors()[status]};float: left;padding-right: 5px;\"></i></a>')
+}
+
 create_details <- function(url, on_cran, onboarding){
-  glue::glue('{on_cran$badge} <a target="_blank" href="{url}"><i class="fa fa-github" style="font-size:1.2rem;color: #01dc0b;padding-left:5px;"></i></a> {onboarding$badge }')
+  glue::glue('{on_cran$badge} {onboarding$badge }')
 }
 
 get_cran <- function(pkg, cran, bioc_names){
@@ -154,10 +169,14 @@ create_registry <- function(cm, outpat){
 
 
   website_info <- dplyr::rowwise(website_info)
+
   website_info <- dplyr::mutate(website_info,
                                 details = create_details(url, on_cran, onboarding))
-
-
+  website_info <- dplyr::ungroup(website_info)
+  website_info <- dplyr::rowwise(website_info)
+  website_info <- dplyr::mutate(website_info,
+                                name_col = create_name(url, name, status,
+                                                       status_colors = status_colors()))
   list(packages = website_info,
        date = format(Sys.time(), format = "%F %R %Z")) %>%
     jsonlite::toJSON(auto_unbox = TRUE,
