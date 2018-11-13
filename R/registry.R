@@ -1,33 +1,15 @@
-status_colors <- function(){
-  status_colors <- c("#40BA12", "#E9E9E9",
-                     "#CDA61A", "#F27E40",
-                     "#4BC51D", "#A1A328",
-                     "#9D9D9D", "#D7624B")
-  names(status_colors) <- c("abandoned", "concept",
-                            "wip", "suspended",
-                            "active", "inactive",
-                            "unsupported", "moved")
-  status_colors
-}
-
 get_review <- function(entry){
   if(!is.null(entry$review)){
     if(grepl("ropensci\\/onboarding", entry$review$url)){
-      issue <- gsub("https\\:\\/\\/github\\.com\\/ropensci\\/onboarding\\/issues\\/",
-                    "", entry$review$url)
-      badge <- glue::glue('<a target="_blank" href="https://github.com/ropensci/onboarding/issues/{issue}"><i class="fa fa-comments" title = "rOpenSci software review" style="font-size:1.2rem;color: #01dc0b;float: right;padding-right: 5px;"></i></a>')
+     entry$review$url
 
     }else{
-      badge <- glue::glue('<i class="fa fa-comments" style="font-size:1.2rem;color: #dfe3eb;float: right;padding-right: 5px;"></i>')
-
+      ""
     }
   }else{
-    badge <- glue::glue('<i class="fa fa-comments" style="font-size:1.2rem;color: #dfe3eb;float: right;padding-right: 5px;"></i>')
-
+    ""
   }
 
-  return(list(badge = badge,
-              review = !(badge=="")))
 }
 
 get_maintainer <- function(entry){
@@ -91,32 +73,13 @@ guess_status <- function(entry){
   }
 }
 
-create_name <- function(url, name, status,
-                        status_colors){
-  glue::glue('<a href=\"{url}\">{name}</a> <a target=\"_blank\" href=\"https://www.repostatus.org/#{status}"><i class=\"fa fa-circle\" title = \"{status} package\" style=\"font-size:0.8rem;color: {status_colors()[status]};float: left;padding-right: 5px;\"></i></a>')
+
+get_cran <- function(pkg, cran){
+  pkg %in% cran
 }
 
-create_details <- function(url, on_cran, onboarding){
-  glue::glue('{on_cran$badge} {onboarding$badge }')
-}
-
-get_cran <- function(pkg, cran, bioc_names){
-  on_cran <- pkg %in% cran
-  if(on_cran){
-    badge <- glue::glue('<a target="_blank" href="https://cran.r-project.org/package={pkg}"><p class="label cran">cran</p></a>')
-  }
-  else{
-    if(pkg %in% bioc_names){
-      on_cran <- TRUE
-      badge <- glue::glue('<a target="_blank" href="https://bioconductor.org/packages/release/bioc/html/{pkg}.html"><p class="label bioc">bioc</p></a>')
-    }else{
-      on_cran <- FALSE
-      badge <- glue::glue('<p class="label nocran">cran</p>')
-    }
-  }
-
-  list(on_cran = on_cran,
-       badge = badge)
+get_bioc <- function(pkg, bioc_names){
+  pkg %in% bioc_names
 }
 
 
@@ -153,8 +116,10 @@ create_registry <- function(cm, outpat){
   bioc_names <- rownames(available_packages(repos = repos))
 
   website_info$on_cran <- purrr::map(website_info$name,
-                                     get_cran, cran,
-                                     bioc_names)
+                                     get_cran, cran)
+
+  website_info$on_bioc <- purrr::map(website_info$name,
+                                     get_bioc, bioc_names)
 
   website_info$url <- website_info$github
 
@@ -170,14 +135,7 @@ create_registry <- function(cm, outpat){
 
   website_info <- dplyr::rowwise(website_info)
 
-  website_info <- dplyr::mutate(website_info,
-                                details = create_details(url, on_cran, onboarding))
-  website_info <- dplyr::ungroup(website_info)
-  website_info <- dplyr::rowwise(website_info)
-  website_info <- dplyr::mutate(website_info,
-                                name_col = create_name(url, name, status,
-                                                       status_colors = status_colors()))
-  list(packages = website_info,
+    list(packages = website_info,
        date = format(Sys.time(), format = "%F %R %Z")) %>%
     jsonlite::toJSON(auto_unbox = TRUE,
                      pretty = TRUE) %>%
