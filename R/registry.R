@@ -94,6 +94,7 @@ get_bioc <- function(pkg, bioc_names){
 create_registry <- function(cm, outpat){
   registry <- jsonlite::read_json(cm)
   registry <- registry[lengths(registry) > 0]
+
   website_info <- tibble::tibble(name = purrr::map_chr(registry, "identifier"),
                                  description = purrr::map_chr(registry, "name"),
                                  details = purrr::map_chr(registry, "description"),

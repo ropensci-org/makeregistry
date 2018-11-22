@@ -17,7 +17,7 @@
       if(length(old_cm[purrr::map_chr(old_cm, "identifier") ==
                        gsub("repos\\/.*\\/", "", pkg)]) > 0){
         old_cm[purrr::map_chr(old_cm, "identifier") ==
-                 gsub("repos\\/.*\\/", "", pkg)]
+                 gsub("repos\\/.*\\/", "", pkg)][[1]]
 
       }else{
         NULL
