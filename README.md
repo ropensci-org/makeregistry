@@ -11,14 +11,14 @@ remotes::install_github("ropenscilabs/makeregistry")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem. Currently you need to run it from inside the RStudio thing, where the repos/ live.
+This is a basic example which shows you how to solve a common problem. 
 
-The codemeta creation needs to be run in RStudio cloud where we have a repos/ folder with all clones. The `old_cm` parameter allows to use older entries for packages for which CodeMeta creation fails for some reason.
+The codemeta creation needs to be run in the server where we have a repos/ folder with all clones. The `old_cm` parameter allows to use older entries for packages for which CodeMeta creation fails for some reason.
 
 ``` r
 
 if(!file.exists("old_cm.json")){
-  old_cm <- "https://github.com/ropensci/roregistry/blob/ex/codemeta.json?raw=true"
+  old_cm <- "https://github.com/ropensci/roregistry/blob/gh-pages/raw_cm.json?raw=true"
 }else{
   old_cm <- "raw_cm.json"
 }
@@ -30,11 +30,6 @@ makeregistry:::write_json(codemeta, path = "raw_cm.json",
                           auto_unbox = TRUE)
 
 makeregistry::create_registry(cm = "raw_cm.json",
-                              outpat = "registry.json")
-                              
-# or, as long as we don't have raw_cm.json
-
-makeregistry::create_registry(cm = "https://github.com/ropensci/roregistry/blob/ex/codemeta.json?raw=true",
                               outpat = "registry.json")
                               
 # find some way to upload the that to roweb2
