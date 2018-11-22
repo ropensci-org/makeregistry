@@ -3,7 +3,6 @@
                                          force_update = TRUE),
               silent = TRUE)
   if(!inherits(info, "try-error")){
-print(pkg)
     # for other repos, the URLs in DESCRIPTION have to be right
     if(org %in% c("ropensci", "ropenscilabs")){
       info$codeRepository <- paste0("https://github.com/",
