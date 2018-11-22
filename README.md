@@ -32,6 +32,6 @@ makeregistry:::write_json(codemeta, path = "raw_cm.json",
 makeregistry::create_registry(cm = "raw_cm.json",
                               outpat = "registry.json")
                               
-# find some way to upload the that to roweb2
+# find some way to upload raw_cm.json and registry.json to the roregistry repo.
 ```
 
