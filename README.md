@@ -17,7 +17,7 @@ The codemeta creation needs to be run in the server where we have a repos/ folde
 
 ``` r
 
-if(!file.exists("old_cm.json")){
+if(!file.exists("raw_cm.json")){
   old_cm <- "https://github.com/ropensci/roregistry/blob/gh-pages/raw_cm.json?raw=true"
 }else{
   old_cm <- "raw_cm.json"
