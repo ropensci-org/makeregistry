@@ -3,4 +3,4 @@
 0 */6 * * * cd repos/ropensci && sh pull_changes.sh && curl -fsS --retry 3 <healthchecks pingurl - secret>  > /dev/null
 0 */6 * * * cd repos/ropenscilabs && sh pull_new.sh && curl -fsS --retry 3 <healthchecks pingurl - secret> > /dev/null
 0 */6 * * * cd repos/ropenscilabs && sh pull_changes.sh && curl -fsS --retry 3 <healthchecks pingurl - secret>  > /dev/null
-30 20 * * * sh make_registry.sh && curl -fsS --retry 3 <healthchecks pingurl - secret>  > /dev/null
+15 21 * * * sh make_registry.sh && curl -fsS --retry 3 <healthchecks pingurl - secret>  > /dev/null
