@@ -4,7 +4,7 @@
 \alias{create_codemetas}
 \title{Create the codemetas for all files}
 \usage{
-create_codemetas(old_cm)
+create_codemetas(old_cm = NULL)
 }
 \arguments{
 \item{old_cm}{path to latest CodeMeta version}
