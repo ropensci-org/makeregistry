@@ -1,6 +1,6 @@
 get_review <- function(entry){
   if(!is.null(entry$review)){
-    if(grepl("ropensci\\/onboarding", entry$review$url)){
+    if(grepl("ropensci\\/onboarding|ropensci\\/software-review", entry$review$url)){
      entry$review$url
 
     }else{
