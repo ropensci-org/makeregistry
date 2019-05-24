@@ -111,3 +111,6 @@ geofilter
 taxizesoap
 phylodiv
 proj
+geojsonpolys
+rrocksdb
+siftgeojson
