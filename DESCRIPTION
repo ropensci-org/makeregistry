@@ -23,7 +23,8 @@ Imports:
     dplyr,
     tibble,
     purrr,
-    glue
+    glue,
+    tidyr
 Remotes:
     ropensci/codemetar@44236ea
 RoxygenNote: 6.1.1
