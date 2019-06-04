@@ -1,11 +1,7 @@
-Package: makeregistry
 Type: Package
+Package: makeregistry
 Title: Creates JSON registry from cloned repos.
 Version: 0.1.0.1
-Description: Creates JSON registry from cloned repos.
-License: MIT + file LICENSE
-Encoding: UTF-8
-LazyData: true
 Authors@R: 
     c(person(given = "Maëlle",
              family = "Salmon",
@@ -15,6 +11,10 @@ Authors@R:
       person(given = "rOpenSci",
              role = "fnd",
              comment = "https://ropensci.org/"))
+Description: Creates JSON registry from cloned repos.
+License: MIT + file LICENSE
+URL: https://github.com/ropenscilabs/makeregistry
+BugReports: https://github.com/ropenscilabs/makeregistry/issues
 Imports: 
     codemetar,
     magrittr,
@@ -27,6 +27,6 @@ Imports:
     tidyr
 Remotes:
     ropensci/codemetar@44236ea
+Encoding: UTF-8
+LazyData: true
 RoxygenNote: 6.1.1
-URL: https://github.com/ropenscilabs/makeregistry
-BugReports: https://github.com/ropenscilabs/makeregistry/issues
