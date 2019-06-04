@@ -43,7 +43,7 @@ get_review <- function(entry){
 get_reviewers <- function(id, reviews){
   reviewers <- reviews[reviews$review == id, c("name", "github")]
   as.list(split(reviewers,
-                reviewer$github))
+                reviewers$github))
 }
 
 get_maintainer <- function(entry){
