@@ -1,7 +1,35 @@
+.get_review_table <- function(){
+  # reviews table
+  reviews <- airtabler::airtable(base = "appZIB8hgtvjoV99D",
+                                   table = "Reviews")
+  reviews <- reviews$Reviews$select_all()
+  reviews <- reviews[lengths(reviews$reviewer) == 1,]
+  reviews <- tidyr::unnest(reviews, reviewer)
+  reviews <- as.data.frame(reviews)
+  reviews <- reviews[!is.na(reviews$onboarding_url),]
+
+  # reviewers table
+  reviewers <- airtabler::airtable(base = "appZIB8hgtvjoV99D",
+                                 table = "Reviewers")
+  reviewers <- reviewers$Reviewers$select_all()
+  reviewers <- as.data.frame(reviewers)
+
+  # join
+  reviews <- dplyr::left_join(reviews, reviewers, by = c("reviewer" = "id"))
+  reviews$review <- gsub(".*issues\\/", "", reviews$onboarding_url)
+  reviews <- reviews[!is.na(reviews$name),]
+  reviews[, c("review", "name", "github")]
+}
+
+get_review_table <- memoise::memoise(.get_review_table)
+
 get_review <- function(entry){
   if(!is.null(entry$review)){
     if(grepl("ropensci\\/onboarding|ropensci\\/software-review", entry$review$url)){
-     entry$review$url
+     review <- list(url = entry$review$url)
+     review$reviewers <- get_reviewers(id = gsub(".*issues\\/", "", entry$review$url),
+                                       reviews = get_review_table())
+     review
 
     }else{
       ""
@@ -10,6 +38,12 @@ get_review <- function(entry){
     ""
   }
 
+}
+
+get_reviewers <- function(id, reviews){
+  reviewers <- reviews[reviews$review == id, c("name", "github")]
+  as.list(split(reviewers,
+                reviewer$github))
 }
 
 get_maintainer <- function(entry){
