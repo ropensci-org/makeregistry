@@ -114,3 +114,7 @@ proj
 geojsonpolys
 rrocksdb
 siftgeojson
+greta
+ozdata
+containerit
+redland-bindings
