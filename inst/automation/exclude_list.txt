@@ -120,3 +120,4 @@ containerit
 redland-bindings
 acme
 agent
+etseed
