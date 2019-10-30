@@ -1,5 +1,5 @@
 #!/bin/bash
-for x in 1 2 3 4
+for x in 1 2 3 4 5
 do
   echo "working on $x loop"
   url=$(printf 'https://api.github.com/orgs/ropensci/repos?per_page=100&page=%s' $x)
