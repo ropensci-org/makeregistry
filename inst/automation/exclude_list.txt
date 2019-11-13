@@ -134,3 +134,4 @@ hirsutosa
 geolocart
 geoflowr
 webrockets
+leafier
