@@ -132,3 +132,5 @@ scatrr
 timeraster
 hirsutosa
 geolocart
+geoflowr
+webrockets
