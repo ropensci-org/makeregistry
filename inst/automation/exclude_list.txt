@@ -135,3 +135,5 @@ geolocart
 geoflowr
 webrockets
 leafier
+dashboard
+
