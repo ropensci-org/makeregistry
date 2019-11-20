@@ -25,9 +25,8 @@ if(!file.exists("raw_cm.json")){
 
 codemeta <- makeregistry::create_codemetas(old_cm = old_cm)
 
-makeregistry:::write_json(codemeta, path = "raw_cm.json",
-                          pretty=TRUE,
-                          auto_unbox = TRUE)
+jsonlite::write_json(codemeta, path = "raw_cm.json",
+                     pretty = TRUE, auto_unbox = TRUE)
 
 makeregistry::create_registry(cm = "raw_cm.json",
                               outpat = "registry.json")
