@@ -25,7 +25,7 @@ Imports:
     purrr,
     glue
 Remotes:
-    ropensci/codemetar@18b7599
+    ropensci/codemetar@344bd7e
 RoxygenNote: 6.1.1
 URL: https://github.com/ropenscilabs/makeregistry
 BugReports: https://github.com/ropenscilabs/makeregistry/issues
