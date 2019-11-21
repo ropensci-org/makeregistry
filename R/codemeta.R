@@ -1,4 +1,22 @@
 .create_cm <- function(pkg, org, old_cm){
+
+  if(!is.null(old_cm)){
+    if(length(old_cm[purrr::map_chr(old_cm, "identifier") ==
+                     gsub("repos\\/.*\\/", "", pkg)]) > 0){
+      old_entry <- old_cm[purrr::map_chr(old_cm, "identifier") ==
+               gsub("repos\\/.*\\/", "", pkg)][[1]]
+
+      if (!file.exists(file.path(pkg, "codemeta.json"))){
+        jsonlite::write_json(old_entry, path = file.path(pkg, "codemeta.json"))
+
+      }
+    } else {
+      old_entry <- NULL
+    }
+  } else {
+      old_entry <- NULL
+    }
+
   info <- try(codemetar::create_codemeta(pkg = pkg, verbose = FALSE,
                                          force_update = TRUE),
               silent = TRUE)
@@ -13,13 +31,9 @@
   }else{
     print(toupper(pkg))
 
-    if(!is.null(old_cm)){
-      if(length(old_cm[purrr::map_chr(old_cm, "identifier") ==
-                       gsub("repos\\/.*\\/", "", pkg)]) > 0){
-        old_cm[purrr::map_chr(old_cm, "identifier") ==
-                 gsub("repos\\/.*\\/", "", pkg)][[1]]
-
-      }else{
+    if (is.null(old_entry)){
+      return(old_entry)
+      } else {
         NULL
       }
     }else{
