@@ -128,7 +128,7 @@ create_registry <- function(cm, outpat){
   website_info$description <- trimws(website_info$description)
 
   # add categories
-  category_info <- readr::read_csv("https://raw.githubusercontent.com/ropensci/roregistry/gh-pages/final_categories.csv")
+  category_info <- readr::read_csv(system.file(file.path("scripts", "final_categories.csv"), package = "makeregistry"))
 
   website_info <- dplyr::left_join(website_info,
                                    category_info, by = "name")
