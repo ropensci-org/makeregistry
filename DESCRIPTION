@@ -19,7 +19,7 @@ Imports:
     codemetar,
     magrittr,
     memoise,
-    jsonlite,
+    jsonlite (>= 1.6),
     dplyr,
     tibble,
     purrr,
