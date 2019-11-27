@@ -8,7 +8,7 @@
 
       if (!file.exists(file.path(pkg, "codemeta.json"))){
         jsonlite::write_json(old_entry, path = file.path(pkg, "codemeta.json"))
-
+        codemeta_written <- TRUE
       }
     } else {
       old_entry <- NULL
@@ -20,7 +20,12 @@
   info <- try(codemetar::create_codemeta(pkg = pkg, verbose = FALSE,
                                          force_update = TRUE),
               silent = TRUE)
-  if(!inherits(info, "try-error")){
+
+  if (codemeta_written) {
+    file.remove(file.path(pkg, "codemeta.json"))
+  }
+
+  if(!inherits(info, "try-error")) {
     # for other repos, the URLs in DESCRIPTION have to be right
     if(org %in% c("ropensci", "ropenscilabs")){
       info$codeRepository <- paste0("https://github.com/",
