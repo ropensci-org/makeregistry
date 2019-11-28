@@ -1,0 +1,3 @@
+https://github.com/CornellLabofOrnithology/auk.git
+https://github.com/gmbecker/genbankr.git
+https://github.com/YuLab-SMU/treeio.git

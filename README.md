@@ -41,11 +41,9 @@ files in inst/automation
 
 * cronjob - cron jobs, urls for healthchecks.io hidden
 * exclude_list.txt - repos to ignore in git cloning
+* not_transferred.txt - repos gone through software review, but not transferred to an ropensci github org
 * make_registry.R - R script to do the registry creation
 * make_registry.sh - shell script to run make_registry.R, push to github and clean up tar.gz files to save disk space
 * pull_changes.sh - for loop across each repo dir to pull down any changes
 * pull_new_ropensci.sh - pull down any new repos in github.com/ropensci
 * pull_new_ropenscilabs.sh - pull down any new repos in github.com/ropenscilabs
-
-
-
