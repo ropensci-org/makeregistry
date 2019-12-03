@@ -26,6 +26,6 @@ Imports:
     glue
 Remotes:
     ropensci/codemetar@344bd7e
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 URL: https://github.com/ropenscilabs/makeregistry
 BugReports: https://github.com/ropenscilabs/makeregistry/issues
