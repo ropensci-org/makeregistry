@@ -7,7 +7,11 @@
     ) {
       old_entry <- old_cm[purrr::map_chr(old_cm, "identifier") == gsub("repos\\/.*\\/", "", pkg)][[1]]
       if (!file.exists(file.path(pkg, "codemeta.json"))) {
-        jsonlite::write_json(old_entry, path = file.path(pkg, "codemeta.json"))
+        jsonlite::write_json(old_entry,
+                             path = file.path(pkg, "codemeta.json"),
+                             pretty = TRUE,
+                             auto_unbox = TRUE
+                             )
         codemeta_written <- TRUE
       }
     } else {
