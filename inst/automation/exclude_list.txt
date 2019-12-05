@@ -143,3 +143,5 @@ webrockets
 webservices
 wishlist
 rtd
+stellar
+
