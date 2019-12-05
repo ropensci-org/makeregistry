@@ -144,4 +144,12 @@ webservices
 wishlist
 rtd
 stellar
-
+col-sql
+annual-report-help
+ropensci-tweets
+community-calls
+ropenscilabs.github.io
+crandata
+makeregistry
+ocrstuff
+docs
