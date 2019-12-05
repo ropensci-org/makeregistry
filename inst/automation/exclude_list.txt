@@ -86,7 +86,6 @@ realtime
 redland-bindings
 remake-tutorial
 reproducibility-guide
-roblog
 robridgems
 rocites
 rOpenInterviews
