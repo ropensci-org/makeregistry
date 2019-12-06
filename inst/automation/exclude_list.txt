@@ -153,3 +153,6 @@ crandata
 makeregistry
 ocrstuff
 docs
+sheetseeR
+maptools
+status
