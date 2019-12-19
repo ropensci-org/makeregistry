@@ -184,3 +184,5 @@ ozroaddeaths
 goodtables
 corporateR
 gramr
+Rcademy
+hideandseek
