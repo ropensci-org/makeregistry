@@ -39,12 +39,15 @@ out = []
 allres.each { |repo|
   out << {"repo_name" => repo["name"], "git_url" => repo["html_url"]} unless repo["archived"] || ex.include?(repo["name"])
 }
+
 # add other repos (those not in ropensci or ropenscilabs)
-others = [
-  {"repo_name" => 'auk', "git_url" => 'https://github.com/CornellLabofOrnithology/auk'},
-  {"repo_name" => 'genbankr', "git_url" => 'https://github.com/gmbecker/genbankr'},
-  {"repo_name" => 'treeio', "git_url" => 'https://github.com/YuLab-SMU/treeio'}
-]
+nms = ["repo_name", "git_url"]
+url = 'https://raw.githubusercontent.com/ropenscilabs/makeregistry/master/inst/automation/not_transferred.txt'
+resp = Faraday.get(url)
+others = resp.body.split("\n").map{ |z| 
+  vals = [z.split("/").last.sub(".git", ""), z]
+  Hash[nms.zip(vals)]
+}
 out.concat others
 
 # write json file to disk
