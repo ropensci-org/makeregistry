@@ -188,3 +188,4 @@ Rcademy
 hideandseek
 syn
 expanding-peer-review
+weatherdata
