@@ -15,7 +15,6 @@ buffy-api
 cchecksapi
 cheatsheets
 citation_tracking
-citation_tracking
 cityquant
 colorpile
 containerit
@@ -189,3 +188,7 @@ hideandseek
 syn
 expanding-peer-review
 weatherdata
+outsider-testsuites
+statistical-software-peer-review
+statistical-software
+roblog
