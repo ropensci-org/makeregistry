@@ -8,7 +8,8 @@ if [ $? -eq 0 ]; then
   # go into roregistry dir, pull any changes
   echo "pulling any changes in roregistry"
   cd roregistry
-  git pull
+  git fetch origin
+  git reset --hard origin/gh-pages
 
   # copy files into roregistry directory
   echo "copy registry_urls.json into roregistry"
