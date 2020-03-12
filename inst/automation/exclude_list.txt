@@ -43,6 +43,7 @@ geofilter
 geoflowr
 geojsonpolys
 geolocart
+geoparser
 greta
 heythere
 hirsutosa
