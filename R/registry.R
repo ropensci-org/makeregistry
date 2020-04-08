@@ -129,18 +129,17 @@ create_registry <- function(cm, outpat){
 
   # add categories
   category_info <- readr::read_csv(system.file(file.path("scripts", "final_categories.csv"), package = "makeregistry"))
+  website_info <- dplyr::left_join(website_info, category_info, by = "name")
 
-  website_info <- dplyr::left_join(website_info,
-                                   category_info, by = "name")
-
+  # add last commit dates
+  if (file.exists("last_commits.csv")) {
+    last_commits <- readr::read_csv("last_commits.csv")
+    website_info <- dplyr::left_join(website_info, last_commits, by = "name")
+  }
 
   website_info <- dplyr::rowwise(website_info)
 
-    list(packages = website_info,
-       date = format(Sys.time(), format = "%F %R %Z")) %>%
-    jsonlite::toJSON(auto_unbox = TRUE,
-                     pretty = TRUE) %>%
+  list(packages = website_info, date = format(Sys.time(), format = "%F %R %Z")) %>%
+    jsonlite::toJSON(auto_unbox = TRUE, pretty = TRUE) %>%
     writeLines(outpat)
-
-
 }
