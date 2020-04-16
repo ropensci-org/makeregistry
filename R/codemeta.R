@@ -65,7 +65,7 @@ create_codemetas <- function(old_cm = NULL){
                    tibble::tibble(folder = dir("repos/ropensci", full.names = TRUE),
                                   org = "ropensci"))
   folders <- dplyr::rowwise(folders)
-  folders <- dplyr::mutate(folders, is_package = is_package(folder))
+  folders <- dplyr::mutate(folders, is_package = is_package(folder, old_cm))
 
   packages <- dplyr::filter(folders, is_package)
 
