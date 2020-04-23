@@ -2,9 +2,9 @@
 
 ruby git_urls.rb
 
-echo "pushing up registry_urls.json"
 # if make registry did not fail, proceed
 if [ $? -eq 0 ]; then
+  echo "pushing up registry_urls.json"
   # go into roregistry dir, pull any changes
   echo "pulling any changes in roregistry"
   cd roregistry

@@ -16,6 +16,15 @@ def fetch_gh(org, page, per_page = 100)
   return resp
 end
 
+# try reading exclude list, if fails or empty, or last pull failed due 
+# to a github error, then fail out
+ff = File.read("exclude_list.txt");
+# ff = File.read("/home/ubuntu/exclude_list.txt");
+if !ff.match?("ropensci_citations")
+  raise "exclude_list.txt read failure"
+end
+ex = ff.split;
+
 # ropensci
 res_ropensci = []
 (1..5).each do |x|
@@ -27,9 +36,6 @@ res_ropenscilabs = []
 (1..3).each do |x|
   res_ropenscilabs << fetch_gh('ropenscilabs', x)
 end
-
-ex = File.read("exclude_list.txt").split;
-# ex = File.read("/home/ubuntu/exclude_list.txt").split;
 
 # parse JSON and flatten into an array
 allres = [res_ropensci, res_ropenscilabs].flatten.map { |x| JSON.load(x.body) }.flatten;
