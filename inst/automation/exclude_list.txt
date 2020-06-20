@@ -203,3 +203,5 @@ lq
 taxadc
 identifires
 gbifloc
+cranchecksdocs
+rthings
