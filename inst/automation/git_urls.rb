@@ -43,7 +43,11 @@ allres = [res_ropensci, res_ropenscilabs].flatten.map { |x| JSON.load(x.body) }.
 # pull out name and git html (https) url
 out = []
 allres.each { |repo|
-  out << {"repo_name" => repo["name"], "git_url" => repo["html_url"]} unless repo["archived"] || ex.include?(repo["name"])
+  out << {
+    "repo_name" => repo["name"],
+    "git_url" => repo["html_url"],
+    "default_branch" => repo["default_branch"]
+  } unless repo["archived"] || ex.include?(repo["name"])
 }
 
 # add other repos (those not in ropensci or ropenscilabs)
