@@ -26,13 +26,13 @@ categories <- dplyr::left_join(
 # for current packages
 categories <- dplyr::filter(categories,
                             name %in% packages)
-readr::write_csv(categories, here::here(  here::here(
+readr::write_csv(categories, here::here(
   file.path(
     "inst",
     "scripts",
     "final_categories.csv"
   )
 )
-))
+)
 
 
