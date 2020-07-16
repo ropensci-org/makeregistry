@@ -16,6 +16,19 @@ def fetch_gh(org, page, per_page = 100)
   return resp
 end
 
+def gh_default_branch(owner_repo)
+  url = 'https://api.github.com/repos/' + owner_repo
+  resp = Faraday.get(url) do |req|
+    req.headers['Authorization'] = 'token ' + ENV['GITHUB_PAT']
+    # req.headers['Authorization'] = 'token ' + ENV['GITHUB_PAT_SCOTT']
+  end
+  if resp.success?
+    return JSON.load(resp.body)["default_branch"] || "master"
+  else
+    return "master"
+  end
+end
+
 # try reading exclude list, if fails or empty, or last pull failed due 
 # to a github error, then fail out
 ff = File.read("exclude_list.txt");
@@ -58,6 +71,15 @@ others = resp.body.split("\n").map{ |z|
   vals = [z.split("/").last.sub(".git", ""), z]
   Hash[nms.zip(vals)]
 }
+# add default_branch
+others.map { |e|
+  if e["git_url"].match(/github/).nil?
+    e["default_branch"] = "master"
+  else
+    e["default_branch"] = gh_default_branch(e["git_url"].gsub(/https:\/\/github.com\/|\.git/, ""))
+  end
+}
+# combine
 out.concat others
 
 # write json file to disk
