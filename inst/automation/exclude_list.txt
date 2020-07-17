@@ -209,3 +209,7 @@ mdb
 actions
 canpaginate
 elasticdsl
+dappr
+rwdpa
+zissou
+feetures
