@@ -208,3 +208,4 @@ rthings
 mdb
 actions
 canpaginate
+elasticdsl
