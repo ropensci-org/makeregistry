@@ -207,4 +207,4 @@ cranchecksdocs
 rthings
 mdb
 actions
-
+canpaginate
