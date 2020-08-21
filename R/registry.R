@@ -152,14 +152,21 @@ github_archived <- function(org) {
   tibble::as_tibble(dplyr::bind_rows(out)$node)
 }
 
+get_cran_archived <- function() {
+  x <- "http://crandb.r-pkg.org/-/archivals"
+  z <- crul::HttpClient$new(x)$get()
+  w <- tibble::as_tibble(jsonlite::fromJSON(z$parse("UTF-8"))$package)
+  dplyr::select(w, Package, Type)
+}
+is_cran_archived <- function(x, y) x %in% y
 
 #' Title
 #'
+#' @export
 #' @param cm Path to the JSON codemeta
 #' @param outpat Path where to save the JSON
 #' @importFrom ghql GraphqlClient Query
-#'
-#' @export
+#' @importFrom crul HttpClient
 create_registry <- function(cm, outpat){
   registry <- jsonlite::read_json(cm)
   registry <- registry[lengths(registry) > 0]
@@ -208,7 +215,12 @@ create_registry <- function(cm, outpat){
 
   # github archived?
   ga <- dplyr::bind_rows(lapply(c("ropensci", "ropenscilabs"), github_archived))
-  website_info$github_archived <- "x"
+  website_info <- dplyr::left_join(website_info, ga, by = "name")
+  website_info <- dplyr::rename(website_info, github_archived = isArchived)
+
+  # cran archived?
+  ca <- get_cran_archived()
+  website_info$cran_archived <- purrr::map(website_info$name, is_cran_archived, ca$Package)
 
   website_info <- dplyr::rowwise(website_info)
 

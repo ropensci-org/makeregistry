@@ -24,7 +24,8 @@ Imports:
     tibble,
     purrr,
     glue,
-    ghql
+    ghql,
+    crul
 Remotes:
     ropensci/codemetar
 RoxygenNote: 7.1.1
