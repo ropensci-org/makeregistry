@@ -222,8 +222,11 @@ create_registry <- function(cm, outpat){
   ca <- get_cran_archived()
   website_info$cran_archived <- purrr::map(website_info$name, is_cran_archived, ca$Package)
 
-  website_info <- dplyr::rowwise(website_info)
+  # staff maintained?
+  # staff <- readLines(system.file("scripts/staff.csv", package = "makeregistry"))
+  # website_info$staff_maintained <- zzz
 
+  website_info <- dplyr::rowwise(website_info)
   list(packages = website_info, date = format(Sys.time(), format = "%F %R %Z")) %>%
     jsonlite::toJSON(auto_unbox = TRUE, pretty = TRUE) %>%
     writeLines(outpat)
