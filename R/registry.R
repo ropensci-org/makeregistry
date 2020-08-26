@@ -158,7 +158,7 @@ get_cran_archived <- function() {
   w <- tibble::as_tibble(jsonlite::fromJSON(z$parse("UTF-8"))$package)
   dplyr::select(w, Package, Type)
 }
-is_cran_archived <- function(x, y) x %in% y
+is_staff <- is_cran_archived <- function(x, y) x %in% y
 
 #' Title
 #'
@@ -223,8 +223,8 @@ create_registry <- function(cm, outpat){
   website_info$cran_archived <- purrr::map(website_info$name, is_cran_archived, ca$Package)
 
   # staff maintained?
-  # staff <- readLines(system.file("scripts/staff.csv", package = "makeregistry"))
-  # website_info$staff_maintained <- zzz
+  staff <- readLines(system.file("scripts/staff.csv", package = "makeregistry"))
+  website_info$staff_maintained <- purrr::map(website_info$maintainer, is_staff, staff)
 
   website_info <- dplyr::rowwise(website_info)
   list(packages = website_info, date = format(Sys.time(), format = "%F %R %Z")) %>%
