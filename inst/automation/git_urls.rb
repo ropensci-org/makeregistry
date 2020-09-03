@@ -3,7 +3,7 @@
 require 'faraday'
 require 'json'
 
-puts "making new git urls file: registry_urls.json"
+puts "making new repository index file: packages.json"
 
 def fetch_gh(org, page, per_page = 100)
   url = 'https://api.github.com/orgs/%s/repos' % org
@@ -29,7 +29,7 @@ def gh_default_branch(owner_repo)
   end
 end
 
-# try reading exclude list, if fails or empty, or last pull failed due 
+# try reading exclude list, if fails or empty, or last pull failed due
 # to a github error, then fail out
 ff = File.read("exclude_list.txt");
 # ff = File.read("/home/ubuntu/exclude_list.txt");
@@ -57,32 +57,32 @@ allres = [res_ropensci, res_ropenscilabs].flatten.map { |x| JSON.load(x.body) }.
 out = []
 allres.each { |repo|
   out << {
-    "repo_name" => repo["name"],
-    "git_url" => repo["html_url"],
-    "default_branch" => repo["default_branch"]
+    "package" => repo["name"],
+    "url" => repo["html_url"],
+    "branch" => repo["default_branch"]
   } unless repo["archived"] || ex.include?(repo["name"])
 }
 
 # add other repos (those not in ropensci or ropenscilabs)
-nms = ["repo_name", "git_url"]
+nms = ["package", "url"]
 url = 'https://raw.githubusercontent.com/ropenscilabs/makeregistry/master/inst/automation/not_transferred.txt'
 resp = Faraday.get(url)
-others = resp.body.split("\n").map{ |z| 
+others = resp.body.split("\n").map{ |z|
   vals = [z.split("/").last.sub(".git", ""), z]
   Hash[nms.zip(vals)]
 }
 # add default_branch
 others.map { |e|
-  if e["git_url"].match(/github/).nil?
-    e["default_branch"] = "master"
+  if e["url"].match(/github/).nil?
+    e["branch"] = "master"
   else
-    e["default_branch"] = gh_default_branch(e["git_url"].gsub(/https:\/\/github.com\/|\.git/, ""))
+    e["branch"] = gh_default_branch(e["url"].gsub(/https:\/\/github.com\/|\.git/, ""))
   end
 }
 # combine
 out.concat others
 
 # write json file to disk
-File.open('registry_urls.json', 'w') do |f|
+File.open('packages.json', 'w') do |f|
   f.puts(JSON.pretty_generate(out))
 end
