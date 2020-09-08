@@ -135,18 +135,21 @@ github_archived <- function(org) {
   pag <- res1$data$repositoryOwner$repositories$pageInfo
   has_next_page <- pag$hasNextPage
   cursor <- pag$endCursor
-
+  
   out <- list(res1$data$repositoryOwner$repositories$edges)
-  i <- 1
-  while (has_next_page) {
-    i <- i + 1
-    # cat(i, sep = "\n")
-    variable <- list(cursor = cursor)
-    xx <- con$exec(qry$queries$cursor, variables = variable)
-    res_next <- jsonlite::fromJSON(xx)
-    out[[i]] <- res_next$data$repositoryOwner$repositories$edges
-    has_next_page <- res_next$data$repositoryOwner$repositories$pageInfo$hasNextPage
-    cursor <- res_next$data$repositoryOwner$repositories$pageInfo$endCursor
+
+  if (!is.null(has_next_page)) {
+    i <- 1
+    while (has_next_page) {
+      i <- i + 1
+      # cat(i, sep = "\n")
+      variable <- list(cursor = cursor)
+      xx <- con$exec(qry$queries$cursor, variables = variable)
+      res_next <- jsonlite::fromJSON(xx)
+      out[[i]] <- res_next$data$repositoryOwner$repositories$edges
+      has_next_page <- res_next$data$repositoryOwner$repositories$pageInfo$hasNextPage
+      cursor <- res_next$data$repositoryOwner$repositories$pageInfo$endCursor
+    }
   }
 
   tibble::as_tibble(dplyr::bind_rows(out)$node)
