@@ -40,6 +40,7 @@ jobs:
         sudo apt install -y libgit2-dev libcurl4-openssl-dev
     - name: Install R dependencies and makeregistry
       run: |
+        remotes::install_deps(dependencies = TRUE)
         remotes::install_cran(c("gert", "dplyr", "desc"))
         remotes::install_local(".")
       shell: Rscript {0}
@@ -58,3 +59,21 @@ jobs:
         cp inst/automation/last_commits.sh .
         cp inst/automation/make_registry.R .
         cp inst/automation/make_registry.sh .
+    - name: Clone repos
+      run: |
+        cd repos/ropenscilabs
+        bash pull_ropenscilabs2.sh
+        cd ../ropensci
+        bash pull_ropensci2.sh
+        cd ../other
+        bash pull_other.sh
+        cd ../../
+    - name: Make last commit.csv
+      run: |
+        sh last_commits.sh
+        head last_commits.csv
+    - name: Make registry, push to roregistry
+      run: |
+        git config --global user.email "actions@github.com"
+        git config --global user.name "GitHub Actions makeregistry"
+        sh make_registry.sh
