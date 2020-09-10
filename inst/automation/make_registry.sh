@@ -8,9 +8,9 @@ Rscript make_registry.R
 if [ $? -eq 0 ]; then
   # go into roregistry dir, pull any changes
   echo "pulling any changes in roregistry"
-  git remote add origin https://REPO_PAT:$REPO_PAT@github.com/ropensci/roregistry.git
   git clone https://REPO_PAT:$REPO_PAT@github.com/ropensci/roregistry.git
   cd roregistry
+  git remote add origin https://REPO_PAT:$REPO_PAT@github.com/ropensci/roregistry.git
   git fetch origin
   git reset --hard origin/gh-pages
 
