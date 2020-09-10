@@ -3,7 +3,7 @@ name: build-registry
 on: push
 
 jobs:
-  test:
+  build:
     strategy:
       fail-fast: false
     runs-on: ubuntu-latest
@@ -23,5 +23,5 @@ jobs:
         mkdir repos/ropenscilabs
         cd repos/ropensci
         git clone --depth 1 https://github.com/ropensci/taxize
-        cd
+        cd ../../
         ls repos/ropensci
