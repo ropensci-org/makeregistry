@@ -59,17 +59,17 @@ get_status <- function(entry){
   }else{
     status <- guess_status(entry)
   }
-  status <- gsub("http(s)?\\:\\/\\/www\\.repostatus\\.org\\/\\#",
-                 "", status)
+    status <- gsub("http(s)?\\:\\/\\/www\\.repostatus\\.org\\/\\#",
+                 "https://www.repostatus.org", status)
   return(status)
 }
 
 guess_status <- function(entry){
 
-  if(grepl("ropenscilabs", entry$codeRepository)){
-    "www.repostatus.org/#concept"
-  }else{
-    "www.repostatus.org/#active"
+   if(grepl("ropenscilabs", entry$codeRepository)) {
+    "https://www.repostatus.org/#concept"
+  } else {
+    "https://www.repostatus.org/#active"
   }
 }
 
