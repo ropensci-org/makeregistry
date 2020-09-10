@@ -49,7 +49,7 @@ spenv,data-access,TRUE
 splister,data-tools,TRUE
 spplist,data-access,TRUE
 spplit,data-access,TRUE
-taxspell,taxspell,TRUE
+taxspell,taxonomy,TRUE
 testevil,security,TRUE
 testrmd,scalereprod,TRUE
 tinkr,scalereprod,TRUE
