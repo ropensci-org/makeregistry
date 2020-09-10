@@ -19,12 +19,12 @@ jobs:
         mkdir repos/other
         mkdir repos/ropensci
         mkdir repos/ropenscilabs
-        pwd
-        ls
         cp inst/automation/pull_ropenscilabs2.sh repos/ropenscilabs
         cp inst/automation/pull_ropensci2.sh repos/ropensci
+        cp inst/automation/pull_other.sh repos/other
         cd repos/ropenscilabs
         bash pull_ropenscilabs2.sh
         cd ../ropensci
         bash pull_ropensci2.sh
-        cd ../../
+        cd ../other
+        bash pull_other.sh

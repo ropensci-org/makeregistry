@@ -2,7 +2,7 @@
 
 rm -rf */
 
-curl https://raw.githubusercontent.com/ropenscilabs/makeregistry/master/inst/automation/not_transferred.txt > not_transferred.txt
+curl https://raw.githubusercontent.com/ropensci-org/makeregistry/master/inst/automation/not_transferred.txt > not_transferred.txt
 mapfile -t arr < not_transferred.txt
 
 for x in "${arr[@]}"
