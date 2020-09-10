@@ -8,7 +8,7 @@ jobs:
       fail-fast: false
     runs-on: ubuntu-latest
     env:
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      working-directory: 
     steps:
     - uses: actions/checkout@v2
     - name: Setup Ruby
@@ -21,8 +21,4 @@ jobs:
         mkdir repos/other
         mkdir repos/ropensci
         mkdir repos/ropenscilabs
-        cp makeregistry/inst/automation/pull_ropenscilabs2.sh repos/ropenscilabs
-        cd repos/ropenscilabs
-        bash pull_ropenscilabs2.sh
-        cd ../../
-        ls repos/ropenscilabs
+        tree
