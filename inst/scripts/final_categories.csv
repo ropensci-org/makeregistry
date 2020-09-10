@@ -232,7 +232,7 @@ prism,data-access,FALSE
 pubchunks,literature,FALSE
 qpdf,literature,FALSE
 qualtRics,data-access,FALSE
-rAltmetric,altmetrics,FALSE
+rAltmetric,literature,FALSE
 ramlegacy,data-access,FALSE
 randgeo,geospatial,FALSE
 rAvis,data-access,FALSE
@@ -278,7 +278,7 @@ rnaturalearthhires,data-access,FALSE
 RNeXML,data-publication,FALSE
 rnoaa,data-access,FALSE
 rnpn,data-access,FALSE
-roadoi,altmetrics,FALSE
+roadoi,literature,FALSE
 robotstxt,http-tools,FALSE
 ropenaq,data-access,FALSE
 rorcid,literature,FALSE
