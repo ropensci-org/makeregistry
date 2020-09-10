@@ -22,5 +22,9 @@ jobs:
         pwd
         ls
         cp inst/automation/pull_ropenscilabs2.sh repos/ropenscilabs
+        cp inst/automation/pull_ropensci.sh repos/ropensci
         cd repos/ropenscilabs
         bash pull_ropenscilabs2.sh
+        cd ../../
+        bash pull_ropensci2.sh
+        cd ../../
