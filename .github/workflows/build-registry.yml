@@ -19,12 +19,23 @@ jobs:
         mkdir repos/other
         mkdir repos/ropensci
         mkdir repos/ropenscilabs
+    - name: Copy files
+      run: |
         cp inst/automation/pull_ropenscilabs2.sh repos/ropenscilabs
         cp inst/automation/pull_ropensci2.sh repos/ropensci
         cp inst/automation/pull_other.sh repos/other
+        cp inst/automation/last_commits.R .
+        cp inst/automation/last_commits.sh .
+    - name: Clone repos
+      run: |
         cd repos/ropenscilabs
         bash pull_ropenscilabs2.sh
         cd ../ropensci
         bash pull_ropensci2.sh
         cd ../other
         bash pull_other.sh
+        cd ../../
+    - name: Make last commit.csv
+      run: |
+        sh last_commits.sh
+        head last_commits.csv
