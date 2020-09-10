@@ -7,7 +7,7 @@ if [ $? -eq 0 ]; then
   echo "pushing up packages.json"
   # go into roregistry dir, pull any changes
   echo "pulling any changes in roregistry"
-  git clone https://github.com/ropensci/roregistry.git
+  git clone git@github.com:ropensci/roregistry.git
   cd roregistry
   git fetch origin
   git reset --hard origin/gh-pages

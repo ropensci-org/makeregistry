@@ -1,0 +1,26 @@
+name: build-packages-file
+
+on: push
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.7
+    - name: Install Ruby gems
+      run: |
+        gem install faraday json
+    - name: Make packages.json
+      run: |
+        git config --global user.email "actions@github.com"
+        git config --global user.name "GitHub Actions makeregistry"
+        bash git_urls.sh
+        head packages.json
