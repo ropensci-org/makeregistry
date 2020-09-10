@@ -8,7 +8,7 @@ error_exit()
 
 check_exclude_list()
 {
-    ruby -e 'ff = File.read("inst/automation/exclude_list.txt"); !ff.match?("ropensci_citations") ? raise("exclude_list.txt read failure") : nil'
+    ruby -e 'ff = File.read("../../inst/automation/exclude_list.txt"); !ff.match?("ropensci_citations") ? raise("exclude_list.txt read failure") : nil'
 }
 
 get_repos()
@@ -17,7 +17,7 @@ get_repos()
     do
       echo "working on $x loop"
       url=$(printf 'https://api.github.com/orgs/ropenscilabs/repos?per_page=100&page=%s' $x)
-      curl -s $url | ruby -e 'ex=File.read("inst/automation/exclude_list.txt").split; require "json"; JSON.load(STDIN.read).each { |repo| puts repo["name"]; %x[git clone --depth 1 #{repo["html_url"]}] unless File.directory?(repo["name"]) || repo["archived"] || ex.include?(repo["name"]) }'
+      curl -s $url | ruby -e 'ex=File.read("../../inst/automation/exclude_list.txt").split; require "json"; JSON.load(STDIN.read).each { |repo| puts repo["name"]; %x[git clone --depth 1 #{repo["html_url"]}] unless File.directory?(repo["name"]) || repo["archived"] || ex.include?(repo["name"]) }'
     done
 }
 
