@@ -2,9 +2,9 @@
 
 ruby git_urls.rb
 
-echo "pushing up registry_urls.json"
 # if make registry did not fail, proceed
 if [ $? -eq 0 ]; then
+  echo "pushing up packages.json"
   # go into roregistry dir, pull any changes
   echo "pulling any changes in roregistry"
   cd roregistry
@@ -12,12 +12,12 @@ if [ $? -eq 0 ]; then
   git reset --hard origin/gh-pages
 
   # copy files into roregistry directory
-  echo "copy registry_urls.json into roregistry"
-  cp ../registry_urls.json .
+  echo "copy packages.json into roregistry"
+  cp ../packages.json .
 
   # upload new registry files to github
   echo "pushing changes to github"
-  git commit -am 'registry_urls.json updated'
+  git commit -am 'packages.json updated'
   git push
 
   # cd back to home dir
