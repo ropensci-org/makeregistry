@@ -12,13 +12,6 @@ jobs:
       GITHUB_GRAPHQL_TOKEN: ${{ secrets.GRAPHQL_TOKEN }}
       REPO_PAT: ${{ secrets.REPO_PAT }}
     steps:
-    - name: Git Details
-      uses: oleksiyrudenko/gha-git-credentials@v1
-      with:
-        name: 'Scott Chamberlain'
-        email: 'myrmecocystus+ropenscibot@gmail.com'
-        actor: 'ropenscibot'
-        token: '${{ secrets.REPO_PAT }}'
     - uses: actions/checkout@v2
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
