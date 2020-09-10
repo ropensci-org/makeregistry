@@ -62,5 +62,7 @@ jobs:
         cp inst/automation/make_registry.sh .
     - name: Make packages.json
       run: |
+        git config --local user.email "actions@github.com"
+        git config --local user.name "GitHub Actions makeregistry"
         bash git_urls.sh
         head packages.json
