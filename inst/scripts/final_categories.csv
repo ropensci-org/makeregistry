@@ -265,7 +265,7 @@ rfisheries,data-access,FALSE
 rfna,data-access,FALSE
 rgbif,data-access,FALSE
 rglobi,data-access,FALSE
-rgnparser,NA,FALSE
+rgnparser,taxonomy,FALSE
 rgpdd,data-access,FALSE
 riem,data-access,FALSE
 rif,data-access,FALSE
