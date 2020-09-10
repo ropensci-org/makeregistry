@@ -1,7 +1,7 @@
 {
   "packages": [
     {
-      "name": "pkg1",
+      "name": "blabla",
       "description": "Creates JSON registry from cloned repos.",
       "details": "Creates JSON registry from cloned repos.",
       "maintainer": "Maëlle Salmon",
@@ -79,5 +79,5 @@
       "url": "https://github.com/ropenscilabs/pkg1"
     }
   ],
-  "date": "2020-09-10 11:46 CEST"
+  "date": "2020-09-10 13:32 CEST"
 }

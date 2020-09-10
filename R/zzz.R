@@ -10,12 +10,12 @@ is_package <- function(path, old_cm){
     if (!is.null(old_cm)) {
     if (
       length(old_cm[purrr::map_chr(old_cm, "identifier") ==
-      gsub("repos\\/.*\\/", "", path)]) > 0
+      basename(path)]) > 0
     ) {
       return(TRUE) # or if it is already in the registry
       }
     }
 
-  return(FALSE) # not a package in other cases (no old registry, or no entry in it)
     }
+  return(FALSE) # not a package in other cases (no old registry, or no entry in it)
 }
