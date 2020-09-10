@@ -20,7 +20,7 @@ datastorr,databases,TRUE
 decapitated,http-tools,TRUE
 defender,security,TRUE
 dirdf,data-tools,TRUE
-gendercodeR,data-analysis,TRUE
+gendercodeR,data-tools,TRUE
 ghrecipes,data-access,TRUE
 jobstatus,scalereprod,TRUE
 keybase,security,TRUE
@@ -42,7 +42,7 @@ riodata,data-access,TRUE
 roomba,data-extraction,TRUE
 ropsec,security,TRUE
 scientist,scalereprod,TRUE
-simpletextr,data-analysis,TRUE
+simpletextr,data-tools,TRUE
 snowball,scalereprod,TRUE
 sparqldsl,databases,TRUE
 spenv,data-access,TRUE
@@ -218,8 +218,8 @@ parzer,geospatial,FALSE
 patentsview,literature,FALSE
 pdftools,literature,FALSE
 photosearcher,data-access,FALSE
-phylocomr,data-analysis,FALSE
-phylogram,data-analysis,FALSE
+phylocomr,data-tools,FALSE
+phylogram,data-tools,FALSE
 phylotaR,data-access,FALSE
 piggyback,data-publication,FALSE
 plater,data-tools,FALSE
