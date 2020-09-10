@@ -1,4 +1,4 @@
-Package: makeregistry
+Package: pkg1
 Type: Package
 Title: Creates JSON registry from cloned repos.
 Version: 0.1.0.2

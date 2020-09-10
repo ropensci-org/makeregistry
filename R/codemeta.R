@@ -49,23 +49,26 @@ create_cm <- memoise::memoise(.create_cm)
 #' Create the codemetas for all files
 #'
 #' @param old_cm path to latest CodeMeta version
+#' @param folder folder under which the
 #'
 #' @return A JSON codemeta
 #' @export
-create_codemetas <- function(old_cm = NULL){
+create_codemetas <- function(old_cm = NULL, folder = "repos"){
   if(!is.null(old_cm)){
     old_cm <- jsonlite::read_json(old_cm)
     old_cm <- old_cm[lengths(old_cm) > 0]
   }
+  list_repos <- function(directory) {
+    tibble::tibble(
+      folder = dir(file.path(folder, directory), full.names = TRUE),
+      org = directory
+    )
+  }
+  folders <- purrr::map_df(dir(folder), list_repos)
 
-  folders <- rbind(tibble::tibble(folder = dir("repos/other", full.names = TRUE),
-                                  org = "other"),
-                   tibble::tibble(folder = dir("repos/ropenscilabs", full.names = TRUE),
-                                  org = "ropenscilabs"),
-                   tibble::tibble(folder = dir("repos/ropensci", full.names = TRUE),
-                                  org = "ropensci"))
   folders <- dplyr::rowwise(folders)
-  folders <- dplyr::mutate(folders, is_package = is_package(folder, old_cm))
+
+  folders <- dplyr::mutate(folders, is_package = is_package(.data$folder, old_cm))
 
   packages <- dplyr::filter(folders, is_package)
 
