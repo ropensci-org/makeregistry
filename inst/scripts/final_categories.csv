@@ -226,7 +226,7 @@ plater,data-tools,FALSE
 pleiades,data-access,FALSE
 plotdap,data-visualization,FALSE
 plotly,data-visualization,FALSE
-popler,popler,FALSE
+popler,data-access,FALSE
 PostcodesioR,geospatial,FALSE
 prism,data-access,FALSE
 pubchunks,literature,FALSE
