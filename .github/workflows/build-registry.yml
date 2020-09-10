@@ -21,4 +21,4 @@ jobs:
         mkdir repos/other
         mkdir repos/ropensci
         mkdir repos/ropenscilabs
-        tree
+        pwd
