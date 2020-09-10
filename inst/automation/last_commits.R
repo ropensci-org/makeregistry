@@ -1,5 +1,6 @@
 library(gert)
 library(dplyr)
+library(desc)
 dirs <- c(
   "repos/other",
   "repos/ropensci",
