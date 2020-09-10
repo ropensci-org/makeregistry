@@ -56,6 +56,7 @@ jobs:
         cp inst/automation/pull_other.sh repos/other
         cp inst/automation/last_commits.R .
         cp inst/automation/last_commits.sh .
+        cp inst/automation/git_urls.rb .
         cp inst/automation/git_urls.sh .
         cp inst/automation/make_registry.R .
         cp inst/automation/make_registry.sh .
