@@ -67,9 +67,9 @@ get_status <- function(entry){
 guess_status <- function(entry){
 
   if(grepl("ropenscilabs", entry$codeRepository)){
-    "http://www.repostatus.org/#concept"
+    "www.repostatus.org/#concept"
   }else{
-    "http://www.repostatus.org/#active"
+    "www.repostatus.org/#active"
   }
 }
 
@@ -83,14 +83,93 @@ get_bioc <- function(pkg, bioc_names){
 }
 
 
+github_archived <- function(org) {
+  token <- Sys.getenv("GITHUB_GRAPHQL_TOKEN")
+  con <- ghql::GraphqlClient$new(
+    url = "https://api.github.com/graphql",
+    headers = list(Authorization = paste0("Bearer ", token))
+  )
+
+  qry <- ghql::Query$new()
+  query_first <- '{
+    repositoryOwner(login:"%s") {
+      repositories(first: 100, isFork:false) {
+        edges {
+          node {
+            name
+            isArchived
+          }
+        }
+        pageInfo {
+          startCursor
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  }'
+  qry$query('first', sprintf(query_first, org))
+
+  query_cursor <- '
+  query($cursor: String){
+    repositoryOwner(login:"%s") {
+      repositories(first: 100, isFork:false, after:$cursor) {
+        edges {
+          node {
+            name
+            isArchived
+          }
+        }
+        pageInfo {
+          startCursor
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  }'
+  qry$query('cursor', sprintf(query_cursor, org))
+
+  x <- con$exec(qry$queries$first)
+  res1 <- jsonlite::fromJSON(x)
+  pag <- res1$data$repositoryOwner$repositories$pageInfo
+  has_next_page <- pag$hasNextPage
+  cursor <- pag$endCursor
+  
+  out <- list(res1$data$repositoryOwner$repositories$edges)
+
+  if (!is.null(has_next_page)) {
+    i <- 1
+    while (has_next_page) {
+      i <- i + 1
+      # cat(i, sep = "\n")
+      variable <- list(cursor = cursor)
+      xx <- con$exec(qry$queries$cursor, variables = variable)
+      res_next <- jsonlite::fromJSON(xx)
+      out[[i]] <- res_next$data$repositoryOwner$repositories$edges
+      has_next_page <- res_next$data$repositoryOwner$repositories$pageInfo$hasNextPage
+      cursor <- res_next$data$repositoryOwner$repositories$pageInfo$endCursor
+    }
+  }
+
+  tibble::as_tibble(dplyr::bind_rows(out)$node)
+}
+
+get_cran_archived <- function() {
+  x <- "http://crandb.r-pkg.org/-/archivals"
+  z <- crul::HttpClient$new(x)$get()
+  w <- tibble::as_tibble(jsonlite::fromJSON(z$parse("UTF-8"))$package)
+  dplyr::select(w, Package, Type)
+}
+is_staff <- is_cran_archived <- function(x, y) x %in% y
+
 #' Title
 #'
+#' @export
 #' @param cm Path to the JSON codemeta
 #' @param outpat Path where to save the JSON
-#'
-#' @export
-#'
-#' @examples
+#' @importFrom ghql GraphqlClient Query
+#' @importFrom crul HttpClient
 create_registry <- function(cm, outpat){
   registry <- jsonlite::read_json(cm)
   registry <- registry[lengths(registry) > 0]
@@ -137,8 +216,20 @@ create_registry <- function(cm, outpat){
     website_info <- dplyr::left_join(website_info, last_commits, by = "name")
   }
 
-  website_info <- dplyr::rowwise(website_info)
+  # github archived?
+  ga <- dplyr::bind_rows(lapply(c("ropensci", "ropenscilabs"), github_archived))
+  website_info <- dplyr::left_join(website_info, ga, by = "name")
+  website_info <- dplyr::rename(website_info, github_archived = isArchived)
 
+  # cran archived?
+  ca <- get_cran_archived()
+  website_info$cran_archived <- purrr::map(website_info$name, is_cran_archived, ca$Package)
+
+  # staff maintained?
+  staff <- readLines(system.file("scripts/staff.csv", package = "makeregistry"))
+  website_info$staff_maintained <- purrr::map(website_info$maintainer, is_staff, staff)
+
+  website_info <- dplyr::rowwise(website_info)
   list(packages = website_info, date = format(Sys.time(), format = "%F %R %Z")) %>%
     jsonlite::toJSON(auto_unbox = TRUE, pretty = TRUE) %>%
     writeLines(outpat)

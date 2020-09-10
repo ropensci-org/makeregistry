@@ -6,6 +6,11 @@ error_exit()
     exit 1
 }
 
+check_exclude_list()
+{
+    ruby -e 'ff = File.read("/home/ubuntu/exclude_list.txt"); !ff.match?("ropensci_citations") ? raise("exclude_list.txt read failure") : nil'
+}
+
 get_repos()
 {
     for x in 1 2 3 4 5
@@ -18,10 +23,14 @@ get_repos()
 
 
 if rm -rf */; then
-    if get_repos; then
-        echo "yay!"
+    if check_exclude_list; then
+      if get_repos; then
+          echo "yay!"
+      else
+          error_exit "for loop didn't work"
+      fi
     else
-        error_exit "for loop didn't work"
+      error_exit "exclude_list file is bad"
     fi
 else
     error_exit "Cannot delete folders! Aborting."
