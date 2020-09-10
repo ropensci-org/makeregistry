@@ -17,9 +17,9 @@ if [ $? -eq 0 ]; then
   cp ../packages.json .
 
   # upload new registry files to github
-  # echo "pushing changes to github"
-  # git commit -am 'packages.json updated'
-  # git push
+  echo "pushing changes to github"
+  git commit -am 'packages.json updated'
+  git push
 
   # cd back to home dir
   cd ..
