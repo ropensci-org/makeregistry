@@ -15,8 +15,8 @@ jobs:
         ruby-version: 2.7
     - name: Setup R
       uses: r-lib/actions/setup-r@master
-        with:
-          r-version: release
+      with:
+        r-version: release
     - name: Query R dependencies
         run: |
           install.packages('remotes')
