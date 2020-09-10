@@ -75,8 +75,8 @@ binman,http-tools,FALSE
 biomartr,data-access,FALSE
 bittrex,data-access,FALSE
 bold,data-access,FALSE
-bomrang,data-analysis,FALSE
-bowerbird,data-access,FALSE
+bomrang,data-access,FALSE
+bowerbird,scalereprod,FALSE
 brranching,data-access,FALSE
 c14bazAAR,data-access,FALSE
 camsRad,data-access,FALSE
