@@ -8,6 +8,7 @@ Rscript make_registry.R
 if [ $? -eq 0 ]; then
   # go into roregistry dir, pull any changes
   echo "pulling any changes in roregistry"
+  git clone https://github.com/ropensci/roregistry.git
   cd roregistry
   git fetch origin
   git reset --hard origin/gh-pages
@@ -25,13 +26,3 @@ if [ $? -eq 0 ]; then
   # cd back to home dir
   cd ..
 fi
-
-# clean tar files
-echo "\n\n\n"
-echo "cleaning out .tar.gz files"
-for d in repos/* ; do
-  echo "$d"
-  cd $d
-  rm *.tar.gz
-  cd ../../
-done

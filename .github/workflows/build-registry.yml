@@ -7,12 +7,17 @@ jobs:
     strategy:
       fail-fast: false
     runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
     - uses: actions/checkout@v2
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.7
+    - name: Install Ruby gems
+      run: |
+        gem install faraday json 
     - name: Setup R
       uses: r-lib/actions/setup-r@master
       with:
@@ -33,9 +38,10 @@ jobs:
       run: |
         sudo apt update
         sudo apt install -y libgit2-dev libcurl4-openssl-dev
-    - name: Install R dependencies
+    - name: Install R dependencies and makeregistry
       run: |
         remotes::install_cran(c("gert", "dplyr", "desc"))
+        remotes::install_local(".")
       shell: Rscript {0}
     - name: Make directories
       run: |
@@ -50,18 +56,10 @@ jobs:
         cp inst/automation/pull_other.sh repos/other
         cp inst/automation/last_commits.R .
         cp inst/automation/last_commits.sh .
-    - name: Clone repos
+        cp inst/automation/git_urls.sh .
+        cp inst/automation/make_registry.R .
+        cp inst/automation/make_registry.sh .
+    - name: Make packages.json
       run: |
-        cd repos/ropenscilabs
-        bash pull_ropenscilabs2.sh
-        cd ../ropensci
-        bash pull_ropensci2.sh
-        cd ../other
-        bash pull_other.sh
-        cd ../../
-    - name: Make last commit.csv
-      run: |
-        git config --local user.email "actions@github.com"
-        git config --local user.name "GitHub Actions"
-        sh last_commits.sh
-        head last_commits.csv
+        bash git_urls.sh
+        head packages.json
