@@ -21,7 +21,7 @@ jobs:
         mkdir repos/other
         mkdir repos/ropensci
         mkdir repos/ropenscilabs
-        cp inst/automation/pull_ropenscilabs2.sh repos/ropenscilabs
+        cp makeregistry/inst/automation/pull_ropenscilabs2.sh repos/ropenscilabs
         cd repos/ropenscilabs
         bash pull_ropenscilabs2.sh
         cd ../../
