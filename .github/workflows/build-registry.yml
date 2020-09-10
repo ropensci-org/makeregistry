@@ -25,6 +25,6 @@ jobs:
         cp inst/automation/pull_ropensci2.sh repos/ropensci
         cd repos/ropenscilabs
         bash pull_ropenscilabs2.sh
-        cd ../../
+        cd ../ropensci
         bash pull_ropensci2.sh
         cd ../../
