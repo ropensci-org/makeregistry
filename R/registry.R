@@ -170,6 +170,7 @@ is_staff <- is_cran_archived <- function(x, y) x %in% y
 #' @param outpat Path where to save the JSON
 #' @importFrom ghql GraphqlClient Query
 #' @importFrom crul HttpClient
+#' @importFrom readr read_csv
 create_registry <- function(cm, outpat){
   registry <- jsonlite::read_json(cm)
   registry <- registry[lengths(registry) > 0]

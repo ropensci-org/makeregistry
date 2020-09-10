@@ -21,6 +21,7 @@ Imports:
     memoise,
     jsonlite (>= 1.6),
     dplyr,
+    readr,
     tibble,
     purrr,
     glue,
