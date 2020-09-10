@@ -360,6 +360,6 @@ wicket,geospatial,FALSE
 wikitaxa,taxonomy,FALSE
 workloopR,data-extraction,FALSE
 worrms,taxonomy,FALSE
-writexl,data-analysis,FALSE
+writexl,data-tools,FALSE
 xslt,data-tools,FALSE
 zbank,taxonomy,FALSE
