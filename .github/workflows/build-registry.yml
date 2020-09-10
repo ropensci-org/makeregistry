@@ -75,6 +75,6 @@ jobs:
         head last_commits.csv
     - name: Make registry, push to roregistry
       run: |
-        git config --global user.email "actions@github.com"
-        git config --global user.name "GitHub Actions makeregistry"
+        git config --global user.email "myrmecocystus+ropenscibot@gmail.com"
+        git config --global user.name "ropenscibot"
         sh make_registry.sh
