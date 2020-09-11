@@ -32,7 +32,6 @@ end
 # try reading exclude list, if fails or empty, or last pull failed due
 # to a github error, then fail out
 ff = File.read("inst/automation/exclude_list.txt");
-# ff = File.read("/home/ubuntu/exclude_list.txt");
 if !ff.match?("ropensci_citations")
   raise "exclude_list.txt read failure"
 end
@@ -65,9 +64,10 @@ allres.each { |repo|
 
 # add other repos (those repos not in ropensci or ropenscilabs)
 nms = ["package", "url"]
-url = 'https://raw.githubusercontent.com/ropensci-org/makeregistry/master/inst/automation/not_transferred.txt'
-resp = Faraday.get(url)
-others = resp.body.split("\n").map{ |z|
+nt_path = 'inst/automation/not_transferred.txt'
+nt = File.read(nt_path).split
+# others = resp.body.split("\n").map{ |z|
+others = nt.map{ |z|
   vals = [z.split("/").last.sub(".git", ""), z]
   Hash[nms.zip(vals)]
 }
