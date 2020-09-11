@@ -4,12 +4,14 @@
 \alias{create_registry}
 \title{Title}
 \usage{
-create_registry(cm, outpat)
+create_registry(cm, outpat, time = Sys.time())
 }
 \arguments{
 \item{cm}{Path to the JSON codemeta}
 
 \item{outpat}{Path where to save the JSON}
+
+\item{time}{Time to add at the end}
 }
 \description{
 Title

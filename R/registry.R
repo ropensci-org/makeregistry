@@ -169,9 +169,10 @@ is_staff <- is_cran_archived <- function(x, y) x %in% y
 #' @export
 #' @param cm Path to the JSON codemeta
 #' @param outpat Path where to save the JSON
+#' @param time Time to add at the end
 #' @importFrom ghql GraphqlClient Query
 #' @importFrom crul HttpClient
-create_registry <- function(cm, outpat){
+create_registry <- function(cm, outpat, time = Sys.time()){
   registry <- jsonlite::read_json(cm)
   registry <- registry[lengths(registry) > 0]
 
@@ -231,7 +232,7 @@ create_registry <- function(cm, outpat){
   website_info$staff_maintained <- purrr::map(website_info$maintainer, is_staff, staff)
 
   website_info <- dplyr::rowwise(website_info)
-  list(packages = website_info, date = format(Sys.time(), format = "%F %R %Z")) %>%
+  list(packages = website_info, date = format(time, format = "%F %R %Z")) %>%
     jsonlite::toJSON(auto_unbox = TRUE, pretty = TRUE) %>%
     writeLines(outpat)
 }

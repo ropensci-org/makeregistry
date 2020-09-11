@@ -35,6 +35,5 @@ RoxygenNote: 7.1.1
 URL: https://github.com/ropenscilabs/makeregistry
 BugReports: https://github.com/ropenscilabs/makeregistry/issues
 Suggests: 
-    testthat (>= 2.99.0.9000),
-    mockery
+    testthat (>= 2.99.0.9000)
 Config/testthat/edition: 3
