@@ -1,87 +1,79 @@
-get_review <- function(entry){
-  if(!is.null(entry$review)){
-    if(grepl("ropensci\\/onboarding|ropensci\\/software-review", entry$review$url)){
+get_review <- function(entry) {
+  if (!is.null(entry$review)) {
+    if (grepl("ropensci\\/onboarding|ropensci\\/software-review",
+      entry$review$url)) {
      entry$review$url
-
-    }else{
+    } else {
       ""
     }
-  }else{
+  } else {
     ""
   }
-
 }
 
-get_maintainer <- function(entry){
+get_maintainer <- function(entry) {
   maintainer <- entry$maintainer[[1]]
-  if(maintainer$`@type` == "Organization"){
+  if (maintainer$`@type` == "Organization") {
     toString(maintainer$name)
-  }else{
-    if(length(maintainer$givenName) > 1){
+  } else {
+    if (length(maintainer$givenName) > 1) {
       maintainer$givenName <- paste(maintainer$givenName[1],
                                     maintainer$givenName[2])
     }
-
     paste(maintainer$givenName, maintainer$familyName)
   }
-
-
 }
 
-get_keywords <- function(entry){
+get_keywords <- function(entry) {
   keywords <- unlist(entry$keywords)
   keywords <- keywords[!keywords %in% c("r", "rstats", "r-package")]
-  if(length(keywords > 0)){
+  if (length(keywords > 0)) {
     toString(sort(keywords))
-  }else{
+  } else {
     ""
   }
-
 }
 
-get_coderepo <- function(entry){
-  if(!is.null(entry$codeRepository)){
+get_coderepo <- function(entry) {
+  if (!is.null(entry$codeRepository)) {
     gsub("\\#.*", "", entry$codeRepository)
-  }else{
+  } else {
     ""
   }
 }
 
-get_status <- function(entry){
-  if(!is.null(entry$developmentStatus)){
+get_status <- function(entry) {
+  if (!is.null(entry$developmentStatus)) {
     status <- unlist(entry$developmentStatus)
     status <- status[grepl("repostatus", status)]
-    if(length(status) > 0){
+    if (length(status) > 0) {
       status <- status
-    }else{
+    } else {
       status <- guess_status(entry)
     }
-  }else{
+  } else {
     status <- guess_status(entry)
   }
-    status <- gsub("http(s)?\\:\\/\\/www\\.repostatus\\.org\\/\\#",
-                 "https://www.repostatus.org#", status)
+  status <- gsub("http(s)?\\:\\/\\/www\\.repostatus\\.org\\/\\#",
+    "https://www.repostatus.org#", status)
   return(status)
 }
 
-guess_status <- function(entry){
-
-   if(grepl("ropenscilabs", entry$codeRepository)) {
+guess_status <- function(entry) {
+  if (grepl("ropenscilabs", entry$codeRepository)) {
     "https://www.repostatus.org/#concept"
   } else {
     "https://www.repostatus.org/#active"
   }
 }
 
-
-get_cran <- function(pkg, cran){
+get_cran <- function(pkg, cran) {
   pkg %in% cran
 }
 
-get_bioc <- function(pkg, bioc_names){
+get_bioc <- function(pkg, bioc_names) {
   pkg %in% bioc_names
 }
-
 
 github_archived <- function(org) {
   token <- Sys.getenv("GITHUB_GRAPHQL_TOKEN")
@@ -111,7 +103,7 @@ github_archived <- function(org) {
   qry$query('first', sprintf(query_first, org))
 
   query_cursor <- '
-  query($cursor: String){
+  query($cursor: String) {
     repositoryOwner(login:"%s") {
       repositories(first: 100, isFork:false, after:$cursor) {
         edges {
@@ -135,7 +127,7 @@ github_archived <- function(org) {
   pag <- res1$data$repositoryOwner$repositories$pageInfo
   has_next_page <- pag$hasNextPage
   cursor <- pag$endCursor
-  
+
   out <- list(res1$data$repositoryOwner$repositories$edges)
 
   if (!is.null(has_next_page)) {
@@ -171,18 +163,19 @@ is_staff <- is_cran_archived <- function(x, y) x %in% y
 #' @importFrom ghql GraphqlClient Query
 #' @importFrom crul HttpClient
 #' @importFrom readr read_csv
-create_registry <- function(cm, outpat){
+create_registry <- function(cm, outpat) {
   registry <- jsonlite::read_json(cm)
   registry <- registry[lengths(registry) > 0]
 
-  website_info <- tibble::tibble(name = purrr::map_chr(registry, "identifier"),
-                                 description = purrr::map_chr(registry, "name"),
-                                 details = purrr::map_chr(registry, "description"),
-                                 maintainer = purrr::map_chr(registry, get_maintainer),
-                                 keywords = purrr::map_chr(registry, get_keywords),
-                                 github = purrr::map_chr(registry, get_coderepo),
-                                 status = purrr::map(registry, get_status),
-                                 onboarding = purrr::map(registry, get_review))
+  website_info <- tibble::tibble(
+    name = purrr::map_chr(registry, "identifier"),
+    description = purrr::map_chr(registry, "name"),
+    details = purrr::map_chr(registry, "description"),
+    maintainer = purrr::map_chr(registry, get_maintainer),
+    keywords = purrr::map_chr(registry, get_keywords),
+    github = purrr::map_chr(registry, get_coderepo),
+    status = purrr::map(registry, get_status),
+    onboarding = purrr::map(registry, get_review))
 
   available_packages <- memoise::memoise(available.packages)
   cran <- available_packages()[,1] %>% as.character()
@@ -208,7 +201,9 @@ create_registry <- function(cm, outpat){
   website_info$description <- trimws(website_info$description)
 
   # add categories
-  category_info <- readr::read_csv(system.file(file.path("scripts", "final_categories.csv"), package = "makeregistry"))
+  category_info <- readr::read_csv(
+    system.file(file.path("scripts", "final_categories.csv"),
+      package = "makeregistry"))
   website_info <- dplyr::left_join(website_info, category_info, by = "name")
 
   # add last commit dates
@@ -218,20 +213,25 @@ create_registry <- function(cm, outpat){
   }
 
   # github archived?
-  ga <- dplyr::bind_rows(lapply(c("ropensci", "ropenscilabs"), github_archived))
+  ga <- dplyr::bind_rows(
+    lapply(c("ropensci", "ropenscilabs"), github_archived))
   website_info <- dplyr::left_join(website_info, ga, by = "name")
   website_info <- dplyr::rename(website_info, github_archived = isArchived)
 
   # cran archived?
   ca <- get_cran_archived()
-  website_info$cran_archived <- purrr::map(website_info$name, is_cran_archived, ca$Package)
+  website_info$cran_archived <- purrr::map(
+    website_info$name, is_cran_archived, ca$Package)
 
   # staff maintained?
   staff <- readLines(system.file("scripts/staff.csv", package = "makeregistry"))
-  website_info$staff_maintained <- purrr::map(website_info$maintainer, is_staff, staff)
+  website_info$staff_maintained <- purrr::map(
+    website_info$maintainer, is_staff, staff)
 
   website_info <- dplyr::rowwise(website_info)
-  list(packages = website_info, date = format(Sys.time(), format = "%F %R %Z")) %>%
-    jsonlite::toJSON(auto_unbox = TRUE, pretty = TRUE) %>%
-    writeLines(outpat)
+  list(
+    packages = website_info,
+    date = format(Sys.time(), format = "%F %R %Z")) %>%
+      jsonlite::toJSON(auto_unbox = TRUE, pretty = TRUE) %>%
+      writeLines(outpat)
 }
