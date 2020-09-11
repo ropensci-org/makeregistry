@@ -60,7 +60,7 @@ get_status <- function(entry){
     status <- guess_status(entry)
   }
     status <- gsub("http(s)?\\:\\/\\/www\\.repostatus\\.org\\/\\#",
-                 "https://www.repostatus.org/", status)
+                 "https://www.repostatus.org#", status)
   return(status)
 }
 
