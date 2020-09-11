@@ -4,10 +4,12 @@
 \alias{create_codemetas}
 \title{Create the codemetas for all files}
 \usage{
-create_codemetas(old_cm = NULL)
+create_codemetas(old_cm = NULL, folder = "repos")
 }
 \arguments{
 \item{old_cm}{path to latest CodeMeta version}
+
+\item{folder}{folder under which the}
 }
 \value{
 A JSON codemeta
