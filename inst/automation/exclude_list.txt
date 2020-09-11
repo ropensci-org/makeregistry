@@ -220,3 +220,5 @@ geojsonrewind
 pegax
 rdpla
 tpl-sqlite
+statistical-software-review
+statistical-software-review-book
