@@ -63,7 +63,7 @@ allres.each { |repo|
   } unless repo["archived"] || ex.include?(repo["name"])
 }
 
-# add other repos (those not in ropensci or ropenscilabs)
+# add other repos (those repos not in ropensci or ropenscilabs)
 nms = ["package", "url"]
 url = 'https://raw.githubusercontent.com/ropensci-org/makeregistry/master/inst/automation/not_transferred.txt'
 resp = Faraday.get(url)
