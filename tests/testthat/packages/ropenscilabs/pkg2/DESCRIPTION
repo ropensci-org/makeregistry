@@ -1,7 +1,7 @@
-Package: makeregistry
+Package: pkg1
 Type: Package
 Title: Creates JSON registry from cloned repos.
-Version: 0.1.0.3
+Version: 0.1.0.2
 Description: Creates JSON registry from cloned repos.
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -23,15 +23,12 @@ Imports:
     dplyr,
     tibble,
     purrr,
-    glue,
-    ghql,
-    crul
-Remotes: 
-    ropensci/codemetar@dev,
-    r-lib/testthat
-RoxygenNote: 7.1.1
+    glue
+Remotes:
+    ropensci/codemetar@dev
+RoxygenNote: 7.0.2
 URL: https://github.com/ropenscilabs/makeregistry
 BugReports: https://github.com/ropenscilabs/makeregistry/issues
 Suggests: 
-    testthat (>= 2.99.0.9000)
+    testthat
 Config/testthat/edition: 3
