@@ -1,8 +1,10 @@
+#' @importFrom rlang .data
 get_review <- function(entry) {
   if (!is.null(entry$review)) {
     if (grepl("ropensci\\/onboarding|ropensci\\/software-review",
-      entry$review$url)) {
-     entry$review$url
+      entry$review$url)
+    ) {
+      entry$review$url
     } else {
       ""
     }
@@ -151,7 +153,7 @@ get_cran_archived <- function() {
   x <- "http://crandb.r-pkg.org/-/archivals"
   z <- crul::HttpClient$new(x)$get()
   w <- tibble::as_tibble(jsonlite::fromJSON(z$parse("UTF-8"))$package)
-  dplyr::select(w, Package, Type)
+  dplyr::select(w, .data$Package, .data$Type)
 }
 is_staff <- is_cran_archived <- function(x, y) x %in% y
 
@@ -160,10 +162,11 @@ is_staff <- is_cran_archived <- function(x, y) x %in% y
 #' @export
 #' @param cm Path to the JSON codemeta
 #' @param outpat Path where to save the JSON
+#' @param time Time to add at the end
 #' @importFrom ghql GraphqlClient Query
 #' @importFrom crul HttpClient
 #' @importFrom readr read_csv
-create_registry <- function(cm, outpat) {
+create_registry <- function(cm, outpat, time = Sys.time()) {
   registry <- jsonlite::read_json(cm)
   registry <- registry[lengths(registry) > 0]
 
@@ -177,7 +180,7 @@ create_registry <- function(cm, outpat) {
     status = purrr::map(registry, get_status),
     onboarding = purrr::map(registry, get_review))
 
-  available_packages <- memoise::memoise(available.packages)
+  available_packages <- memoise::memoise(utils::available.packages)
   cran <- available_packages()[,1] %>% as.character()
   cran <- cran[cran != "dashboard"]
 
@@ -216,7 +219,7 @@ create_registry <- function(cm, outpat) {
   ga <- dplyr::bind_rows(
     lapply(c("ropensci", "ropenscilabs"), github_archived))
   website_info <- dplyr::left_join(website_info, ga, by = "name")
-  website_info <- dplyr::rename(website_info, github_archived = isArchived)
+  website_info <- dplyr::rename(website_info, github_archived = .data$isArchived)
 
   # cran archived?
   ca <- get_cran_archived()

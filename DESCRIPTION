@@ -1,6 +1,6 @@
 Package: makeregistry
 Type: Package
-Title: Creates JSON registry from cloned repos.
+Title: Creates JSON registry from cloned repos
 Version: 0.1.0.3
 Description: Creates JSON registry from cloned repos.
 License: MIT + file LICENSE
@@ -26,7 +26,9 @@ Imports:
     purrr,
     glue,
     ghql,
-    crul
+    crul,
+    readr,
+    rlang
 Remotes: 
     ropensci/codemetar@dev,
     r-lib/testthat
