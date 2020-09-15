@@ -231,7 +231,8 @@ create_registry <- function(cm, outpat, time = Sys.time()) {
     website_info$name, is_cran_archived, ca$Package)
 
   # staff maintained?
-  staff <- readLines(system.file("scripts/staff.csv", package = "makeregistry"))
+  staff <- readLines(system.file("scripts/staff.csv", package = "makeregistry"),
+                     encoding = "UTF-8")
   website_info$staff_maintained <- purrr::map(
     website_info$maintainer, is_staff, staff)
 
