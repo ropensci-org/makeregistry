@@ -240,5 +240,5 @@ create_registry <- function(cm, outpat, time = Sys.time()) {
     packages = website_info,
     date = format(time, format = "%F %R %Z", tz = "UTC")) %>%
       jsonlite::toJSON(auto_unbox = TRUE, pretty = TRUE) %>%
-      writeLines(outpat)
+      writeLines(outpat, useBytes = TRUE)
 }
