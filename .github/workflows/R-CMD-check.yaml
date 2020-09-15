@@ -71,7 +71,7 @@ jobs:
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
           GITHUB_GRAPHQL_TOKEN: ${{ secrets.GITHUB_GRAPHQL_TOKEN }}
-          GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
+          GITHUB_PAT: ${{ secrets.MYSECRETTOKEN }}
         run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
