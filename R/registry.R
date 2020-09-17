@@ -62,19 +62,19 @@ get_status <- function(entry) {
 }
 
 guess_status <- function(entry) {
-  if ("codeRepository" %in% names(entry)) {
-    if (grepl("ropenscilabs", entry$codeRepository)) {
-      "https://www.repostatus.org/#concept"
-    } else {
-      if(grepl("ropensci-archive", entry$codeRepository)) {
-        "https://www.repostatus.org/#unsupported"
-      }
-      else
-        { "https://www.repostatus.org/#active" }
-    }
-  } else {
-    ""
+  if (!"codeRepository" %in% names(entry)) {
+   return("")
   }
+
+  if (grepl("ropenscilabs", entry$codeRepository)) {
+      return("https://www.repostatus.org/#concept")
+    }
+
+  if(grepl("ropensci-archive", entry$codeRepository)) {
+      return("https://www.repostatus.org/#unsupported")
+    }
+
+  return("https://www.repostatus.org/#active")
 }
 
 get_cran <- function(pkg, cran) {
@@ -205,6 +205,22 @@ create_registry <- function(cm, outpat, time = Sys.time()) {
 
   website_info$on_bioc <- purrr::map(website_info$name,
                                      get_bioc, bioc_names)
+
+  get_type <- function(status) {
+
+    if(grepl("concept", status)|| grepl("wip", status)) {
+      return("experimental")
+    }
+
+    if(grepl("abandoned", status)|| grepl("unsupported", status)) {
+      return("archived")
+    }
+
+    return("active")
+  }
+
+  website_info$type <- purrr::map_chr(website_info$status,
+                                     get_type)
 
   website_info$url <- website_info$github
 
