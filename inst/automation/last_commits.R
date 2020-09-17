@@ -4,7 +4,8 @@ library(desc)
 dirs <- c(
   "repos/other",
   "repos/ropensci",
-  "repos/ropenscilabs"
+  "repos/ropenscilabs",
+  "repos/ropensci-archive"
 )
 each_repo <- function(path) {
   desc_file <- file.path(path, "DESCRIPTION")

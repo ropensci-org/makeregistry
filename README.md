@@ -6,7 +6,7 @@ The goal of makeregistry is to create the JSON that's used to display packages o
 
 ``` r
 remotes::install_github("ropensci/codemetar")
-remotes::install_github("ropenscilabs/makeregistry")
+remotes::install_github("ropensci-org/makeregistry")
 ```
 
 ## Example

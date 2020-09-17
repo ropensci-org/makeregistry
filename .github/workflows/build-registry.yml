@@ -22,7 +22,7 @@ jobs:
         ruby-version: 2.7
     - name: Install Ruby gems
       run: |
-        gem install faraday json 
+        gem install faraday json
     - name: Setup R
       uses: r-lib/actions/setup-r@master
       with:
@@ -55,10 +55,12 @@ jobs:
         mkdir repos/other
         mkdir repos/ropensci
         mkdir repos/ropenscilabs
+        mkdir repos/ropensci-archive
     - name: Copy files
       run: |
         cp inst/automation/pull_ropenscilabs2.sh repos/ropenscilabs
         cp inst/automation/pull_ropensci2.sh repos/ropensci
+        cp inst/automation/pull_ropensci-archive.sh repos/ropensci-archive
         cp inst/automation/pull_other.sh repos/other
         cp inst/automation/last_commits.R .
         cp inst/automation/last_commits.sh .
@@ -70,6 +72,8 @@ jobs:
         bash pull_ropenscilabs2.sh
         cd ../ropensci
         bash pull_ropensci2.sh
+        cd ../ropensci-archive
+        bash pull_ropensci-archive2.sh
         cd ../other
         bash pull_other.sh
         cd ../../

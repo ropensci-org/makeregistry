@@ -1,5 +1,5 @@
 0 */5 * * * wget -O exclude_list.txt https://raw.githubusercontent.com/ropenscilabs/makeregistry/master/inst/automation/exclude_list.txt
-30 */5 * * * sh git_urls.sh 
+30 */5 * * * sh git_urls.sh
 0 */6 * * * cd repos/other && sh remove_excluded.sh && curl -fsS --retry 3 <healthchecks pingurl - secret>  > /dev/null
 0 */6 * * * cd repos/other && sh pull_changes.sh && curl -fsS --retry 3 <healthchecks pingurl - secret>  > /dev/null
 0 */6 * * * cd repos/ropensci && sh remove_excluded.sh && curl -fsS --retry 3 <healthchecks pingurl - secret>  > /dev/null
@@ -8,4 +8,7 @@
 0 */6 * * * cd repos/ropenscilabs && sh remove_excluded.sh && curl -fsS --retry 3 <healthchecks pingurl - secret>  > /dev/null
 0 */6 * * * cd repos/ropenscilabs && sh pull_new.sh && curl -fsS --retry 3 <healthchecks pingurl - secret> > /dev/null
 0 */6 * * * cd repos/ropenscilabs && sh pull_changes.sh && curl -fsS --retry 3 <healthchecks pingurl - secret>  > /dev/null
+0 */6 * * * cd repos/ropensci-archive && sh remove_excluded.sh && curl -fsS --retry 3 <healthchecks pingurl - secret>  > /dev/null
+0 */6 * * * cd repos/ropensci-archive && sh pull_new.sh && curl -fsS --retry 3 <healthchecks pingurl - secret> > /dev/null
+0 */6 * * * cd repos/ropensci-archive && sh pull_changes.sh && curl -fsS --retry 3 <healthchecks pingurl - secret>  > /dev/null
 40 21 * * * sh make_registry.sh && curl -fsS --retry 3 <healthchecks pingurl - secret>  > /dev/null

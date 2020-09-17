@@ -66,7 +66,11 @@ guess_status <- function(entry) {
     if (grepl("ropenscilabs", entry$codeRepository)) {
       "https://www.repostatus.org/#concept"
     } else {
-      "https://www.repostatus.org/#active"
+      if(grepl("ropensci-archive", entry$codeRepository)) {
+        "https://www.repostatus.org/#unsupported"
+      }
+      else
+        { "https://www.repostatus.org/#active" }
     }
   } else {
     ""

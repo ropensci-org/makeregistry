@@ -49,8 +49,14 @@ res_ropenscilabs = []
   res_ropenscilabs << fetch_gh('ropenscilabs', x)
 end
 
+# ropensci-archive
+# why are number of pages hard-coded? isn't this hard to maintain?
+res_ropensciarchive = []
+(1..3).each do |x|
+  res_ropensciarchive << fetch_gh('ropensci-archive', x)
+end
 # parse JSON and flatten into an array
-allres = [res_ropensci, res_ropenscilabs].flatten.map { |x| JSON.load(x.body) }.flatten;
+allres = [res_ropensci, res_ropenscilabs, res_ropensciarchive].flatten.map { |x| JSON.load(x.body) }.flatten;
 
 # pull out name and git html (https) url
 out = []
@@ -62,7 +68,7 @@ allres.each { |repo|
   } unless repo["archived"] || ex.include?(repo["name"])
 }
 
-# add other repos (those repos not in ropensci or ropenscilabs)
+# add other repos (those repos not in ropensci or ropenscilabs or ropensci-archive)
 nms = ["package", "url"]
 nt_path = 'inst/automation/not_transferred.txt'
 nt = File.read(nt_path).split
