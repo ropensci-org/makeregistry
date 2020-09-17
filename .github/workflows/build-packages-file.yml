@@ -1,6 +1,9 @@
 name: build-packages-file
 
-on: push
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
