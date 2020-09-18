@@ -3,7 +3,7 @@ if (!file.exists("raw_cm.json")) {
 } else {
   old_cm <- "raw_cm.json"
 }
-
+print(old_cm)
 # cat("creating codemetas", sep = "\n")
 codemeta <- makeregistry::create_codemetas(old_cm = old_cm)
 
