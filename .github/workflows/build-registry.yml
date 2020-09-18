@@ -25,7 +25,7 @@ jobs:
         ruby-version: 2.7
     - name: Install Ruby gems
       run: |
-        gem install faraday json 
+        gem install faraday json octokit
     - name: Setup R
       uses: r-lib/actions/setup-r@master
       with:
@@ -54,25 +54,20 @@ jobs:
       shell: Rscript {0}
     - name: Make directories
       run: |
-        mkdir repos
-        mkdir repos/other
-        mkdir repos/ropensci
-        mkdir repos/ropenscilabs
+        mkdir repos repos/other repos/ropensci repos/ropenscilabs repos/ropensci-archive
     - name: Copy files
       run: |
-        cp inst/automation/pull_ropenscilabs2.sh repos/ropenscilabs
-        cp inst/automation/pull_ropensci2.sh repos/ropensci
+        echo repos/ropenscilabs repos/ropensci repos/ropensci-archive | xargs -n 1 cp inst/automation/clone_repos.rb
         cp inst/automation/pull_other.sh repos/other
-        cp inst/automation/last_commits.R .
-        cp inst/automation/last_commits.sh .
-        cp inst/automation/make_registry.R .
-        cp inst/automation/make_registry.sh .
+        cp inst/automation/last_commits.R inst/automation/last_commits.sh inst/automation/make_registry.R inst/automation/make_registry.sh .
     - name: Clone repos
       run: |
         cd repos/ropenscilabs
-        bash pull_ropenscilabs2.sh
+        ruby clone_repos.rb ropenscilabs
         cd ../ropensci
-        bash pull_ropensci2.sh
+        ruby clone_repos.rb ropensci
+        cd ../ropensci-archive
+        ruby clone_repos.rb ropensci-archive
         cd ../other
         bash pull_other.sh
         cd ../../
