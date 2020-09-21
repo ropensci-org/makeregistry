@@ -30,7 +30,7 @@
 
   if (!inherits(info, "try-error")) {
     # for other repos, the URLs in DESCRIPTION have to be right
-    if (org %in% c("ropensci", "ropenscilabs")) {
+    if (org %in% c("ropensci", "ropenscilabs", "ropensci-archive")) {
       info$codeRepository <- paste0("https://github.com/",
         org, "/", info$identifier)
     }

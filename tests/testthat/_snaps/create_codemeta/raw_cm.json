@@ -637,6 +637,322 @@
     "identifier": "pkg1",
     "description": "Creates JSON registry from cloned repos.",
     "name": "pkg1: Creates JSON registry from cloned repos.",
+    "codeRepository": "https://github.com/ropensci-archive/pkg1",
+    "issueTracker": "https://github.com/ropenscilabs/makeregistry/issues",
+    "license": "https://spdx.org/licenses/MIT",
+    "version": "0.1.0.2",
+    "programmingLanguage": {
+      "@type": "ComputerLanguage",
+      "name": "R",
+      "url": "https://r-project.org"
+    },
+    "runtimePlatform": "R version 4.0.2 (2020-06-22)",
+    "author": [
+      {
+        "@type": "Person",
+        "givenName": "Maëlle",
+        "familyName": "Salmon",
+        "email": "maelle.salmon@yahoo.se",
+        "@id": "https://orcid.org/0000-0002-2815-0399"
+      }
+    ],
+    "contributor": {},
+    "copyrightHolder": {},
+    "funder": [
+      {
+        "@type": "Organization",
+        "name": "rOpenSci"
+      }
+    ],
+    "maintainer": [
+      {
+        "@type": "Person",
+        "givenName": "Maëlle",
+        "familyName": "Salmon",
+        "email": "maelle.salmon@yahoo.se",
+        "@id": "https://orcid.org/0000-0002-2815-0399"
+      }
+    ],
+    "softwareSuggestions": [
+      {
+        "@type": "SoftwareApplication",
+        "identifier": "testthat",
+        "name": "testthat",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=testthat"
+      }
+    ],
+    "softwareRequirements": [
+      {
+        "@type": "SoftwareApplication",
+        "identifier": "codemetar",
+        "name": "codemetar",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=codemetar"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "identifier": "magrittr",
+        "name": "magrittr",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=magrittr"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "identifier": "memoise",
+        "name": "memoise",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=memoise"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "identifier": "jsonlite",
+        "name": "jsonlite",
+        "version": ">= 1.6",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=jsonlite"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "identifier": "dplyr",
+        "name": "dplyr",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=dplyr"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "identifier": "tibble",
+        "name": "tibble",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=tibble"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "identifier": "purrr",
+        "name": "purrr",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=purrr"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "identifier": "glue",
+        "name": "glue",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=glue"
+      }
+    ],
+    "readme": "https://github.com/ropensci-org/makeregistry/blob/master/README.md",
+    "keywords": ["r", "r-package", "rstats"]
+  },
+  {
+    "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+    "@type": "SoftwareSourceCode",
+    "identifier": "pkg1",
+    "description": "Creates JSON registry from cloned repos.",
+    "name": "pkg1: Creates JSON registry from cloned repos.",
+    "codeRepository": "https://github.com/ropensci-archive/pkg1",
+    "issueTracker": "https://github.com/ropenscilabs/makeregistry/issues",
+    "license": "https://spdx.org/licenses/MIT",
+    "version": "0.1.0.2",
+    "programmingLanguage": {
+      "@type": "ComputerLanguage",
+      "name": "R",
+      "url": "https://r-project.org"
+    },
+    "runtimePlatform": "R version 4.0.2 (2020-06-22)",
+    "author": [
+      {
+        "@type": "Person",
+        "givenName": "Maëlle",
+        "familyName": "Salmon",
+        "email": "maelle.salmon@yahoo.se",
+        "@id": "https://orcid.org/0000-0002-2815-0399"
+      }
+    ],
+    "contributor": {},
+    "copyrightHolder": {},
+    "funder": [
+      {
+        "@type": "Organization",
+        "name": "rOpenSci"
+      }
+    ],
+    "maintainer": [
+      {
+        "@type": "Person",
+        "givenName": "Maëlle",
+        "familyName": "Salmon",
+        "email": "maelle.salmon@yahoo.se",
+        "@id": "https://orcid.org/0000-0002-2815-0399"
+      }
+    ],
+    "softwareSuggestions": [
+      {
+        "@type": "SoftwareApplication",
+        "identifier": "testthat",
+        "name": "testthat",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=testthat"
+      }
+    ],
+    "softwareRequirements": [
+      {
+        "@type": "SoftwareApplication",
+        "identifier": "codemetar",
+        "name": "codemetar",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=codemetar"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "identifier": "magrittr",
+        "name": "magrittr",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=magrittr"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "identifier": "memoise",
+        "name": "memoise",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=memoise"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "identifier": "jsonlite",
+        "name": "jsonlite",
+        "version": ">= 1.6",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=jsonlite"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "identifier": "dplyr",
+        "name": "dplyr",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=dplyr"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "identifier": "tibble",
+        "name": "tibble",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=tibble"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "identifier": "purrr",
+        "name": "purrr",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=purrr"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "identifier": "glue",
+        "name": "glue",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=glue"
+      }
+    ],
+    "readme": "https://github.com/ropensci-org/makeregistry/blob/master/README.md",
+    "keywords": ["r", "r-package", "rstats"]
+  },
+  {
+    "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+    "@type": "SoftwareSourceCode",
+    "identifier": "pkg1",
+    "description": "Creates JSON registry from cloned repos.",
+    "name": "pkg1: Creates JSON registry from cloned repos.",
     "codeRepository": "https://github.com/ropenscilabs/pkg1",
     "issueTracker": "https://github.com/ropenscilabs/makeregistry/issues",
     "license": "https://spdx.org/licenses/MIT",
