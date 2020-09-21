@@ -2,7 +2,7 @@
 get_review <- function(entry) {
   if (!is.null(entry$review)) {
     if (grepl("ropensci\\/onboarding|ropensci\\/software-review",
-      entry$review$url)
+              entry$review$url)
     ) {
       entry$review$url
     } else {
@@ -57,20 +57,24 @@ get_status <- function(entry) {
     status <- guess_status(entry)
   }
   status <- gsub("http(s)?\\:\\/\\/www\\.repostatus\\.org\\/\\#",
-    "https://www.repostatus.org#", status)
+                 "https://www.repostatus.org#", status)
   return(status)
 }
 
 guess_status <- function(entry) {
-  if ("codeRepository" %in% names(entry)) {
-    if (grepl("ropenscilabs", entry$codeRepository)) {
-      "https://www.repostatus.org/#concept"
-    } else {
-      "https://www.repostatus.org/#active"
-    }
-  } else {
-    ""
+  if (!"codeRepository" %in% names(entry)) {
+    return("")
   }
+
+  if (grepl("ropenscilabs", entry$codeRepository)) {
+    return("https://www.repostatus.org/#concept")
+  }
+
+  if(grepl("ropensci-archive", entry$codeRepository)) {
+    return("https://www.repostatus.org/#unsupported")
+  }
+
+  return("https://www.repostatus.org/#active")
 }
 
 get_cran <- function(pkg, cran) {
@@ -202,6 +206,22 @@ create_registry <- function(cm, outpat, time = Sys.time()) {
   website_info$on_bioc <- purrr::map(website_info$name,
                                      get_bioc, bioc_names)
 
+  get_type <- function(status) {
+
+    if(grepl("concept", status)|| grepl("wip", status)) {
+      return("experimental")
+    }
+
+    if(grepl("abandoned", status)|| grepl("unsupported", status)) {
+      return("archived")
+    }
+
+    return("active")
+  }
+
+  website_info$type <- purrr::map_chr(website_info$status,
+                                      get_type)
+
   website_info$url <- website_info$github
 
   website_info$description <- sub(".*\\:", "", website_info$description)
@@ -210,7 +230,7 @@ create_registry <- function(cm, outpat, time = Sys.time()) {
   # add categories
   category_info <- readr::read_csv(
     system.file(file.path("scripts", "final_categories.csv"),
-      package = "makeregistry"))
+                package = "makeregistry"))
   website_info <- dplyr::left_join(website_info, category_info, by = "name")
 
   # add last commit dates
@@ -240,6 +260,6 @@ create_registry <- function(cm, outpat, time = Sys.time()) {
   list(
     packages = website_info,
     date = format(time, format = "%F %R %Z", tz = "UTC")) %>%
-      jsonlite::toJSON(auto_unbox = TRUE, pretty = TRUE) %>%
-      writeLines(outpat, useBytes = TRUE)
+    jsonlite::toJSON(auto_unbox = TRUE, pretty = TRUE) %>%
+    writeLines(outpat, useBytes = TRUE)
 }

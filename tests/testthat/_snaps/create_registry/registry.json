@@ -11,6 +11,7 @@
       "onboarding": "",
       "on_cran": false,
       "on_bioc": false,
+      "type": "experimental",
       "url": "https://github.com/ropenscilabs/makeregistry",
       "cran_archived": false,
       "staff_maintained": true
@@ -26,6 +27,7 @@
       "onboarding": "",
       "on_cran": false,
       "on_bioc": false,
+      "type": "experimental",
       "url": "https://github.com/ropenscilabs/makeregistry",
       "cran_archived": false,
       "staff_maintained": true
@@ -41,6 +43,7 @@
       "onboarding": "",
       "on_cran": false,
       "on_bioc": false,
+      "type": "active",
       "url": "https://github.com/ropensci/pkg1",
       "cran_archived": false,
       "staff_maintained": true
@@ -56,7 +59,40 @@
       "onboarding": "",
       "on_cran": false,
       "on_bioc": false,
+      "type": "active",
       "url": "https://github.com/ropensci/otherpkg",
+      "cran_archived": false,
+      "staff_maintained": true
+    },
+    {
+      "name": "pkg1",
+      "description": "Creates JSON registry from cloned repos.",
+      "details": "Creates JSON registry from cloned repos.",
+      "maintainer": "Maëlle Salmon",
+      "keywords": "",
+      "github": "https://github.com/ropensci-archive/pkg1",
+      "status": "https://www.repostatus.org#unsupported",
+      "onboarding": "",
+      "on_cran": false,
+      "on_bioc": false,
+      "type": "archived",
+      "url": "https://github.com/ropensci-archive/pkg1",
+      "cran_archived": false,
+      "staff_maintained": true
+    },
+    {
+      "name": "pkg1",
+      "description": "Creates JSON registry from cloned repos.",
+      "details": "Creates JSON registry from cloned repos.",
+      "maintainer": "Maëlle Salmon",
+      "keywords": "",
+      "github": "https://github.com/ropensci-archive/pkg1",
+      "status": "https://www.repostatus.org#unsupported",
+      "onboarding": "",
+      "on_cran": false,
+      "on_bioc": false,
+      "type": "archived",
+      "url": "https://github.com/ropensci-archive/pkg1",
       "cran_archived": false,
       "staff_maintained": true
     },
@@ -71,6 +107,7 @@
       "onboarding": "",
       "on_cran": false,
       "on_bioc": false,
+      "type": "experimental",
       "url": "https://github.com/ropenscilabs/pkg1",
       "cran_archived": false,
       "staff_maintained": true
@@ -86,6 +123,7 @@
       "onboarding": "",
       "on_cran": false,
       "on_bioc": false,
+      "type": "experimental",
       "url": "https://github.com/ropenscilabs/pkg1",
       "cran_archived": false,
       "staff_maintained": true
