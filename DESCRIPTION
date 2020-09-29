@@ -1,7 +1,7 @@
 Package: makeregistry
 Type: Package
 Title: Creates JSON registry from cloned repos
-Version: 0.1.0.4
+Version: 0.1.0.5
 Description: Creates JSON registry from cloned repos.
 License: MIT + file LICENSE
 Encoding: UTF-8
