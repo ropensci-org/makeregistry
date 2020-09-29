@@ -70,7 +70,7 @@ jobs:
       - name: Check
         run: |
           Sys.setenv(GITHUB_GRAPHQL_TOKEN = "${{secrets.GRAPHQL_TOKEN}}")
-          Sys.setenv(GITHUB_PAT = "${{secrets.MYSECRETTOKEN}}")
+          Sys.setenv(GITHUB_PAT = "${{secrets.GITHUB_TOKEN}}")
           rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
