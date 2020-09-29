@@ -2,6 +2,13 @@ test_that("create_codemeta works", {
   tmp <- tempdir(check = TRUE)
 
   cm <- create_codemetas(folder = testthat::test_path("packages"))
+
+  change_runtimePlatform <- function(cm) {
+    cm$runtimePlatform <- "Rrrr"
+    cm
+  }
+
+  cm <- lapply(cm, change_runtimePlatform)
   jsonlite::write_json(
       cm,
       file.path(tmp, "raw_cm.json"),
@@ -24,7 +31,12 @@ test_that("create_codemeta works", {
       old_cm = file.path(tmp, "raw_cm.json"),
       folder = file.path(tmp, "packages")
     )
+  change_runtimePlatform <- function(cm) {
+    cm$runtimePlatform <- "Rrrr"
+    cm
+  }
 
+  cm2 <- lapply(cm2, change_runtimePlatform)
   jsonlite::write_json(
       cm2,
       file.path(tmp, "cm2.json"),
