@@ -165,6 +165,16 @@ get_cran_archived <- function() {
 }
 is_staff <- is_cran_archived <- function(x, y) x %in% y
 
+get_type <- function(status) {
+  if (grepl("concept", status) || grepl("wip", status)) {
+    return("experimental")
+  }
+  if (grepl("abandoned", status) || grepl("unsupported", status)) {
+    return("archived")
+  }
+  return("active")
+}
+
 #' Title
 #'
 #' @export
@@ -205,19 +215,6 @@ create_registry <- function(cm, outpat, time = Sys.time()) {
 
   website_info$on_bioc <- purrr::map(website_info$name,
                                      get_bioc, bioc_names)
-
-  get_type <- function(status) {
-
-    if(grepl("concept", status)|| grepl("wip", status)) {
-      return("experimental")
-    }
-
-    if(grepl("abandoned", status)|| grepl("unsupported", status)) {
-      return("archived")
-    }
-
-    return("active")
-  }
 
   website_info$type <- purrr::map_chr(website_info$status,
                                       get_type)
