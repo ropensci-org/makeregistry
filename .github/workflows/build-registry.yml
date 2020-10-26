@@ -12,6 +12,7 @@ jobs:
     strategy:
       fail-fast: false
     runs-on: ubuntu-latest
+    container: cran/ubuntu
     env:
       GITHUB_PAT: ${{ secrets.TOKEN2 }}
       GITHUB_GRAPHQL_TOKEN: ${{ secrets.GRAPHQL_TOKEN }}
@@ -19,37 +20,12 @@ jobs:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: false
     steps:
     - uses: actions/checkout@v2
-    - name: Setup Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.7
     - name: Install Ruby gems
-      run: |
-        gem install faraday json octokit
-    - name: Setup R
-      uses: r-lib/actions/setup-r@master
-      with:
-        r-version: release
-    - name: Query R dependencies
-      run: |
-        install.packages('remotes')
-        saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
-        writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
-      shell: Rscript {0}
-    - name: Cache R packages
-      uses: actions/cache@v2
-      with:
-        path: ${{ env.R_LIBS_USER }}
-        key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-        restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
-    - name: Install system dependencies
-      run: |
-        sudo apt update
-        sudo apt install -y libgit2-dev libcurl4-openssl-dev
+      run: apt-get install -y ruby-faraday ruby-json ruby-octokit
     - name: Install R dependencies and makeregistry
       run: |
+        install.packages(c("remotes", "gert", "dplyr", "desc"))
         remotes::install_deps(dependencies = TRUE)
-        remotes::install_cran(c("gert", "dplyr", "desc"))
         remotes::install_local(".")
       shell: Rscript {0}
     - name: Make directories
