@@ -1,6 +1,7 @@
 name: build-packages-file
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
@@ -9,21 +10,17 @@ on:
 
 jobs:
   build:
-    strategy:
-      fail-fast: false
     runs-on: ubuntu-latest
+    container: ubuntu:focal
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       REPO_PAT: ${{ secrets.REPO_PAT }}
     steps:
     - uses: actions/checkout@v2
-    - name: Setup Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.7
-    - name: Install Ruby gems
+    - name: Install dependencies
       run: |
-        gem install faraday json
+        apt-get update
+        apt-get install -y curl git ruby-faraday ruby-json ruby-octokit
     - name: Copy files
       run: |
         cp inst/automation/git_urls.rb .

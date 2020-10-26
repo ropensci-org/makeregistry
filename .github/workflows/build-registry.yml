@@ -1,6 +1,7 @@
 name: build-registry
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
@@ -9,8 +10,6 @@ on:
 
 jobs:
   build:
-    strategy:
-      fail-fast: false
     runs-on: ubuntu-latest
     container: cran/ubuntu
     env:
