@@ -20,7 +20,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install Ruby gems
-      run: apt-get install -y ruby-faraday ruby-json ruby-octokit
+      run: |
+        apt-get update
+        apt-get install -y ruby-faraday ruby-json ruby-octokit
     - name: Install R dependencies and makeregistry
       run: |
         install.packages(c("remotes", "gert", "dplyr", "desc"))
