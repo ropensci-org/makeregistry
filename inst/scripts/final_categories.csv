@@ -324,6 +324,7 @@ taxa,taxonomy,FALSE
 taxadb,taxonomy,FALSE
 taxize,taxonomy,FALSE
 taxizedb,taxonomy,FALSE
+taxlist,taxonomy,FALSE
 taxview,taxonomy,FALSE
 tesseract,image-processing,FALSE
 textreuse,literature,FALSE
