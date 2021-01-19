@@ -13,6 +13,9 @@ def fetch_gh(org, page, per_page = 100)
     req.headers['Authorization'] = 'token ' + ENV['GITHUB_PAT']
     # req.headers['Authorization'] = 'token ' + ENV['GITHUB_PAT_SCOTT']
   end
+  if !resp.success?
+    raise "%s: %s" % [resp.status, resp.reason_phrase]
+  end
   return resp
 end
 
