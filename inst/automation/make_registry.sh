@@ -20,7 +20,7 @@ if [ $? -eq 0 ]; then
   cp ../raw_cm.json .
 
   pkgslength=$(jq .packages ../registry.json | jq length)
-  if [  $pkgslength != 0]; then
+  if [  $pkgslength != 0 ]; then
     # upload new registry files to github
     echo "pushing changes to github"
     git commit -am 'registry.json and raw_cm.json updated'
