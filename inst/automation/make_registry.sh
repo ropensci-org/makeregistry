@@ -26,7 +26,7 @@ if [ $? -eq 0 ]; then
     git commit -am 'registry.json and raw_cm.json updated'
     git push
   else
-    echo "Only" $pkglength "package(s), this is not good. :-("
+    echo "Only $pkglength package(s), this is not good. :-("
     exit 1
   fi
 
