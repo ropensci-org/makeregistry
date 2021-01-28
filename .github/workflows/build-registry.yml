@@ -19,14 +19,10 @@ jobs:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: false
     steps:
     - uses: actions/checkout@v2
-    - name: Install Ruby gems
+    - name: Install Ruby gems and jq
       run: |
         apt-get update
-        apt-get install -y ruby-faraday ruby-json ruby-octokit
-    - name: Install jq
-      run: |
-        apt-get update
-        apt-get install -y jq
+        apt-get install -y ruby-faraday ruby-json ruby-octokit jq
     - name: Install pak
       run: |
         install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
