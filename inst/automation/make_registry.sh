@@ -25,6 +25,9 @@ if [ $? -eq 0 ]; then
     echo "pushing changes to github"
     git commit -am 'registry.json and raw_cm.json updated'
     git push
+  else
+    echo "Only" $pkglength "package(s), this is not good. :-("
+    exit 1
   fi
 
   # cd back to home dir
