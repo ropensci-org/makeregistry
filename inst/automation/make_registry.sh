@@ -25,6 +25,7 @@ if [ $? -eq 0 ]; then
     echo "pushing changes to github"
     git commit -am 'registry.json and raw_cm.json updated'
     git push
+  fi
 
   # cd back to home dir
   cd ..
