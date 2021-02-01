@@ -1,6 +1,12 @@
 library(gert)
 library(dplyr)
 library(desc)
+# used in two places below: 
+# - give NA if action fails to avoid stopping on error
+try_default <- function(x) {
+  z <- tryCatch(x, error = function(e) e)
+  if (inherits(z, "error")) NA_character_ else z
+}
 dirs <- c(
   "repos/other",
   "repos/ropensci",
@@ -15,8 +21,9 @@ each_repo <- function(path) {
       stringsAsFactors = FALSE)
     return(df)
   }
-  name <- desc::desc_get_field("Package", file = desc_file)
-  date <- as.character(gert::git_log(max = 1, repo = path)$time)
+  name <- try_default(desc::desc_get_field("Package", file = desc_file))
+  date <- try_default(gert::git_log(max = 1, repo = path))
+  if (!all(is.na(date))) date <- as.character(date$time)
   data.frame(name = name, date_last_commit = date,
     stringsAsFactors = FALSE)
 }
