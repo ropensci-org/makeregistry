@@ -29,7 +29,7 @@ jobs:
       shell: Rscript {0}
     - name: Install R dependencies
       run: |
-        pak::pkg_install(c("gert", "dplyr", "desc"))
+        pak::pkg_install(c("waldo", "gert", "dplyr", "desc"))
         pak::local_install_dev_deps()
         pak::local_install(".")
       shell: Rscript {0}
