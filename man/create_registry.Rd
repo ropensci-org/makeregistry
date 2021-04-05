@@ -12,6 +12,8 @@ create_registry(cm, outpat, time = Sys.time(), folder = "repos")
 \item{outpat}{Path where to save the JSON}
 
 \item{time}{Time to add at the end}
+
+\item{folder}{folder under which the folders with packages are.}
 }
 \description{
 Title

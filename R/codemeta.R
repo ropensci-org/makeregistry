@@ -49,7 +49,7 @@ create_cm <- memoise::memoise(.create_cm)
 #' Create the codemetas for all files
 #'
 #' @param old_cm path to latest CodeMeta version
-#' @param folder folder under which the
+#' @param folder folder under which the folders with packages are.
 #'
 #' @return A JSON codemeta
 #' @export

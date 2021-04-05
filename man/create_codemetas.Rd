@@ -9,7 +9,7 @@ create_codemetas(old_cm = NULL, folder = "repos")
 \arguments{
 \item{old_cm}{path to latest CodeMeta version}
 
-\item{folder}{folder under which the}
+\item{folder}{folder under which the folders with packages are.}
 }
 \value{
 A JSON codemeta

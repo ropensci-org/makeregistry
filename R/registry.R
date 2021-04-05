@@ -211,6 +211,7 @@ get_type <- function(status) {
 #' @param cm Path to the JSON codemeta
 #' @param outpat Path where to save the JSON
 #' @param time Time to add at the end
+#' @param folder folder under which the folders with packages are.
 #' @importFrom ghql GraphqlClient Query
 #' @importFrom crul HttpClient
 #' @importFrom readr read_csv
