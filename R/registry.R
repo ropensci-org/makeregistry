@@ -179,7 +179,14 @@ is_staff <- function(maintainer, pkg_name, staff, folder = folder) {
 
   path <- path_first_existing(paste0(dir(folder, full.names = TRUE), "/", pkg_name))
 
-  rbuildignore <- try(readLines(file.path(path, ".Rbuildignore")), silent = TRUE)
+  rbuildignore <- suppressWarnings(
+    try(
+      readLines(
+        file.path(path, ".Rbuildignore")
+      ),
+      silent = TRUE
+    )
+  )
 
   if (inherits(rbuildignore, "try-error")) {
     rbuildignore <- ""
