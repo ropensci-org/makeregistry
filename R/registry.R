@@ -165,7 +165,7 @@ get_cran_archived <- function() {
 }
 is_cran_archived <- function(x, y) x %in% y
 
-is_staff <- function(maintainer, pkg_name, staff) {
+is_staff <- function(maintainer, pkg_name, staff, folder = folder) {
   # from pkgdown
   path_first_existing <- function(...) {
   paths <- fs::path(...)
@@ -177,9 +177,13 @@ is_staff <- function(maintainer, pkg_name, staff) {
   NULL
 }
 
-  path <- path_first_existing(paste0(dir("repos"), "/", pkg_name))
+  path <- path_first_existing(paste0(dir(folder), "/", pkg_name))
 
-  rbuildignore <- readLines(file.path(path, ".Rbuildignore"))
+  rbuildignore <- try(readLines(file.path(path, ".Rbuildignore")), silent = TRUE)
+
+  if (inherits(rbuildignore, "try-error")) {
+    rbuildignore <- ""
+  }
 
   ".ropensci" %in% rbuildignore || maintainer %in% staff
 }
@@ -203,7 +207,7 @@ get_type <- function(status) {
 #' @importFrom ghql GraphqlClient Query
 #' @importFrom crul HttpClient
 #' @importFrom readr read_csv
-create_registry <- function(cm, outpat, time = Sys.time()) {
+create_registry <- function(cm, outpat, time = Sys.time(), folder = "repos") {
   registry <- jsonlite::read_json(cm)
   registry <- registry[lengths(registry) > 0]
 
@@ -270,7 +274,8 @@ create_registry <- function(cm, outpat, time = Sys.time()) {
   staff <- readLines(system.file("scripts/staff.csv", package = "makeregistry"),
                      encoding = "UTF-8")
   website_info$staff_maintained <- purrr::map2(
-    website_info$maintainer, website_info$name, is_staff, staff)
+    website_info$maintainer, website_info$name, is_staff, staff,
+    folder = folder)
 
   website_info <- dplyr::rowwise(website_info)
   list(
