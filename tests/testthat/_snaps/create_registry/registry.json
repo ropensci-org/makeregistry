@@ -14,7 +14,7 @@
       "type": "experimental",
       "url": "https://github.com/ropenscilabs/makeregistry",
       "cran_archived": false,
-      "staff_maintained": false
+      "staff_maintained": true
     },
     {
       "name": "pkg2",

@@ -177,7 +177,7 @@ is_staff <- function(maintainer, pkg_name, staff, folder = folder) {
   NULL
 }
 
-  path <- path_first_existing(paste0(dir(folder), "/", pkg_name))
+  path <- path_first_existing(paste0(dir(folder, full.names = TRUE), "/", pkg_name))
 
   rbuildignore <- try(readLines(file.path(path, ".Rbuildignore")), silent = TRUE)
 
