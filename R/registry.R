@@ -168,7 +168,7 @@ is_cran_archived <- function(x, y) x %in% y
 is_staff <- function(maintainer, pkg_name, staff) {
   # from pkgdown
   path_first_existing <- function(...) {
-  paths <- path(...)
+  paths <- fs::path(...)
   for (path in paths) {
     if (file_exists(path))
       return(path)

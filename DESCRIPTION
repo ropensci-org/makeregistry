@@ -27,7 +27,8 @@ Imports:
     ghql,
     crul,
     readr,
-    rlang
+    rlang,
+    fs
 Remotes: 
     ropensci/codemetar@dev,
     r-lib/testthat
