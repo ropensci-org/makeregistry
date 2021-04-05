@@ -7,11 +7,12 @@
     ) {
       old_entry <- old_cm[purrr::map_chr(old_cm, "identifier") == gsub("repos\\/.*\\/", "", pkg)][[1]]
       if (!file.exists(file.path(pkg, "codemeta.json"))) {
-        jsonlite::write_json(old_entry,
-                             path = file.path(pkg, "codemeta.json"),
-                             pretty = TRUE,
-                             auto_unbox = TRUE
-                             )
+        jsonlite::write_json(
+          old_entry,
+          path = file.path(pkg, "codemeta.json"),
+          pretty = TRUE,
+          auto_unbox = TRUE
+        )
         codemeta_written <- TRUE
       }
     } else {
@@ -21,8 +22,14 @@
     old_entry <- NULL
   }
 
-  info <- try(codemetar::create_codemeta(pkg = pkg, verbose = FALSE,
-    force_update = TRUE), silent = TRUE)
+  info <- try(
+    codemetar::create_codemeta(
+      pkg = pkg,
+      verbose = FALSE,
+      force_update = TRUE
+    ),
+    silent = TRUE
+  )
 
   if (codemeta_written) {
     file.remove(file.path(pkg, "codemeta.json"))
@@ -72,7 +79,9 @@ create_codemetas <- function(old_cm = NULL, folder = "repos"){
 
   packages <- dplyr::filter(folders, is_package)
 
-  purrr::map2(packages$folder,
-              packages$org, create_cm,
-              old_cm = old_cm)
+  purrr::map2(
+    packages$folder,
+    packages$org, create_cm,
+    old_cm = old_cm
+  )
 }
