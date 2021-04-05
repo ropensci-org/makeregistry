@@ -170,7 +170,7 @@ is_staff <- function(maintainer, pkg_name, staff) {
   path_first_existing <- function(...) {
   paths <- fs::path(...)
   for (path in paths) {
-    if (file_exists(path))
+    if (fs::file_exists(path))
       return(path)
   }
 
