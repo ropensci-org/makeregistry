@@ -192,7 +192,7 @@ is_staff <- function(maintainer, pkg_name, staff, folder = folder) {
     rbuildignore <- ""
   }
 
-  ".ropensci" %in% rbuildignore || maintainer %in% staff
+  ".ropensci-staff" %in% rbuildignore || maintainer %in% staff
 }
 
 get_type <- function(status) {

@@ -4,7 +4,7 @@
 \alias{create_registry}
 \title{Title}
 \usage{
-create_registry(cm, outpat, time = Sys.time())
+create_registry(cm, outpat, time = Sys.time(), folder = "repos")
 }
 \arguments{
 \item{cm}{Path to the JSON codemeta}
