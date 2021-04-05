@@ -163,7 +163,26 @@ get_cran_archived <- function() {
   w <- tibble::as_tibble(jsonlite::fromJSON(z$parse("UTF-8"))$package)
   dplyr::select(w, .data$Package, .data$Type)
 }
-is_staff <- is_cran_archived <- function(x, y) x %in% y
+is_cran_archived <- function(x, y) x %in% y
+
+is_staff <- function(maintainer, pkg_name, staff) {
+  # from pkgdown
+  path_first_existing <- function(...) {
+  paths <- path(...)
+  for (path in paths) {
+    if (file_exists(path))
+      return(path)
+  }
+
+  NULL
+}
+
+  path <- path_first_existing(paste0(dir("repos"), "/", pkgname))
+
+  rbuildignore <- readLines(file.path(path, ".Rbuildignore"))
+
+  ".ropensci" %in% rbuildignore || maintainer %in% staff
+}
 
 get_type <- function(status) {
   if (grepl("concept", status) || grepl("wip", status)) {
@@ -250,8 +269,8 @@ create_registry <- function(cm, outpat, time = Sys.time()) {
   # staff maintained?
   staff <- readLines(system.file("scripts/staff.csv", package = "makeregistry"),
                      encoding = "UTF-8")
-  website_info$staff_maintained <- purrr::map(
-    website_info$maintainer, is_staff, staff)
+  website_info$staff_maintained <- purrr::map2(
+    website_info$maintainer, website_info$name, is_staff, staff)
 
   website_info <- dplyr::rowwise(website_info)
   list(
