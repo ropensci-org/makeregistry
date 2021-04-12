@@ -2,7 +2,7 @@
 get_review <- function(entry) {
   if (!is.null(entry$review)) {
     if (grepl("ropensci\\/onboarding|ropensci\\/software-review",
-              entry$review$url)
+      entry$review$url)
     ) {
       entry$review$url
     } else {
@@ -20,7 +20,7 @@ get_maintainer <- function(entry) {
   } else {
     if (length(maintainer$givenName) > 1) {
       maintainer$givenName <- paste(maintainer$givenName[1],
-                                    maintainer$givenName[2])
+        maintainer$givenName[2])
     }
     paste(maintainer$givenName, maintainer$familyName)
   }
@@ -57,7 +57,7 @@ get_status <- function(entry) {
     status <- guess_status(entry)
   }
   status <- gsub("http(s)?\\:\\/\\/www\\.repostatus\\.org\\/\\#",
-                 "https://www.repostatus.org#", status)
+    "https://www.repostatus.org#", status)
   return(status)
 }
 
@@ -168,14 +168,14 @@ is_cran_archived <- function(x, y) x %in% y
 is_staff <- function(maintainer, pkg_name, staff, folder = folder) {
   # from pkgdown
   path_first_existing <- function(...) {
-  paths <- fs::path(...)
-  for (path in paths) {
-    if (fs::file_exists(path))
-      return(path)
-  }
+    paths <- fs::path(...)
+    for (path in paths) {
+      if (fs::file_exists(path))
+        return(path)
+    }
 
-  NULL
-}
+    NULL
+  }
 
   path <- path_first_existing(paste0(dir(folder, full.names = TRUE), "/", pkg_name))
 
@@ -242,13 +242,13 @@ create_registry <- function(cm, outpat, time = Sys.time(), folder = "repos") {
   bioc_names <- rownames(available_packages(repos = repos))
 
   website_info$on_cran <- purrr::map(website_info$name,
-                                     get_cran, cran)
+    get_cran, cran)
 
   website_info$on_bioc <- purrr::map(website_info$name,
-                                     get_bioc, bioc_names)
+    get_bioc, bioc_names)
 
   website_info$type <- purrr::map_chr(website_info$status,
-                                      get_type)
+    get_type)
 
   website_info$url <- website_info$github
 
@@ -258,7 +258,7 @@ create_registry <- function(cm, outpat, time = Sys.time(), folder = "repos") {
   # add categories
   category_info <- readr::read_csv(
     system.file(file.path("scripts", "final_categories.csv"),
-                package = "makeregistry"))
+      package = "makeregistry"))
   website_info <- dplyr::left_join(website_info, category_info, by = "name")
 
   # add last commit dates
@@ -280,7 +280,7 @@ create_registry <- function(cm, outpat, time = Sys.time(), folder = "repos") {
 
   # staff maintained?
   staff <- readLines(system.file("scripts/staff.csv", package = "makeregistry"),
-                     encoding = "UTF-8")
+    encoding = "UTF-8")
   website_info$staff_maintained <- purrr::map2(
     website_info$maintainer, website_info$name, is_staff, staff,
     folder = folder)
