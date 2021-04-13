@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     container: ubuntu:focal
     env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_PAT: ${{ secrets.GRAPHQL_TOKEN }}
       REPO_PAT: ${{ secrets.GRAPHQL_TOKEN }}
     steps:
     - uses: actions/checkout@v2
