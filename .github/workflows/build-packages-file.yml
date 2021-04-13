@@ -27,7 +27,7 @@ jobs:
         cp inst/automation/git_urls.sh .
     - name: Make packages.json
       run: |
-        git config --global user.email "myrmecocystus+ropenscibot@gmail.com"
-        git config --global user.name "ropenscibot"
+        git config --global user.email "maelle.salmon@yahoo.se"
+        git config --global user.name "maelle"
         bash git_urls.sh
         head packages.json
