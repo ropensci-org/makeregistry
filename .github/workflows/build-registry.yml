@@ -15,7 +15,7 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.TOKEN2 }}
       GITHUB_GRAPHQL_TOKEN: ${{ secrets.GRAPHQL_TOKEN }}
-      REPO_PAT: ${{ secrets.REPO_PAT }}
+      REPO_PAT: ${{ secrets.GRAPHQL_TOKEN }}
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: false
     steps:
     - uses: actions/checkout@v2
@@ -58,6 +58,6 @@ jobs:
         head last_commits.csv
     - name: Make registry, push to roregistry
       run: |
-        git config --global user.email "myrmecocystus+ropenscibot@gmail.com"
-        git config --global user.name "ropenscibot"
+        git config --global user.email "maelle.salmon@yahoo.se"
+        git config --global user.name "maelle"
         sh make_registry.sh
