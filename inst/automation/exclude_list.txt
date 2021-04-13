@@ -224,3 +224,7 @@ tpl-sqlite
 statistical-software-review
 statistical-software-review-book
 review-robot-test
+commcalls
+legacy
+testprivate
+ropensci.github.io
