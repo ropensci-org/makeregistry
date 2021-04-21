@@ -166,6 +166,11 @@ get_cran_archived <- function() {
 is_cran_archived <- function(x, y) x %in% y
 
 is_staff <- function(maintainer, pkg_name, staff, folder = folder) {
+
+  if (maintainer %in% staff) {
+    return(TRUE)
+  }
+
   # from pkgdown
   path_first_existing <- function(...) {
     paths <- fs::path(...)
@@ -178,21 +183,12 @@ is_staff <- function(maintainer, pkg_name, staff, folder = folder) {
   }
 
   path <- path_first_existing(paste0(dir(folder, full.names = TRUE), "/", pkg_name))
-
-  rbuildignore <- suppressWarnings(
-    try(
-      readLines(
-        file.path(path, ".Rbuildignore")
-      ),
-      silent = TRUE
-    )
-  )
-
-  if (inherits(rbuildignore, "try-error")) {
-    rbuildignore <- ""
+  rbuildignore <- file.path(path, ".Rbuildignore")
+  if (file.exists(rbuildignore)) {
+    return(any(grepl("^.ropensci-staff$", readLines(rbuildignore))))
   }
 
-  ".ropensci-staff" %in% rbuildignore || maintainer %in% staff
+  return(FALSE)
 }
 
 get_type <- function(status) {
