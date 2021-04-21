@@ -2,7 +2,7 @@
 get_review <- function(entry) {
   if (!is.null(entry$review)) {
     if (grepl("ropensci\\/onboarding|ropensci\\/software-review",
-              entry$review$url)
+      entry$review$url)
     ) {
       entry$review$url
     } else {
@@ -20,7 +20,7 @@ get_maintainer <- function(entry) {
   } else {
     if (length(maintainer$givenName) > 1) {
       maintainer$givenName <- paste(maintainer$givenName[1],
-                                    maintainer$givenName[2])
+        maintainer$givenName[2])
     }
     paste(maintainer$givenName, maintainer$familyName)
   }
@@ -57,7 +57,7 @@ get_status <- function(entry) {
     status <- guess_status(entry)
   }
   status <- gsub("http(s)?\\:\\/\\/www\\.repostatus\\.org\\/\\#",
-                 "https://www.repostatus.org#", status)
+    "https://www.repostatus.org#", status)
   return(status)
 }
 
@@ -163,7 +163,33 @@ get_cran_archived <- function() {
   w <- tibble::as_tibble(jsonlite::fromJSON(z$parse("UTF-8"))$package)
   dplyr::select(w, .data$Package, .data$Type)
 }
-is_staff <- is_cran_archived <- function(x, y) x %in% y
+is_cran_archived <- function(x, y) x %in% y
+
+is_staff <- function(maintainer, pkg_name, staff, folder = folder) {
+
+  if (maintainer %in% staff) {
+    return(TRUE)
+  }
+
+  # from pkgdown
+  path_first_existing <- function(...) {
+    paths <- fs::path(...)
+    for (path in paths) {
+      if (fs::file_exists(path))
+        return(path)
+    }
+
+    NULL
+  }
+
+  path <- path_first_existing(paste0(dir(folder, full.names = TRUE), "/", pkg_name))
+  rbuildignore <- file.path(path, ".Rbuildignore")
+  if (file.exists(rbuildignore)) {
+    return(any(grepl("^.ropensci-staff$", readLines(rbuildignore))))
+  }
+
+  return(FALSE)
+}
 
 get_type <- function(status) {
   if (grepl("concept", status) || grepl("wip", status)) {
@@ -181,10 +207,11 @@ get_type <- function(status) {
 #' @param cm Path to the JSON codemeta
 #' @param outpat Path where to save the JSON
 #' @param time Time to add at the end
+#' @param folder folder under which the folders with packages are.
 #' @importFrom ghql GraphqlClient Query
 #' @importFrom crul HttpClient
 #' @importFrom readr read_csv
-create_registry <- function(cm, outpat, time = Sys.time()) {
+create_registry <- function(cm, outpat, time = Sys.time(), folder = "repos") {
   registry <- jsonlite::read_json(cm)
   registry <- registry[lengths(registry) > 0]
 
@@ -211,13 +238,13 @@ create_registry <- function(cm, outpat, time = Sys.time()) {
   bioc_names <- rownames(available_packages(repos = repos))
 
   website_info$on_cran <- purrr::map(website_info$name,
-                                     get_cran, cran)
+    get_cran, cran)
 
   website_info$on_bioc <- purrr::map(website_info$name,
-                                     get_bioc, bioc_names)
+    get_bioc, bioc_names)
 
   website_info$type <- purrr::map_chr(website_info$status,
-                                      get_type)
+    get_type)
 
   website_info$url <- website_info$github
 
@@ -227,7 +254,7 @@ create_registry <- function(cm, outpat, time = Sys.time()) {
   # add categories
   category_info <- readr::read_csv(
     system.file(file.path("scripts", "final_categories.csv"),
-                package = "makeregistry"))
+      package = "makeregistry"))
   website_info <- dplyr::left_join(website_info, category_info, by = "name")
 
   # add last commit dates
@@ -249,9 +276,10 @@ create_registry <- function(cm, outpat, time = Sys.time()) {
 
   # staff maintained?
   staff <- readLines(system.file("scripts/staff.csv", package = "makeregistry"),
-                     encoding = "UTF-8")
-  website_info$staff_maintained <- purrr::map(
-    website_info$maintainer, is_staff, staff)
+    encoding = "UTF-8")
+  website_info$staff_maintained <- purrr::map2(
+    website_info$maintainer, website_info$name, is_staff, staff,
+    folder = folder)
 
   website_info <- dplyr::rowwise(website_info)
   list(

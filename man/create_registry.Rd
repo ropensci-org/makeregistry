@@ -4,7 +4,7 @@
 \alias{create_registry}
 \title{Title}
 \usage{
-create_registry(cm, outpat, time = Sys.time())
+create_registry(cm, outpat, time = Sys.time(), folder = "repos")
 }
 \arguments{
 \item{cm}{Path to the JSON codemeta}
@@ -12,6 +12,8 @@ create_registry(cm, outpat, time = Sys.time())
 \item{outpat}{Path where to save the JSON}
 
 \item{time}{Time to add at the end}
+
+\item{folder}{folder under which the folders with packages are.}
 }
 \description{
 Title
