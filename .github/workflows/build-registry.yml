@@ -58,6 +58,6 @@ jobs:
         head last_commits.csv
     - name: Make registry, push to roregistry
       run: |
-        git config --global user.email "maelle.salmon@yahoo.se"
-        git config --global user.name "maelle"
+        git config --global user.email "accounts@ropensci.org"
+        git config --global user.name "ropensci-review-bot"
         sh make_registry.sh
