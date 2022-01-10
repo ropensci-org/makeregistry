@@ -1,6 +1,6 @@
 [
   {
-    "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+    "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
     "@type": "SoftwareSourceCode",
     "identifier": "blabla",
     "description": "Creates JSON registry from cloned repos.",
@@ -24,8 +24,6 @@
         "@id": "https://orcid.org/0000-0002-2815-0399"
       }
     ],
-    "contributor": {},
-    "copyrightHolder": {},
     "funder": [
       {
         "@type": "Organization",
@@ -55,13 +53,20 @@
         "sameAs": "https://CRAN.R-project.org/package=testthat"
       }
     ],
-    "softwareRequirements": [
-      {
+    "softwareRequirements": {
+      "1": {
         "@type": "SoftwareApplication",
         "identifier": "codemetar",
-        "name": "codemetar"
+        "name": "codemetar",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=codemetar"
       },
-      {
+      "2": {
         "@type": "SoftwareApplication",
         "identifier": "magrittr",
         "name": "magrittr",
@@ -73,7 +78,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=magrittr"
       },
-      {
+      "3": {
         "@type": "SoftwareApplication",
         "identifier": "memoise",
         "name": "memoise",
@@ -85,7 +90,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=memoise"
       },
-      {
+      "4": {
         "@type": "SoftwareApplication",
         "identifier": "jsonlite",
         "name": "jsonlite",
@@ -98,7 +103,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=jsonlite"
       },
-      {
+      "5": {
         "@type": "SoftwareApplication",
         "identifier": "dplyr",
         "name": "dplyr",
@@ -110,7 +115,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=dplyr"
       },
-      {
+      "6": {
         "@type": "SoftwareApplication",
         "identifier": "tibble",
         "name": "tibble",
@@ -122,7 +127,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=tibble"
       },
-      {
+      "7": {
         "@type": "SoftwareApplication",
         "identifier": "purrr",
         "name": "purrr",
@@ -134,7 +139,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=purrr"
       },
-      {
+      "8": {
         "@type": "SoftwareApplication",
         "identifier": "glue",
         "name": "glue",
@@ -145,13 +150,15 @@
           "url": "https://cran.r-project.org"
         },
         "sameAs": "https://CRAN.R-project.org/package=glue"
-      }
-    ],
+      },
+      "SystemRequirements": null
+    },
+    "fileSize": "0KB",
     "readme": "https://github.com/ropensci-org/makeregistry/blob/master/README.md",
     "keywords": ["r", "r-package", "rstats"]
   },
   {
-    "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+    "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
     "@type": "SoftwareSourceCode",
     "identifier": "pkg2",
     "description": "Creates JSON registry from cloned repos.",
@@ -175,8 +182,6 @@
         "@id": "https://orcid.org/0000-0002-2815-0399"
       }
     ],
-    "contributor": {},
-    "copyrightHolder": {},
     "funder": [
       {
         "@type": "Organization",
@@ -206,13 +211,20 @@
         "sameAs": "https://CRAN.R-project.org/package=testthat"
       }
     ],
-    "softwareRequirements": [
-      {
+    "softwareRequirements": {
+      "1": {
         "@type": "SoftwareApplication",
         "identifier": "codemetar",
-        "name": "codemetar"
+        "name": "codemetar",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=codemetar"
       },
-      {
+      "2": {
         "@type": "SoftwareApplication",
         "identifier": "magrittr",
         "name": "magrittr",
@@ -224,7 +236,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=magrittr"
       },
-      {
+      "3": {
         "@type": "SoftwareApplication",
         "identifier": "memoise",
         "name": "memoise",
@@ -236,7 +248,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=memoise"
       },
-      {
+      "4": {
         "@type": "SoftwareApplication",
         "identifier": "jsonlite",
         "name": "jsonlite",
@@ -249,7 +261,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=jsonlite"
       },
-      {
+      "5": {
         "@type": "SoftwareApplication",
         "identifier": "dplyr",
         "name": "dplyr",
@@ -261,7 +273,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=dplyr"
       },
-      {
+      "6": {
         "@type": "SoftwareApplication",
         "identifier": "tibble",
         "name": "tibble",
@@ -273,7 +285,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=tibble"
       },
-      {
+      "7": {
         "@type": "SoftwareApplication",
         "identifier": "purrr",
         "name": "purrr",
@@ -285,7 +297,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=purrr"
       },
-      {
+      "8": {
         "@type": "SoftwareApplication",
         "identifier": "glue",
         "name": "glue",
@@ -296,13 +308,15 @@
           "url": "https://cran.r-project.org"
         },
         "sameAs": "https://CRAN.R-project.org/package=glue"
-      }
-    ],
+      },
+      "SystemRequirements": null
+    },
+    "fileSize": "0KB",
     "readme": "https://github.com/ropensci-org/makeregistry/blob/master/README.md",
     "keywords": ["r", "r-package", "rstats"]
   },
   {
-    "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+    "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
     "@type": "SoftwareSourceCode",
     "identifier": "otherpkg",
     "description": "Creates JSON registry from cloned repos.",
@@ -326,8 +340,6 @@
         "@id": "https://orcid.org/0000-0002-2815-0399"
       }
     ],
-    "contributor": {},
-    "copyrightHolder": {},
     "funder": [
       {
         "@type": "Organization",
@@ -357,13 +369,20 @@
         "sameAs": "https://CRAN.R-project.org/package=testthat"
       }
     ],
-    "softwareRequirements": [
-      {
+    "softwareRequirements": {
+      "1": {
         "@type": "SoftwareApplication",
         "identifier": "codemetar",
-        "name": "codemetar"
+        "name": "codemetar",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=codemetar"
       },
-      {
+      "2": {
         "@type": "SoftwareApplication",
         "identifier": "magrittr",
         "name": "magrittr",
@@ -375,7 +394,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=magrittr"
       },
-      {
+      "3": {
         "@type": "SoftwareApplication",
         "identifier": "memoise",
         "name": "memoise",
@@ -387,7 +406,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=memoise"
       },
-      {
+      "4": {
         "@type": "SoftwareApplication",
         "identifier": "jsonlite",
         "name": "jsonlite",
@@ -400,7 +419,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=jsonlite"
       },
-      {
+      "5": {
         "@type": "SoftwareApplication",
         "identifier": "dplyr",
         "name": "dplyr",
@@ -412,7 +431,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=dplyr"
       },
-      {
+      "6": {
         "@type": "SoftwareApplication",
         "identifier": "tibble",
         "name": "tibble",
@@ -424,7 +443,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=tibble"
       },
-      {
+      "7": {
         "@type": "SoftwareApplication",
         "identifier": "purrr",
         "name": "purrr",
@@ -436,7 +455,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=purrr"
       },
-      {
+      "8": {
         "@type": "SoftwareApplication",
         "identifier": "glue",
         "name": "glue",
@@ -447,13 +466,15 @@
           "url": "https://cran.r-project.org"
         },
         "sameAs": "https://CRAN.R-project.org/package=glue"
-      }
-    ],
+      },
+      "SystemRequirements": null
+    },
+    "fileSize": "0KB",
     "readme": "https://github.com/ropensci-org/makeregistry/blob/master/README.md",
     "keywords": ["r", "r-package", "rstats"]
   },
   {
-    "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+    "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
     "@type": "SoftwareSourceCode",
     "identifier": "pkg1",
     "description": "Creates JSON registry from cloned repos.",
@@ -477,8 +498,6 @@
         "@id": "https://orcid.org/0000-0002-2815-0399"
       }
     ],
-    "contributor": {},
-    "copyrightHolder": {},
     "funder": [
       {
         "@type": "Organization",
@@ -508,13 +527,20 @@
         "sameAs": "https://CRAN.R-project.org/package=testthat"
       }
     ],
-    "softwareRequirements": [
-      {
+    "softwareRequirements": {
+      "1": {
         "@type": "SoftwareApplication",
         "identifier": "codemetar",
-        "name": "codemetar"
+        "name": "codemetar",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=codemetar"
       },
-      {
+      "2": {
         "@type": "SoftwareApplication",
         "identifier": "magrittr",
         "name": "magrittr",
@@ -526,7 +552,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=magrittr"
       },
-      {
+      "3": {
         "@type": "SoftwareApplication",
         "identifier": "memoise",
         "name": "memoise",
@@ -538,7 +564,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=memoise"
       },
-      {
+      "4": {
         "@type": "SoftwareApplication",
         "identifier": "jsonlite",
         "name": "jsonlite",
@@ -551,7 +577,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=jsonlite"
       },
-      {
+      "5": {
         "@type": "SoftwareApplication",
         "identifier": "dplyr",
         "name": "dplyr",
@@ -563,7 +589,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=dplyr"
       },
-      {
+      "6": {
         "@type": "SoftwareApplication",
         "identifier": "tibble",
         "name": "tibble",
@@ -575,7 +601,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=tibble"
       },
-      {
+      "7": {
         "@type": "SoftwareApplication",
         "identifier": "purrr",
         "name": "purrr",
@@ -587,7 +613,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=purrr"
       },
-      {
+      "8": {
         "@type": "SoftwareApplication",
         "identifier": "glue",
         "name": "glue",
@@ -598,13 +624,15 @@
           "url": "https://cran.r-project.org"
         },
         "sameAs": "https://CRAN.R-project.org/package=glue"
-      }
-    ],
+      },
+      "SystemRequirements": null
+    },
+    "fileSize": "0KB",
     "readme": "https://github.com/ropensci-org/makeregistry/blob/master/README.md",
     "keywords": ["r", "r-package", "rstats"]
   },
   {
-    "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+    "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
     "@type": "SoftwareSourceCode",
     "identifier": "pkg1",
     "description": "Creates JSON registry from cloned repos.",
@@ -628,8 +656,6 @@
         "@id": "https://orcid.org/0000-0002-2815-0399"
       }
     ],
-    "contributor": {},
-    "copyrightHolder": {},
     "funder": [
       {
         "@type": "Organization",
@@ -659,13 +685,20 @@
         "sameAs": "https://CRAN.R-project.org/package=testthat"
       }
     ],
-    "softwareRequirements": [
-      {
+    "softwareRequirements": {
+      "1": {
         "@type": "SoftwareApplication",
         "identifier": "codemetar",
-        "name": "codemetar"
+        "name": "codemetar",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=codemetar"
       },
-      {
+      "2": {
         "@type": "SoftwareApplication",
         "identifier": "magrittr",
         "name": "magrittr",
@@ -677,7 +710,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=magrittr"
       },
-      {
+      "3": {
         "@type": "SoftwareApplication",
         "identifier": "memoise",
         "name": "memoise",
@@ -689,7 +722,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=memoise"
       },
-      {
+      "4": {
         "@type": "SoftwareApplication",
         "identifier": "jsonlite",
         "name": "jsonlite",
@@ -702,7 +735,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=jsonlite"
       },
-      {
+      "5": {
         "@type": "SoftwareApplication",
         "identifier": "dplyr",
         "name": "dplyr",
@@ -714,7 +747,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=dplyr"
       },
-      {
+      "6": {
         "@type": "SoftwareApplication",
         "identifier": "tibble",
         "name": "tibble",
@@ -726,7 +759,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=tibble"
       },
-      {
+      "7": {
         "@type": "SoftwareApplication",
         "identifier": "purrr",
         "name": "purrr",
@@ -738,7 +771,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=purrr"
       },
-      {
+      "8": {
         "@type": "SoftwareApplication",
         "identifier": "glue",
         "name": "glue",
@@ -749,13 +782,15 @@
           "url": "https://cran.r-project.org"
         },
         "sameAs": "https://CRAN.R-project.org/package=glue"
-      }
-    ],
+      },
+      "SystemRequirements": null
+    },
+    "fileSize": "0KB",
     "readme": "https://github.com/ropensci-org/makeregistry/blob/master/README.md",
     "keywords": ["r", "r-package", "rstats"]
   },
   {
-    "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+    "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
     "@type": "SoftwareSourceCode",
     "identifier": "pkg1",
     "description": "Creates JSON registry from cloned repos.",
@@ -779,8 +814,6 @@
         "@id": "https://orcid.org/0000-0002-2815-0399"
       }
     ],
-    "contributor": {},
-    "copyrightHolder": {},
     "funder": [
       {
         "@type": "Organization",
@@ -810,13 +843,20 @@
         "sameAs": "https://CRAN.R-project.org/package=testthat"
       }
     ],
-    "softwareRequirements": [
-      {
+    "softwareRequirements": {
+      "1": {
         "@type": "SoftwareApplication",
         "identifier": "codemetar",
-        "name": "codemetar"
+        "name": "codemetar",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=codemetar"
       },
-      {
+      "2": {
         "@type": "SoftwareApplication",
         "identifier": "magrittr",
         "name": "magrittr",
@@ -828,7 +868,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=magrittr"
       },
-      {
+      "3": {
         "@type": "SoftwareApplication",
         "identifier": "memoise",
         "name": "memoise",
@@ -840,7 +880,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=memoise"
       },
-      {
+      "4": {
         "@type": "SoftwareApplication",
         "identifier": "jsonlite",
         "name": "jsonlite",
@@ -853,7 +893,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=jsonlite"
       },
-      {
+      "5": {
         "@type": "SoftwareApplication",
         "identifier": "dplyr",
         "name": "dplyr",
@@ -865,7 +905,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=dplyr"
       },
-      {
+      "6": {
         "@type": "SoftwareApplication",
         "identifier": "tibble",
         "name": "tibble",
@@ -877,7 +917,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=tibble"
       },
-      {
+      "7": {
         "@type": "SoftwareApplication",
         "identifier": "purrr",
         "name": "purrr",
@@ -889,7 +929,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=purrr"
       },
-      {
+      "8": {
         "@type": "SoftwareApplication",
         "identifier": "glue",
         "name": "glue",
@@ -900,13 +940,15 @@
           "url": "https://cran.r-project.org"
         },
         "sameAs": "https://CRAN.R-project.org/package=glue"
-      }
-    ],
+      },
+      "SystemRequirements": null
+    },
+    "fileSize": "0KB",
     "readme": "https://github.com/ropensci-org/makeregistry/blob/master/README.md",
     "keywords": ["r", "r-package", "rstats"]
   },
   {
-    "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+    "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
     "@type": "SoftwareSourceCode",
     "identifier": "pkg1",
     "description": "Creates JSON registry from cloned repos.",
@@ -930,8 +972,6 @@
         "@id": "https://orcid.org/0000-0002-2815-0399"
       }
     ],
-    "contributor": {},
-    "copyrightHolder": {},
     "funder": [
       {
         "@type": "Organization",
@@ -961,13 +1001,20 @@
         "sameAs": "https://CRAN.R-project.org/package=testthat"
       }
     ],
-    "softwareRequirements": [
-      {
+    "softwareRequirements": {
+      "1": {
         "@type": "SoftwareApplication",
         "identifier": "codemetar",
-        "name": "codemetar"
+        "name": "codemetar",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=codemetar"
       },
-      {
+      "2": {
         "@type": "SoftwareApplication",
         "identifier": "magrittr",
         "name": "magrittr",
@@ -979,7 +1026,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=magrittr"
       },
-      {
+      "3": {
         "@type": "SoftwareApplication",
         "identifier": "memoise",
         "name": "memoise",
@@ -991,7 +1038,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=memoise"
       },
-      {
+      "4": {
         "@type": "SoftwareApplication",
         "identifier": "jsonlite",
         "name": "jsonlite",
@@ -1004,7 +1051,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=jsonlite"
       },
-      {
+      "5": {
         "@type": "SoftwareApplication",
         "identifier": "dplyr",
         "name": "dplyr",
@@ -1016,7 +1063,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=dplyr"
       },
-      {
+      "6": {
         "@type": "SoftwareApplication",
         "identifier": "tibble",
         "name": "tibble",
@@ -1028,7 +1075,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=tibble"
       },
-      {
+      "7": {
         "@type": "SoftwareApplication",
         "identifier": "purrr",
         "name": "purrr",
@@ -1040,7 +1087,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=purrr"
       },
-      {
+      "8": {
         "@type": "SoftwareApplication",
         "identifier": "glue",
         "name": "glue",
@@ -1051,13 +1098,15 @@
           "url": "https://cran.r-project.org"
         },
         "sameAs": "https://CRAN.R-project.org/package=glue"
-      }
-    ],
+      },
+      "SystemRequirements": null
+    },
+    "fileSize": "0KB",
     "readme": "https://github.com/ropensci-org/makeregistry/blob/master/README.md",
     "keywords": ["r", "r-package", "rstats"]
   },
   {
-    "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+    "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
     "@type": "SoftwareSourceCode",
     "identifier": "pkg1",
     "description": "Creates JSON registry from cloned repos.",
@@ -1081,8 +1130,6 @@
         "@id": "https://orcid.org/0000-0002-2815-0399"
       }
     ],
-    "contributor": {},
-    "copyrightHolder": {},
     "funder": [
       {
         "@type": "Organization",
@@ -1112,13 +1159,20 @@
         "sameAs": "https://CRAN.R-project.org/package=testthat"
       }
     ],
-    "softwareRequirements": [
-      {
+    "softwareRequirements": {
+      "1": {
         "@type": "SoftwareApplication",
         "identifier": "codemetar",
-        "name": "codemetar"
+        "name": "codemetar",
+        "provider": {
+          "@id": "https://cran.r-project.org",
+          "@type": "Organization",
+          "name": "Comprehensive R Archive Network (CRAN)",
+          "url": "https://cran.r-project.org"
+        },
+        "sameAs": "https://CRAN.R-project.org/package=codemetar"
       },
-      {
+      "2": {
         "@type": "SoftwareApplication",
         "identifier": "magrittr",
         "name": "magrittr",
@@ -1130,7 +1184,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=magrittr"
       },
-      {
+      "3": {
         "@type": "SoftwareApplication",
         "identifier": "memoise",
         "name": "memoise",
@@ -1142,7 +1196,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=memoise"
       },
-      {
+      "4": {
         "@type": "SoftwareApplication",
         "identifier": "jsonlite",
         "name": "jsonlite",
@@ -1155,7 +1209,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=jsonlite"
       },
-      {
+      "5": {
         "@type": "SoftwareApplication",
         "identifier": "dplyr",
         "name": "dplyr",
@@ -1167,7 +1221,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=dplyr"
       },
-      {
+      "6": {
         "@type": "SoftwareApplication",
         "identifier": "tibble",
         "name": "tibble",
@@ -1179,7 +1233,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=tibble"
       },
-      {
+      "7": {
         "@type": "SoftwareApplication",
         "identifier": "purrr",
         "name": "purrr",
@@ -1191,7 +1245,7 @@
         },
         "sameAs": "https://CRAN.R-project.org/package=purrr"
       },
-      {
+      "8": {
         "@type": "SoftwareApplication",
         "identifier": "glue",
         "name": "glue",
@@ -1202,8 +1256,10 @@
           "url": "https://cran.r-project.org"
         },
         "sameAs": "https://CRAN.R-project.org/package=glue"
-      }
-    ],
+      },
+      "SystemRequirements": null
+    },
+    "fileSize": "0KB",
     "readme": "https://github.com/ropensci-org/makeregistry/blob/master/README.md",
     "keywords": ["r", "r-package", "rstats"]
   }
