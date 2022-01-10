@@ -62,7 +62,7 @@ allres.each { |repo|
     "package" => repo["name"],
     "url" => repo["html_url"],
     "branch" => repo["default_branch"]
-  } unless repo["archived"] || ex.include?(repo["name"])
+  } unless repo["archived"] || repo["fork"] || ex.include?(repo["name"])
 }
 
 # add other repos (those repos not in ropensci or ropenscilabs)

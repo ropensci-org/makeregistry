@@ -12,3 +12,5 @@ https://github.com/ropensci-review-tools/pkgstats
 https://github.com/ropensci-review-tools/pkgcheck
 https://github.com/ropensci-review-tools/srr
 https://github.com/ropensci-review-tools/roreviewapi
+https://github.com/ropensci/baRcodeR
+https://github.com/ropensci/redland-bindings
