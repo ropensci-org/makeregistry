@@ -10,6 +10,7 @@ pkgstats,scalereprod,FALSE
 roblog,scalereprod,TRUE
 rodev,scalereprod,FALSE
 roreviewapi,scalereprod,FALSE
+rotemplate,NA,FALSE
 srr,scalereprod,FALSE
 treeio,data-extraction,FALSE
 addressable,geospatial,FALSE
@@ -55,6 +56,7 @@ cld2,literature,FALSE
 cld3,literature,FALSE
 cleanEHR,data-extraction,FALSE
 clifro,data-access,FALSE
+climatrends,scalereprod,FALSE
 codemetar,data-publication,FALSE
 coder,data-extraction,FALSE
 colocr,data-extraction,FALSE
@@ -116,7 +118,6 @@ historydata,data-access,FALSE
 hoardr,scalereprod,FALSE
 hunspell,literature,FALSE
 hydroscoper,data-access,FALSE
-IEEER,literature,FALSE
 iheatmapr,data-visualization,FALSE
 ijtiff,image-processing,FALSE
 infx,data-access,FALSE
@@ -319,7 +320,6 @@ weathercan,data-access,FALSE
 webchem,data-access,FALSE
 webmockr,http-tools,FALSE
 wellknown,geospatial,FALSE
-wicket,geospatial,FALSE
 wikitaxa,taxonomy,FALSE
 workloopR,data-extraction,FALSE
 worrms,taxonomy,FALSE
