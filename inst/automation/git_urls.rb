@@ -81,6 +81,10 @@ others.map { |e|
   else
     e["branch"] = gh_default_branch(e["url"].gsub(/https:\/\/github.com\/|\.git/, ""))
   end
+  if e["url"].match?(/redland-bindings/)
+    e["package"] = "redland"
+    e["subdir"] = "R/redland"
+  end
 }
 # combine
 out.concat others
