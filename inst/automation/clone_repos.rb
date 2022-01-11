@@ -21,5 +21,5 @@ out.flatten!;
 # clone repos
 out.each { |repo|
   puts repo["name"]
-  %x[git clone --depth 1 #{repo["html_url"]}] unless File.directory?(repo["name"]) || repo["archived"] || ex.include?(repo["name"])
+  %x[git clone --depth 1 #{repo["html_url"]}] unless File.directory?(repo["name"]) || repo["archived"] || repo["fork"] || ex.include?(repo["name"])
 }
