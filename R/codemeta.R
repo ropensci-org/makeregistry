@@ -1,9 +1,9 @@
-.create_cm <- function(pkg, org, old_cm) {
+.create_cm <- function(pkg, org, old_cm, path) {
   codemeta_written <- FALSE
   if (!is.null(old_cm)) {
     if (
       length(old_cm[purrr::map_chr(old_cm, "identifier") ==
-      gsub("repos\\/.*\\/", "", pkg)]) > 0
+      gsub(sprintf("%s\\/.*\\/", path), "", pkg)]) > 0
     ) {
       old_entry <- old_cm[purrr::map_chr(old_cm, "identifier") == gsub("repos\\/.*\\/", "", pkg)][[1]]
       if (!file.exists(file.path(pkg, "codemeta.json"))) {
@@ -55,7 +55,7 @@ create_cm <- memoise::memoise(.create_cm)
 
 #' Create the codemetas for all files
 #'
-#' @param old_cm path to latest CodeMeta version
+#' @param old_cm path to latest CodeMeta file
 #' @param folder folder under which the folders with packages are.
 #'
 #' @return A JSON codemeta
@@ -82,6 +82,7 @@ create_codemetas <- function(old_cm = NULL, folder = "repos"){
   purrr::map2(
     packages$folder,
     packages$org, create_cm,
-    old_cm = old_cm
+    old_cm = old_cm,
+    path = path
   )
 }
