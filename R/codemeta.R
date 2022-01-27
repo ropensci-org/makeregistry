@@ -3,7 +3,7 @@
 
   codemeta_written <- FALSE
 
-  # Finding older codemeta entry for this package if available
+  # Find older codemeta entry for this package if available
   if (!is.null(old_cm)) {
 
     if (length(old_cm[purrr::map_chr(old_cm, "identifier") == pkg_name]) > 0) {
