@@ -52,6 +52,7 @@
     return(old_entry)
   }
 }
+
 create_cm <- memoise::memoise(.create_cm)
 
 #' Create the codemetas for all files
@@ -66,17 +67,17 @@ create_codemetas <- function(old_cm = NULL, folder = "repos"){
     old_cm <- jsonlite::read_json(old_cm)
     old_cm <- old_cm[lengths(old_cm) > 0]
   }
+
   list_repos <- function(directory) {
     tibble::tibble(
       folder = dir(file.path(folder, directory), full.names = TRUE),
       org = directory
     )
   }
-  folders <- purrr::map_df(dir(folder), list_repos)
-
-  folders <- dplyr::rowwise(folders)
-
-  folders <- dplyr::mutate(folders, is_package = is_package(.data$folder, old_cm))
+  folders <- dir(folder) |>
+    purrr::map_df(list_repos) |>
+    dplyr::rowwise() |>
+    dplyr::mutate(is_package = is_package(.data$folder, old_cm))
 
   packages <- dplyr::filter(folders, is_package)
 
