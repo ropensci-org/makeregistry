@@ -1,12 +1,17 @@
-.create_cm <- function(pkg, org, old_cm) {
+.create_cm <- function(pkg, org, old_cm, folder) {
+  pkg_name <- gsub(sprintf("%s\\/.*\\/", folder), "", pkg)
+
   codemeta_written <- FALSE
+
+  # Find older codemeta entry for this package if available
   if (!is.null(old_cm)) {
-    if (
-      length(old_cm[purrr::map_chr(old_cm, "identifier") ==
-      gsub("repos\\/.*\\/", "", pkg)]) > 0
-    ) {
-      old_entry <- old_cm[purrr::map_chr(old_cm, "identifier") == gsub("repos\\/.*\\/", "", pkg)][[1]]
-      if (!file.exists(file.path(pkg, "codemeta.json"))) {
+
+    if (length(old_cm[purrr::map_chr(old_cm, "identifier") == pkg_name]) > 0) {
+      old_entry <- old_cm[purrr::map_chr(old_cm, "identifier") == pkg_name][[1]]
+
+      local_pkg_codemeta <- file.exists(file.path(pkg, "codemeta.json"))
+
+      if (!local_pkg_codemeta) {
         jsonlite::write_json(
           old_entry,
           path = file.path(pkg, "codemeta.json"),
@@ -44,18 +49,15 @@
     return(info)
   } else {
     print(toupper(pkg))
-    if (is.null(old_entry)) {
-      return(old_entry)
-    } else {
-      NULL
-    }
+    return(old_entry)
   }
 }
+
 create_cm <- memoise::memoise(.create_cm)
 
 #' Create the codemetas for all files
 #'
-#' @param old_cm path to latest CodeMeta version
+#' @param old_cm path to latest CodeMeta file
 #' @param folder folder under which the folders with packages are.
 #'
 #' @return A JSON codemeta
@@ -65,23 +67,23 @@ create_codemetas <- function(old_cm = NULL, folder = "repos"){
     old_cm <- jsonlite::read_json(old_cm)
     old_cm <- old_cm[lengths(old_cm) > 0]
   }
+
   list_repos <- function(directory) {
     tibble::tibble(
       folder = dir(file.path(folder, directory), full.names = TRUE),
       org = directory
     )
   }
-  folders <- purrr::map_df(dir(folder), list_repos)
-
-  folders <- dplyr::rowwise(folders)
-
-  folders <- dplyr::mutate(folders, is_package = is_package(.data$folder, old_cm))
+  folders <- dir(folder) |>
+    purrr::map_df(list_repos) |>
+    dplyr::rowwise() |>
+    dplyr::mutate(is_package = is_package(.data$folder, old_cm))
 
   packages <- dplyr::filter(folders, is_package)
 
   purrr::map2(
-    packages$folder,
-    packages$org, create_cm,
-    old_cm = old_cm
+    packages$folder, packages$org,
+    create_cm,
+    old_cm = old_cm, folder = folder
   )
 }

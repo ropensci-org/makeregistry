@@ -7,7 +7,7 @@
 create_codemetas(old_cm = NULL, folder = "repos")
 }
 \arguments{
-\item{old_cm}{path to latest CodeMeta version}
+\item{old_cm}{path to latest CodeMeta file}
 
 \item{folder}{folder under which the folders with packages are.}
 }

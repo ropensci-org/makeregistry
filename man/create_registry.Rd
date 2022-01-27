@@ -2,7 +2,7 @@
 % Please edit documentation in R/registry.R
 \name{create_registry}
 \alias{create_registry}
-\title{Title}
+\title{Create registry}
 \usage{
 create_registry(cm, outpat, time = Sys.time(), folder = "repos")
 }
@@ -16,5 +16,5 @@ create_registry(cm, outpat, time = Sys.time(), folder = "repos")
 \item{folder}{folder under which the folders with packages are.}
 }
 \description{
-Title
+Create registry
 }
