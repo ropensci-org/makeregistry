@@ -49,11 +49,7 @@
     return(info)
   } else {
     print(toupper(pkg))
-    if (!is.null(old_entry)) {
-      return(old_entry)
-    } else {
-      NULL
-    }
+    return(old_entry)
   }
 }
 create_cm <- memoise::memoise(.create_cm)
