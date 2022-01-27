@@ -197,7 +197,7 @@ get_type <- function(status) {
   return("active")
 }
 
-#' Title
+#' Create registry
 #'
 #' @export
 #' @param cm Path to the JSON codemeta
