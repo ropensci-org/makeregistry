@@ -248,7 +248,7 @@ create_registry <- function(cm, outpat, time = Sys.time(), folder = "repos") {
 
   # add categories
   category_info <- readr::read_csv(
-    system.file(file.path("data", "final_categories.csv"),
+    system.file(file.path("info", "final_categories.csv"),
       package = "makeregistry"))
   website_info <- dplyr::left_join(website_info, category_info, by = "name")
 
@@ -269,7 +269,7 @@ create_registry <- function(cm, outpat, time = Sys.time(), folder = "repos") {
 
   # staff maintained?
   staff <- readLines(
-    system.file(file.path("data", "staff.csv"), package = "makeregistry"),
+    system.file(file.path("info", "staff.csv"), package = "makeregistry"),
     encoding = "UTF-8"
   )
   website_info$staff_maintained <- purrr::map2(
