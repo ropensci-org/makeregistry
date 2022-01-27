@@ -1,11 +1,17 @@
-.create_cm <- function(pkg, org, old_cm, path) {
-  pkg_name <- gsub(sprintf("%s\\/.*\\/", path), "", pkg)
+.create_cm <- function(pkg, org, old_cm, folder) {
+  pkg_name <- gsub(sprintf("%s\\/.*\\/", folder), "", pkg)
 
   codemeta_written <- FALSE
+
+  # Finding older codemeta entry for this package if available
   if (!is.null(old_cm)) {
+
     if (length(old_cm[purrr::map_chr(old_cm, "identifier") == pkg_name]) > 0) {
       old_entry <- old_cm[purrr::map_chr(old_cm, "identifier") == pkg_name][[1]]
-      if (!file.exists(file.path(pkg, "codemeta.json"))) {
+
+      local_pkg_codemeta <- file.exists(file.path(pkg, "codemeta.json"))
+
+      if (!local_pkg_codemeta) {
         jsonlite::write_json(
           old_entry,
           path = file.path(pkg, "codemeta.json"),
@@ -82,6 +88,6 @@ create_codemetas <- function(old_cm = NULL, folder = "repos"){
     packages$folder,
     packages$org, create_cm,
     old_cm = old_cm,
-    path = path
+    folder = folder
   )
 }
