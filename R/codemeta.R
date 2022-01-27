@@ -1,11 +1,12 @@
-.create_cm <- function(pkg, org, old_cm, path) {
+.create_cm <- function(pkg, org, old_cm, path)
+  pkg_name <- gsub(sprintf("%s\\/.*\\/", path), "", pkg)
+
   codemeta_written <- FALSE
   if (!is.null(old_cm)) {
     if (
-      length(old_cm[purrr::map_chr(old_cm, "identifier") ==
-      gsub(sprintf("%s\\/.*\\/", path), "", pkg)]) > 0
+      length(old_cm[purrr::map_chr(old_cm, "identifier") == pkg_name]) > 0
     ) {
-      old_entry <- old_cm[purrr::map_chr(old_cm, "identifier") == gsub("repos\\/.*\\/", "", pkg)][[1]]
+      old_entry <- old_cm[purrr::map_chr(old_cm, "identifier") == pkg_name][[1]]
       if (!file.exists(file.path(pkg, "codemeta.json"))) {
         jsonlite::write_json(
           old_entry,
