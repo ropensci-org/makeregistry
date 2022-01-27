@@ -158,6 +158,7 @@ get_cran_archived <- function() {
   w <- tibble::as_tibble(jsonlite::fromJSON(z$parse("UTF-8"))$package)
   dplyr::select(w, .data$Package, .data$Type)
 }
+
 is_cran_archived <- function(x, y) x %in% y
 
 is_staff <- function(maintainer, pkg_name, staff, folder = folder) {
@@ -180,7 +181,7 @@ is_staff <- function(maintainer, pkg_name, staff, folder = folder) {
   path <- path_first_existing(paste0(dir(folder, full.names = TRUE), "/", pkg_name))
   rbuildignore <- file.path(path, ".Rbuildignore")
   if (file.exists(rbuildignore)) {
-    return(any(grepl("^.ropensci-staff$", readLines(rbuildignore))))
+    return(any(grepl("^.ropensci-staff$", readLines(rbuildignore, warn = FALSE))))
   }
 
   return(FALSE)
