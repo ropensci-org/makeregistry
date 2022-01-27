@@ -17,8 +17,7 @@ get_maintainer <- function(entry) {
     toString(maintainer$name)
   } else {
     if (length(maintainer$givenName) > 1) {
-      maintainer$givenName <- paste(maintainer$givenName[1],
-        maintainer$givenName[2])
+      maintainer$givenName <- paste(maintainer$givenName, collapse = " ")
     }
     paste(maintainer$givenName, maintainer$familyName)
   }
@@ -47,16 +46,14 @@ get_status <- function(entry) {
     status <- unlist(entry$developmentStatus)
     status <- status[grepl("repostatus", status)]
     if (length(status) > 0) {
-      status <- status
-    } else {
-      status <- guess_status(entry)
+      status <- gsub("http(s)?\\:\\/\\/www\\.repostatus\\.org\\/\\#",
+        "https://www.repostatus.org#", status)
+      return(status)
     }
-  } else {
-    status <- guess_status(entry)
   }
-  status <- gsub("http(s)?\\:\\/\\/www\\.repostatus\\.org\\/\\#",
-    "https://www.repostatus.org#", status)
-  return(status)
+
+  guess_status(entry)
+
 }
 
 guess_status <- function(entry) {
@@ -65,14 +62,14 @@ guess_status <- function(entry) {
   }
 
   if (grepl("ropenscilabs", entry$codeRepository)) {
-    return("https://www.repostatus.org/#concept")
+    return("https://www.repostatus.org#concept")
   }
 
   if(grepl("ropensci-archive", entry$codeRepository)) {
-    return("https://www.repostatus.org/#unsupported")
+    return("https://www.repostatus.org#unsupported")
   }
 
-  return("https://www.repostatus.org/#active")
+  return("https://www.repostatus.org#active")
 }
 
 get_cran <- function(pkg, cran) {
