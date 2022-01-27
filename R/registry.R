@@ -219,7 +219,8 @@ create_registry <- function(cm, outpat, time = Sys.time(), folder = "repos") {
     keywords = purrr::map_chr(registry, get_keywords),
     github = purrr::map_chr(registry, get_coderepo),
     status = purrr::map(registry, get_status),
-    onboarding = purrr::map(registry, get_review))
+    onboarding = purrr::map(registry, get_review)
+  )
 
   available_packages <- memoise::memoise(utils::available.packages)
   cran <- available_packages()[,1] %>% as.character()
@@ -228,19 +229,17 @@ create_registry <- function(cm, outpat, time = Sys.time(), folder = "repos") {
   repos <- c(
     BioCsoft = "https://bioconductor.org/packages/release/bioc",
     BioCann = "https://bioconductor.org/packages/release/data/annotation",
-    BioCexp = "https://bioconductor.org/packages/release/data/experiment")
+    BioCexp = "https://bioconductor.org/packages/release/data/experiment"
+  )
 
 
   bioc_names <- rownames(available_packages(repos = repos))
 
-  website_info$on_cran <- purrr::map(website_info$name,
-    get_cran, cran)
+  website_info$on_cran <- purrr::map(website_info$name, get_cran, cran)
 
-  website_info$on_bioc <- purrr::map(website_info$name,
-    get_bioc, bioc_names)
+  website_info$on_bioc <- purrr::map(website_info$name, get_bioc, bioc_names)
 
-  website_info$type <- purrr::map_chr(website_info$status,
-    get_type)
+  website_info$type <- purrr::map_chr(website_info$status, get_type)
 
   website_info$url <- website_info$github
 
@@ -260,27 +259,29 @@ create_registry <- function(cm, outpat, time = Sys.time(), folder = "repos") {
   }
 
   # github archived?
-  ga <- dplyr::bind_rows(
-    lapply(c("ropensci", "ropenscilabs"), github_archived))
+  ga <- dplyr::bind_rows(lapply(c("ropensci", "ropenscilabs"), github_archived))
   website_info <- dplyr::left_join(website_info, ga, by = "name")
   website_info <- dplyr::rename(website_info, github_archived = .data$isArchived)
 
   # cran archived?
   ca <- get_cran_archived()
-  website_info$cran_archived <- purrr::map(
-    website_info$name, is_cran_archived, ca$Package)
+  website_info$cran_archived <- purrr::map(website_info$name, is_cran_archived, ca$Package)
 
   # staff maintained?
-  staff <- readLines(system.file("scripts/staff.csv", package = "makeregistry"),
-    encoding = "UTF-8")
+  staff <- readLines(
+    system.file("scripts/staff.csv", package = "makeregistry"),
+    encoding = "UTF-8"
+  )
   website_info$staff_maintained <- purrr::map2(
-    website_info$maintainer, website_info$name, is_staff, staff,
-    folder = folder)
+    website_info$maintainer, website_info$name,
+    is_staff,
+    staff, folder = folder)
 
   website_info <- dplyr::rowwise(website_info)
   list(
     packages = website_info,
-    date = format(time, format = "%F %R %Z", tz = "UTC")) %>%
+    date = format(time, format = "%F %R %Z", tz = "UTC")
+  ) %>%
     jsonlite::toJSON(auto_unbox = TRUE, pretty = TRUE) %>%
     writeLines(outpat, useBytes = TRUE)
 }
