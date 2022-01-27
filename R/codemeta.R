@@ -49,7 +49,7 @@
     return(info)
   } else {
     print(toupper(pkg))
-    if (is.null(old_entry)) {
+    if (!is.null(old_entry)) {
       return(old_entry)
     } else {
       NULL
