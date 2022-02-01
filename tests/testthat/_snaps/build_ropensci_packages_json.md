@@ -1,4 +1,4 @@
-# build_ropensci_packages_json works
+# get_hosted_packages works
 
     Code
       unique(lapply(pkgs, names))
@@ -6,7 +6,13 @@
       [[1]]
       [1] "package" "url"     "branch" 
       
-      [[2]]
+
+# get_other_packages works
+
+    Code
+      unique(lapply(pkgs, names))
+    Output
+      [[1]]
       [1] "package" "url"     "branch"  "subdir" 
       
 

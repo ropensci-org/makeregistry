@@ -6,7 +6,25 @@
 #'
 build_ropensci_packages_json <- function(out_file = "packages.json") {
 
-  # packages from our organizations ----------------------------------------------
+  # packages from our organizations
+  hosted_packages <- get_hosted_packages()
+
+  # packages from elsewhere or with not standard repo structure
+  other_packages <- get_other_packages()
+
+  # merge all --------------------------------------------------------------------
+  packages <- c(hosted_packages, other_packages)
+  packages <- packages[order(purrr::map_chr(packages, "package"))]
+  jsonlite::write_json(
+    packages,
+    out_file,
+    auto_unbox = TRUE,
+    pretty= TRUE
+  )
+
+}
+
+get_hosted_packages <- function() {
 
   github_organizations <- c("ropensci", "ropenscilabs")
 
@@ -35,11 +53,13 @@ build_ropensci_packages_json <- function(out_file = "packages.json") {
     )
   }
 
-  packages <- github_organizations |>
+  github_organizations |>
     purrr::map(list_organization_repos, excludes = excludes) |>
     unlist(recursive = FALSE)
 
-  # packages from elsewhere ------------------------------------------------------
+}
+
+get_other_packages <- function() {
 
   others <- jsonlite::read_json(system.file("info", "not_transferred.json", package = "makeregistry"))
 
@@ -64,16 +84,5 @@ build_ropensci_packages_json <- function(out_file = "packages.json") {
     )
   }
 
-  other_packages <- purrr::map(others, format_other_repo)
-
-  # merge all --------------------------------------------------------------------
-  packages <- c(packages, other_packages)
-  packages <- packages[order(purrr::map_chr(packages, "package"))]
-  jsonlite::write_json(
-    packages,
-    out_file,
-    auto_unbox = TRUE,
-    pretty= TRUE
-  )
-
+  purrr::map(others, format_other_repo)
 }
