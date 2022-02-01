@@ -38,7 +38,7 @@ packages <- github_organizations |>
 
 # packages from elsewhere ------------------------------------------------------
 
-others <- readLines(here::here("inst", "info", "not_transferred.json"))
+others <- jsonlite::read_json(here::here("inst", "info", "not_transferred.json"))
 
 format_other_repo <- function(repo) {
   if (grepl("github\\.com", repo[["url"]])) {
@@ -56,7 +56,7 @@ format_other_repo <- function(repo) {
   list(
     package = repo[["package"]],
     url = repo[["url"]],
-    branch = repo[["branch"]],
+    branch = branch,
     subdir = repo[["subdir"]]
   )
 }
@@ -65,4 +65,10 @@ other_packages <- purrr::map(others, format_other_repo)
 
 # merge all --------------------------------------------------------------------
 packages <- c(packages, other_packages)
-jsonlite::write_json(packages, "packages.json")
+packages <- packages[order(purrr::map_chr(packages, "package"))]
+jsonlite::write_json(
+  packages,
+  "packages.json",
+  auto_unbox = TRUE,
+  pretty= TRUE
+)
