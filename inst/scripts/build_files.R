@@ -1,11 +1,6 @@
 # packages from our organizations ----------------------------------------------
 
-github_organizations <- c(
-  "ropensci",
-  "ropensci-org",
-  "ropensci-review-tools",
-  "ropenscilabs"
-)
+github_organizations <- c("ropensci", "ropenscilabs")
 
 excludes <- readLines(here::here("inst", "info", "exclude_list.txt"))
 
