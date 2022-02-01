@@ -23,14 +23,13 @@ Imports:
     dplyr,
     tibble,
     purrr,
-    glue,
     ghql,
     crul,
     readr,
     rlang,
     remotes,
     fs,
-    here
+    gh
 RoxygenNote: 7.1.2
 URL: https://github.com/ropensci-org/makeregistry
 BugReports: https://github.com/ropensci-org/makeregistry/issues
