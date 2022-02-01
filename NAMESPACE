@@ -2,6 +2,7 @@
 
 export("%>%")
 export(build_ropensci_packages_json)
+export(clone_repos)
 export(create_codemetas)
 export(create_registry)
 importFrom(crul,HttpClient)
