@@ -3,7 +3,7 @@ categories <- readr::read_csv(
   here::here(
     file.path(
       "inst",
-      "scripts",
+      "info",
       "final_categories.csv"
       )
     )
@@ -33,7 +33,7 @@ categories <- dplyr::filter(categories,
 readr::write_csv(categories, here::here(
   file.path(
     "inst",
-    "scripts",
+    "info",
     "final_categories.csv"
   )
 )
