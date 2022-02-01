@@ -15,16 +15,16 @@ list_organization_repos <- function(github_organization, excludes) {
   repos <- repos[!purrr::map_lgl(repos, "archived")]
   repos <- repos[! (purrr::map_chr(repos, "name") %in% excludes)]
 
-  pluck_repo <- function(repo) {
-
-    list(
-      package = repo[["name"]],
-      url = repo[["html_url"]],
-      branch = repo[["default_branch"]]
-    )
-  }
-
-  purrr::map(repos, pluck_repo)
+  purrr::map(
+    repos,
+    function(repo) {
+      list(
+        package = repo[["name"]],
+        url = repo[["html_url"]],
+        branch = repo[["default_branch"]]
+      )
+    }
+  )
 }
 
 packages <- github_organizations |>
