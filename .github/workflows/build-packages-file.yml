@@ -21,9 +21,15 @@ jobs:
     - uses: r-lib/actions/setup-renv@v2
       with:
         cache-version: 2
+    - name: Install package
+      run: |
+        install.packages("remotes")
+        remotes::install_local()
+      shell: Rscript {0}
     - name: Build registry
       run: |
-        source("inst/scripts/build_files.R")
+        makeregistry::build_ropensci_packages_json()
+      shell: Rscript {0}
     - name: Make packages.json
       run: |
         git config --global user.email "accounts+ropenscibot@ropensci.org"

@@ -1,0 +1,79 @@
+#' Build rOpenSci packages.json
+#'
+#' @param out_file where to save the JSON file
+#'
+#' @export
+#'
+build_ropensci_packages_json <- function(out_file = "packages.json") {
+
+  # packages from our organizations ----------------------------------------------
+
+  github_organizations <- c("ropensci", "ropenscilabs")
+
+  excludes <- readLines(system.file("info", "exclude_list.txt", package = "makeregistry"))
+
+  list_organization_repos <- function(github_organization, excludes) {
+    repos <- gh::gh(
+      "/orgs/{org}/repos",
+      org = github_organization,
+      .limit = Inf
+    )
+    repos <- repos[!purrr::map_lgl(repos, "fork")]
+    repos <- repos[!purrr::map_lgl(repos, "private")]
+    repos <- repos[!purrr::map_lgl(repos, "archived")]
+    repos <- repos[! (purrr::map_chr(repos, "name") %in% excludes)]
+
+    purrr::map(
+      repos,
+      function(repo) {
+        list(
+          package = repo[["name"]],
+          url = repo[["html_url"]],
+          branch = repo[["default_branch"]]
+        )
+      }
+    )
+  }
+
+  packages <- github_organizations |>
+    purrr::map(list_organization_repos, excludes = excludes) |>
+    unlist(recursive = FALSE)
+
+  # packages from elsewhere ------------------------------------------------------
+
+  others <- jsonlite::read_json(system.file("info", "not_transferred.json", package = "makeregistry"))
+
+  format_other_repo <- function(repo) {
+    if (grepl("github\\.com", repo[["url"]])) {
+      github_info <- remotes::parse_github_url(repo[["url"]])
+      gh_repo <- gh::gh(
+        "/repos/{owner}/{repo}",
+        owner = github_info$username,
+        repo = github_info$repo
+      )
+      branch <- gh_repo[["default_branch"]]
+    } else {
+      branch <- "master"
+    }
+
+    list(
+      package = repo[["package"]],
+      url = repo[["url"]],
+      branch = branch,
+      subdir = repo[["subdir"]]
+    )
+  }
+
+  other_packages <- purrr::map(others, format_other_repo)
+
+  # merge all --------------------------------------------------------------------
+  packages <- c(packages, other_packages)
+  packages <- packages[order(purrr::map_chr(packages, "package"))]
+  jsonlite::write_json(
+    packages,
+    out_file,
+    auto_unbox = TRUE,
+    pretty= TRUE
+  )
+
+}
