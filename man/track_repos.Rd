@@ -4,7 +4,13 @@
 \alias{track_repos}
 \title{Clone all ropensci packages & create `"last_commits.csv"`}
 \usage{
-track_repos()
+track_repos(
+ 
+    pkgs_file = "https://raw.githubusercontent.com/ropensci/roregistry/gh-pages/packages.json"
+)
+}
+\arguments{
+\item{pkgs_file}{`"packages.json"` file for all rOpenSci packages.}
 }
 \description{
 Clone all ropensci packages & create `"last_commits.csv"`
