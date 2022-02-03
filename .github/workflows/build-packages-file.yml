@@ -26,11 +26,11 @@ jobs:
         install.packages("remotes")
         remotes::install_local()
       shell: Rscript {0}
-    - name: Build registry
+    - name: Build packages.json
       run: |
         makeregistry::build_ropensci_packages_json()
       shell: Rscript {0}
-    - name: Make packages.json
+    - name: Push packages.json
       run: |
         git config --global user.email "accounts+ropenscibot@ropensci.org"
         git config --global user.name "ropenscibot"
