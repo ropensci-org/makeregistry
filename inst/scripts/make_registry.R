@@ -7,9 +7,15 @@ old_cm <- "https://github.com/ropensci/roregistry/blob/gh-pages/raw_cm.json?raw=
 codemeta <- makeregistry::create_codemetas(old_cm = old_cm)
 
 # cat("writing json", sep = "\n")
-jsonlite::write_json(codemeta, path = "raw_cm.json",
-  pretty=TRUE, auto_unbox = TRUE)
+jsonlite::write_json(
+  codemeta,
+  path = "raw_cm.json",
+  pretty = TRUE,
+  auto_unbox = TRUE
+)
 
 # cat("creating registry", sep = "\n")
-makeregistry::create_registry(cm = "raw_cm.json",
-  outpat = "registry.json")
+makeregistry::create_registry(
+  cm = "raw_cm.json",
+  outpat = "registry.json"
+)
