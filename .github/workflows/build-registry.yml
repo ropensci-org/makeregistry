@@ -12,7 +12,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: runiverse/base
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       GITHUB_GRAPHQL_TOKEN: ${{ secrets.GRAPHQL_TOKEN }}
