@@ -23,8 +23,8 @@ jobs:
         cache-version: 2
     - name: Install package
       run: |
-        install.packages("remotes")
-        remotes::install_local()
+        install.packages("pak")
+        pak::local_install()
       shell: Rscript {0}
     - name: Build packages.json
       run: |
