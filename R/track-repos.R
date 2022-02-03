@@ -1,8 +1,8 @@
-#' Clone all ropensci packages & ¡¡"last_commits.csv"¡¡
+#' Clone all ropensci packages & create `"last_commits.csv"`
 #'
 #' @export
 #'
-clone_repos <- function() {
+track_repos <- function() {
   dir.create(file.path("repos", "ropensci"), recursive = TRUE)
   dir.create(file.path("repos", "ropenscilabs"), recursive = TRUE)
   dir.create(file.path("repos", "others"), recursive = TRUE)
@@ -11,7 +11,7 @@ clone_repos <- function() {
   write.csv(commits, file = "last_commits.csv", row.names = FALSE)
 }
 
-clone_repo <- function(repo) {
+track_repo <- function(repo) {
   withr::local_dir(guess_folder(repo))
   # TODO: use gert when it becomes possible
   system(sprintf("git clone --depth 1 %s", repo[["url"]]))

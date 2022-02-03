@@ -1,5 +1,5 @@
 # cat("clone repos", sep = "\n")
-makeregistry::clone_repos()
+makeregistry::track_repos()
 
 old_cm <- "https://github.com/ropensci/roregistry/blob/gh-pages/raw_cm.json?raw=true"
 
