@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - master
+      - bye-ruby
   schedule:
     - cron: "2 * * * *"
 
