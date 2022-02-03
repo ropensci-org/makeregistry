@@ -55,7 +55,7 @@ jobs:
         if [  $pkgslength -gt 250 ]; then
           # upload new registry files to github
           echo "pushing changes to github"
-          git commit -am 'registry.json and raw_cm.json updated'
+          git commit --allow-empty -am 'registry.json and raw_cm.json updated'
           git push
         else
           echo "Only $pkgslength package(s), this is not good. :-("
