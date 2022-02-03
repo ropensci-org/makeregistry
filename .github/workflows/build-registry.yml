@@ -28,16 +28,40 @@ jobs:
         install.packages("remotes")
         remotes::install_local()
       shell: Rscript {0}
-    - name: Build registry
+    - name: Build packages.json
       run: |
         makeregistry::build_ropensci_packages_json()
       shell: Rscript {0}
-    - name: Make last commit.csv
+    - name: Build registry
       run: |
-        sh last_commits.sh
-        head last_commits.csv
-    - name: Make registry, push to roregistry
+        source("inst/scripts/make_registry.R")
+      shell: Rscript {0}
+    - name: Push to roregistry
       run: |
-        git config --global user.email "accounts+ropenscibot@ropensci.org"
-        git config --global user.name "ropenscibot"
-        sh make_registry.sh
+        # go into roregistry dir, pull any changes
+        echo "pulling any changes in roregistry"
+        git clone https://REPO_PAT:$REPO_PAT@github.com/ropensci/roregistry.git
+        cd roregistry
+        git remote add origin https://REPO_PAT:$REPO_PAT@github.com/ropensci/roregistry.git
+        git fetch origin
+        git reset --hard origin/gh-pages
+
+        # copy files into roregistry directory
+        echo "copying registry files into roregistry"
+        cp ../registry.json .
+        cp ../raw_cm.json .
+
+        pkgslength=$(jq .packages ../registry.json | jq length)
+        if [  $pkgslength -gt 250 ]; then
+          # upload new registry files to github
+          echo "pushing changes to github"
+          git commit -am 'registry.json and raw_cm.json updated'
+          git push
+        else
+          echo "Only $pkgslength package(s), this is not good. :-("
+          exit 1
+        fi
+
+        # cd back to home dir
+        cd ..
+
