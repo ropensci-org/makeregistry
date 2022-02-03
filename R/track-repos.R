@@ -9,7 +9,7 @@ track_repos <- function(pkgs_file = "https://raw.githubusercontent.com/ropensci/
   dir.create(file.path("repos", "ropenscilabs"), recursive = TRUE)
   dir.create(file.path("repos", "others"), recursive = TRUE)
   packages <- jsonlite::read_json(pkgs_file)
-  commits <- purrr::map_df(packages[1:10], track_repo)
+  commits <- purrr::map_df(packages, track_repo)
   write.csv(commits, file = "last_commits.csv", row.names = FALSE)
 }
 
