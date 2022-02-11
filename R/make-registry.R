@@ -24,4 +24,10 @@ make_registry <- function() {
     cm = "raw_cm.json",
     outpat = "registry.json"
   )
+
+  pkgs <- jsonlite::read_json("registry.json")
+  n_packages <- length(pkgs$packages)
+  if (n_packages < 250) {
+    stop(sprintf("Only %s package(s), this is not good. :-(", n_packages))
+  }
 }
