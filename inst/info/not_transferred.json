@@ -1,7 +1,7 @@
 [
   {
     "package": "auk",
-    "url": "https://github.com/CornellLabofOrnithology/auk.git"
+    "url": "https://github.com/CornellLabofOrnithology/auk"
   },
 
   {
@@ -10,15 +10,15 @@
   },
   {
     "package": "treeio",
-    "url": "https://github.com/YuLab-SMU/treeio.git"
+    "url": "https://github.com/YuLab-SMU/treeio"
   },
   {
     "package": "gert",
-    "url": "https://github.com/r-lib/gert.git"
+    "url": "https://github.com/r-lib/gert"
   },
   {
     "package": "credentials",
-    "url": "https://github.com/r-lib/credentials.git"
+    "url": "https://github.com/r-lib/credentials"
   },
   {
     "package": "redland",
