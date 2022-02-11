@@ -4,7 +4,7 @@
 #'
 make_registry <- function() {
   # cat("clone repos", sep = "\n")
-  makeregistry::track_repos(pkgs_file = "https://raw.githubusercontent.com/ropensci/roregistry/gh-pages/packages.json")
+  makeregistry::track_repos(pkgs_file = file.path("roregistry", "packages.json"))
 
   old_cm <- "https://github.com/ropensci/roregistry/blob/gh-pages/raw_cm.json?raw=true"
 
