@@ -1,28 +1,23 @@
 [
   {
     "package": "auk",
-    "subdir": "",
     "url": "https://github.com/CornellLabofOrnithology/auk.git"
   },
 
   {
     "package": "genbankr",
-    "subdir": "",
     "url": "https://git.bioconductor.org/packages/genbankr"
   },
   {
     "package": "treeio",
-    "subdir": "",
     "url": "https://github.com/YuLab-SMU/treeio.git"
   },
   {
     "package": "gert",
-    "subdir": "",
     "url": "https://github.com/r-lib/gert.git"
   },
   {
     "package": "credentials",
-    "subdir": "",
     "url": "https://github.com/r-lib/credentials.git"
   },
   {
@@ -32,52 +27,42 @@
   },
   {
     "package": "baRcodeR",
-    "subdir": "",
     "url": "https://github.com/ropensci/baRcodeR"
   },
   {
     "package": "rodev",
-    "subdir": "",
     "url": "https://github.com/ropensci-org/rodev"
   },
   {
     "package": "roblog",
-    "subdir": "",
     "url": "https://github.com/ropensci-org/roblog"
   },
   {
     "package": "pkgreviewr",
-    "subdir": "",
     "url": "https://github.com/ropensci-org/pkgreviewr"
   },
   {
     "package": "rotemplate",
-    "subdir": "",
     "url": "https://github.com/ropensci-org/rotemplate"
   },
   {
     "package": "autotest",
-    "subdir": "",
     "url": "https://github.com/ropensci-review-tools/autotest"
   },
   {
     "package": "pkgstats",
-    "subdir": "",
     "url": "https://github.com/ropensci-review-tools/pkgstats"
   },
   {
     "package": "pkgcheck",
-    "subdir": "",
     "url": "https://github.com/ropensci-review-tools/pkgcheck"
   },
   {
     "package": "srr",
-    "subdir": "",
     "url": "https://github.com/ropensci-review-tools/srr"
   },
   {
     "package": "roreviewapi",
-    "subdir": "",
     "url": "https://github.com/ropensci-review-tools/roreviewapi"
   }
 ]

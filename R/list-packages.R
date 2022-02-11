@@ -71,17 +71,20 @@ get_other_packages <- function() {
         owner = github_info$username,
         repo = github_info$repo
       )
-      branch <- gh_repo[["default_branch"]]
+      default_branch <- gh_repo[["default_branch"]]
     } else {
-      branch <- "master"
+      default_branch <- NULL
     }
 
-    list(
+    out <- list(
       package = repo[["package"]],
-      url = repo[["url"]],
-      branch = branch,
-      subdir = repo[["subdir"]]
+      url = repo[["url"]]
     )
+    if(length(default_branch))
+      out$branch = default_branch
+    if(length(repo$subdir))
+      out$subdir = repo$subdir
+    return(out)
   }
 
   purrr::map(others, format_other_repo)
