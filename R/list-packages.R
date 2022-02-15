@@ -31,7 +31,8 @@ get_hosted_packages <- function() {
   tmp <- withr::local_tempfile()
   download.file(
     "https://raw.githubusercontent.com/ropensci/roregistry/gh-pages/info/exclude_list.txt",
-    tmp
+    tmp,
+    quiet = TRUE
   )
   excludes <- readLines(tmp)
 

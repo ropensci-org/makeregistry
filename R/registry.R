@@ -250,7 +250,8 @@ create_registry <- function(cm, outpat, time = Sys.time(), folder = "repos") {
   tmp <- withr::local_file()
   download.file(
     "https://raw.githubusercontent.com/ropensci-org/makeregistry/master/inst/info/final_categories.csv",
-    tmp
+    tmp,
+    quiet = TRUE
   )
   category_info <- readr::read_csv(tmp)
   website_info <- dplyr::left_join(website_info, category_info, by = "name")
@@ -274,7 +275,8 @@ create_registry <- function(cm, outpat, time = Sys.time(), folder = "repos") {
   tmp <- withr::local_tempfile()
   download.file(
     "https://raw.githubusercontent.com/ropensci/roregistry/gh-pages/info/staff.csv",
-    tmp
+    tmp,
+    quiet = TRUE
   )
   staff <- readLines(tmp, encoding = "UTF-8")
   website_info$staff_maintained <- purrr::map2(
