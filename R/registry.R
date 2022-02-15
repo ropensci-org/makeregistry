@@ -247,7 +247,7 @@ create_registry <- function(cm, outpat, time = Sys.time(), folder = "repos") {
   website_info$description <- trimws(website_info$description)
 
   # add categories
-  tmp <- withr::local_file()
+  tmp <- withr::local_tempfile()
   download.file(
     "https://raw.githubusercontent.com/ropensci-org/makeregistry/master/inst/info/final_categories.csv",
     tmp,
