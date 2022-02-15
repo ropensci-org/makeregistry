@@ -64,5 +64,9 @@
   {
     "package": "roreviewapi",
     "url": "https://github.com/ropensci-review-tools/roreviewapi"
+  },
+  {
+    "package": "frictionless",
+    "url": "https://github.com/frictionlessdata/frictionless-r"
   }
 ]
