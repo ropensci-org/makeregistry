@@ -28,7 +28,13 @@ get_hosted_packages <- function() {
 
   github_organizations <- c("ropensci", "ropenscilabs")
 
-  excludes <- readLines(system.file("info", "exclude_list.txt", package = "makeregistry"))
+  tmp <- withr::local_tempfile()
+  download.file(
+    "https://raw.githubusercontent.com/ropensci/roregistry/gh-pages/info/exclude_list.txt",
+    tmp,
+    quiet = TRUE
+  )
+  excludes <- readLines(tmp)
 
   list_organization_repos <- function(github_organization, excludes) {
     repos <- gh::gh(
@@ -61,7 +67,9 @@ get_hosted_packages <- function() {
 
 get_other_packages <- function() {
 
-  others <- jsonlite::read_json(system.file("info", "not_transferred.json", package = "makeregistry"))
+  others <- jsonlite::read_json(
+    "https://raw.githubusercontent.com/ropensci/roregistry/gh-pages/info/not_transferred.json"
+  )
 
   format_other_repo <- function(repo) {
     if (grepl("github\\.com", repo[["url"]])) {

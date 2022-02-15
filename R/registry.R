@@ -247,9 +247,13 @@ create_registry <- function(cm, outpat, time = Sys.time(), folder = "repos") {
   website_info$description <- trimws(website_info$description)
 
   # add categories
-  category_info <- readr::read_csv(
-    system.file(file.path("info", "final_categories.csv"),
-      package = "makeregistry"))
+  tmp <- withr::local_tempfile()
+  download.file(
+    "https://raw.githubusercontent.com/ropensci-org/makeregistry/master/inst/info/final_categories.csv",
+    tmp,
+    quiet = TRUE
+  )
+  category_info <- readr::read_csv(tmp)
   website_info <- dplyr::left_join(website_info, category_info, by = "name")
 
   # add last commit dates
@@ -268,10 +272,13 @@ create_registry <- function(cm, outpat, time = Sys.time(), folder = "repos") {
   website_info$cran_archived <- purrr::map(website_info$name, is_cran_archived, ca$Package)
 
   # staff maintained?
-  staff <- readLines(
-    system.file(file.path("info", "staff.csv"), package = "makeregistry"),
-    encoding = "UTF-8"
+  tmp <- withr::local_tempfile()
+  download.file(
+    "https://raw.githubusercontent.com/ropensci/roregistry/gh-pages/info/staff.csv",
+    tmp,
+    quiet = TRUE
   )
+  staff <- readLines(tmp, encoding = "UTF-8")
   website_info$staff_maintained <- purrr::map2(
     website_info$maintainer, website_info$name,
     is_staff,
