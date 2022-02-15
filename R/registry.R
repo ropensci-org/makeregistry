@@ -249,7 +249,7 @@ create_registry <- function(cm, outpat, time = Sys.time(), folder = "repos") {
   # add categories
   tmp <- withr::local_tempfile()
   download.file(
-    "https://raw.githubusercontent.com/ropensci-org/makeregistry/master/inst/info/final_categories.csv",
+    "https://ropensci.github.io/roregistry/info/final_categories.csv",
     tmp,
     quiet = TRUE
   )
@@ -274,7 +274,7 @@ create_registry <- function(cm, outpat, time = Sys.time(), folder = "repos") {
   # staff maintained?
   tmp <- withr::local_tempfile()
   download.file(
-    "https://raw.githubusercontent.com/ropensci/roregistry/gh-pages/info/staff.csv",
+    "https://ropensci.github.io/roregistry/info/staff.csv",
     tmp,
     quiet = TRUE
   )

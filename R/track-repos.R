@@ -4,7 +4,7 @@
 #'
 #' @export
 #'
-track_repos <- function(pkgs_file = "https://raw.githubusercontent.com/ropensci/roregistry/gh-pages/packages.json") {
+track_repos <- function(pkgs_file = "https://ropensci.github.io/roregistry/packages.json") {
   dir.create(file.path("repos", "ropensci"), recursive = TRUE)
   dir.create(file.path("repos", "ropenscilabs"), recursive = TRUE)
   dir.create(file.path("repos", "others"), recursive = TRUE)

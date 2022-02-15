@@ -3,7 +3,7 @@
 #' @param out_file where to save the JSON file
 #'
 #' @export
-#'
+#' @importFrom utils download.file
 build_ropensci_packages_json <- function(out_file = "packages.json") {
 
   # packages from our organizations
@@ -30,7 +30,7 @@ get_hosted_packages <- function() {
 
   tmp <- withr::local_tempfile()
   download.file(
-    "https://raw.githubusercontent.com/ropensci/roregistry/gh-pages/info/exclude_list.txt",
+    "https://ropensci.github.io/roregistry/info/exclude_list.txt",
     tmp,
     quiet = TRUE
   )
@@ -68,7 +68,7 @@ get_hosted_packages <- function() {
 get_other_packages <- function() {
 
   others <- jsonlite::read_json(
-    "https://raw.githubusercontent.com/ropensci/roregistry/gh-pages/info/not_transferred.json"
+    "https://ropensci.github.io/roregistry/info/not_transferred.json"
   )
 
   format_other_repo <- function(repo) {
