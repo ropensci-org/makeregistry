@@ -4,10 +4,16 @@
 \alias{build_ropensci_packages_json}
 \title{Build rOpenSci packages.json}
 \usage{
-build_ropensci_packages_json(out_file = "packages.json")
+build_ropensci_packages_json(
+  out_file = "packages.json",
+ 
+    former = "https://raw.githubusercontent.com/ropensci/roregistry/gh-pages/packages.json"
+)
 }
 \arguments{
 \item{out_file}{where to save the JSON file}
+
+\item{former}{current packages.json}
 }
 \description{
 Build rOpenSci packages.json

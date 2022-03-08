@@ -1,13 +1,16 @@
 #' Build rOpenSci packages.json
 #'
 #' @param out_file where to save the JSON file
+#' @param former current packages.json
 #'
 #' @export
+#'
 #' @importFrom utils download.file
-build_ropensci_packages_json <- function(out_file = "packages.json") {
+build_ropensci_packages_json <- function(out_file = "packages.json", former = "https://raw.githubusercontent.com/ropensci/roregistry/gh-pages/packages.json") {
+
 
   # packages from our organizations
-  hosted_packages <- get_hosted_packages()
+  hosted_packages <- get_hosted_packages(former)
 
   # packages from elsewhere or with not standard repo structure
   other_packages <- get_other_packages()
@@ -24,7 +27,7 @@ build_ropensci_packages_json <- function(out_file = "packages.json") {
 
 }
 
-get_hosted_packages <- function() {
+get_hosted_packages <- function(former) {
 
   github_organizations <- c("ropensci", "ropenscilabs")
 
@@ -46,6 +49,10 @@ get_hosted_packages <- function() {
     repos <- repos[!purrr::map_lgl(repos, "private")]
     repos <- repos[!purrr::map_lgl(repos, "archived")]
     repos <- repos[! (purrr::map_chr(repos, "name") %in% excludes)]
+    former_pkgs <- jsonlite::read_json(former) |>
+      purrr::map_chr("url") |>
+      purrr::map_chr(function(x) {gsub("https://github.com/", "", x)})
+    repos <- repos[purrr::map_lgl(repos, has_description, former_pkgs = former_pkgs)]
 
     purrr::map(
       repos,
@@ -96,4 +103,20 @@ get_other_packages <- function() {
   }
 
   purrr::map(others, format_other_repo)
+}
+
+
+has_description <- function(repo, former_pkgs) {
+
+  if (repo$full_name %in% former_pkgs) {
+    return(TRUE)
+  }
+
+  resp <- try(gh::gh(
+    "GET /repos/{owner}/{repo}/contents/{path}",
+    owner = repo$owner$login,
+    repo = repo$name,
+    path = "DESCRIPTION"
+  ), silent = TRUE)
+  !inherits(resp, "try-error")
 }
