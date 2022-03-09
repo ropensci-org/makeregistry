@@ -15,6 +15,17 @@ build_ropensci_packages_json <- function(out_file = "packages.json") {
   # merge all --------------------------------------------------------------------
   packages <- c(hosted_packages, other_packages)
   packages <- packages[order(purrr::map_chr(packages, "package"))]
+
+  # Verify new packages
+  if(file.exists(out_file)){
+    previous <- jsonlite::read_json(out_file, simplifyVector = TRUE)
+    message(sprintf("Found %d packages (old packages.json had %d packages)",
+                    length(packages), nrow(previous)))
+    if(nrow(previous) - length(packages) > 10)
+      stop("This does not seem right")
+    verify_new_packages(previous, packages)
+  }
+
   jsonlite::write_json(
     packages,
     out_file,
@@ -22,6 +33,22 @@ build_ropensci_packages_json <- function(out_file = "packages.json") {
     pretty= TRUE
   )
 
+}
+
+verify_new_packages <- function(previous, packages){
+  new_packages <- Filter(function(x){
+    isFALSE(x$package %in% previous$package)
+  }, packages)
+  lapply(new_packages, function(pkg){
+    message("New package: ", pkg$package)
+    descurl <- paste0(sub("\\.git$", "", pkg$url), '/raw/HEAD/DESCRIPTION')
+    req <- curl::curl_fetch_memory(descurl)
+    if(req$status_code == 200){
+      message("Found DESCRIPTION in expected URL!")
+    } else {
+      stop('Failed to get DESCRIPTION (HTTP %d) %s',req$status_code, descurl)
+    }
+  })
 }
 
 get_hosted_packages <- function() {
