@@ -46,7 +46,7 @@ verify_new_packages <- function(previous, packages){
     if(req$status_code == 200){
       message("Found DESCRIPTION in expected URL!")
     } else {
-      stop('Failed to get DESCRIPTION (HTTP %d) %s',req$status_code, descurl)
+      stop(sprintf('Failed to get DESCRIPTION (HTTP %d) %s',req$status_code, descurl))
     }
   })
 }
