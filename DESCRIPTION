@@ -17,6 +17,7 @@ Authors@R:
              comment = "https://ropensci.org/"))
 Imports: 
     codemetar,
+    curl,
     magrittr,
     memoise,
     jsonlite (>= 1.6),
