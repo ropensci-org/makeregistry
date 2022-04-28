@@ -1,5 +1,6 @@
 .create_cm <- function(pkg, org, old_cm, folder) {
   pkg_name <- gsub(sprintf("%s\\/.*\\/", folder), "", pkg)
+  print(pkg_name)
 
   codemeta_written <- FALSE
 

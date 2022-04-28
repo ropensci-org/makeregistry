@@ -1,14 +1,6 @@
 #' @importFrom rlang .data
 get_review <- function(entry) {
-  review_present <- !is.null(entry$review)
-  ropensci_review <- grepl("ropensci\\/onboarding|ropensci\\/software-review",
-      entry$review$url)
-
-  if (review_present && ropensci_review) {
-    return(entry$review$url)
-  }
-
-  ""
+  entry$review$url
 }
 
 get_maintainer <- function(entry) {
