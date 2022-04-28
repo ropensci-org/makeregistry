@@ -16,6 +16,7 @@ Authors@R:
              role = "fnd",
              comment = "https://ropensci.org/"))
 Imports: 
+    codemeta,
     codemetar,
     curl,
     magrittr,
