@@ -48,8 +48,9 @@
       badges <- codemetar::extract_badges(throwaway_readme)
 
       review_url <- badges[grepl("ropensci/onboarding", badges$link)|grepl("ropensci/software-review", badges$link), "link"]
+      review_url <- sub("onboarding", "software-review", review_url)
 
-      if (!is.null(review_url)) {
+      if (isTRUE(nzchar(review_url))) {
         info$review <- list(
           "@type" = "Review",
           "url" = review_url,
@@ -69,7 +70,7 @@
     info$keywords <- unlist(runiv[[length(runiv)]]$`_builder`$gitstats$topics)
   }
 
-  purrr::compact(info)
+  info
 }
 
 create_cm <- memoise::memoise(.create_cm)

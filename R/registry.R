@@ -1,6 +1,7 @@
 #' @importFrom rlang .data
+#' @importFrom rlang `%||%`
 get_review <- function(entry) {
-  entry$review$url
+  entry$review$url %||% ""
 }
 
 get_maintainer <- function(entry) {
