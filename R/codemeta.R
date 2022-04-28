@@ -17,8 +17,8 @@
   }
 
   info <- try(
-    codemeta::create_codemeta(
-      pkg = pkg,
+    codemeta::write_codemeta(
+      path = pkg,
       verbose = FALSE,
       file = NULL
     ),
@@ -42,20 +42,24 @@
     throwaway_readme <- withr::local_tempfile()
     raw_readme <- sub("github", "raw.githubusercontent", info$readme)
     raw_readme <- sub("blob/", "", raw_readme)
-    curl::curl_download(raw_readme, throwaway_readme)
-    badges <- codemetar::extract_badges(throwaway_readme)
+    dl <- try(curl::curl_download(raw_readme, throwaway_readme), silent = TRUE)
+    if (!inherits(dl, "try-error")) {
+      badges <- codemetar::extract_badges(throwaway_readme)
 
-    review_url <- badges[grepl("ropensci/onboarding", badges$link)|grepl("ropensci/software-review", badges$link), "link"]
+      review_url <- badges[grepl("ropensci/onboarding", badges$link)|grepl("ropensci/software-review", badges$link), "link"]
 
-    if (!is.null(review_url)) {
-      info$review <- list(
-        "@type" = "Review",
-        "url" = review_url,
-        "provider" = "https://ropensci.org"
-      )
+      if (!is.null(review_url)) {
+        info$review <- list(
+          "@type" = "Review",
+          "url" = review_url,
+          "provider" = "https://ropensci.org"
+        )
+      }
+
+      info$developmentStatus <- badges[grepl("repostatus\\.org", badges$link)|grepl("lifecycle", badges$link), "link"]
+
     }
 
-    info$developmentStatus <- badges[grepl("repostatus\\.org", badges$link)|grepl("lifecycle", badges$link), "link"]
 
   }
 

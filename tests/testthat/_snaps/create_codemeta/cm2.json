@@ -154,8 +154,7 @@
       "SystemRequirements": null
     },
     "fileSize": "0KB",
-    "readme": "https://github.com/ropensci-org/makeregistry/blob/master/README.md",
-    "keywords": ["r", "r-package", "rstats"]
+    "readme": "https://github.com/ropenscilabs/makeregistry/blob/HEAD/README.md"
   },
   {
     "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
@@ -312,8 +311,7 @@
       "SystemRequirements": null
     },
     "fileSize": "0KB",
-    "readme": "https://github.com/ropensci-org/makeregistry/blob/master/README.md",
-    "keywords": ["r", "r-package", "rstats"]
+    "readme": "https://github.com/ropenscilabs/makeregistry/blob/HEAD/README.md"
   },
   {
     "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
@@ -470,8 +468,7 @@
       "SystemRequirements": null
     },
     "fileSize": "0KB",
-    "readme": "https://github.com/ropensci-org/makeregistry/blob/master/README.md",
-    "keywords": ["r", "r-package", "rstats"]
+    "readme": "https://github.com/ropensci/otherpkg/blob/HEAD/README.md"
   },
   {
     "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
@@ -628,8 +625,7 @@
       "SystemRequirements": null
     },
     "fileSize": "0KB",
-    "readme": "https://github.com/ropensci-org/makeregistry/blob/master/README.md",
-    "keywords": ["r", "r-package", "rstats"]
+    "readme": "https://github.com/ropensci/pkg1/blob/HEAD/README.md"
   },
   {
     "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
@@ -786,8 +782,7 @@
       "SystemRequirements": null
     },
     "fileSize": "0KB",
-    "readme": "https://github.com/ropensci-org/makeregistry/blob/master/README.md",
-    "keywords": ["r", "r-package", "rstats"]
+    "readme": "https://github.com/ropensci-archive/pkg1/blob/HEAD/README.md"
   },
   {
     "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
@@ -944,8 +939,7 @@
       "SystemRequirements": null
     },
     "fileSize": "0KB",
-    "readme": "https://github.com/ropensci-org/makeregistry/blob/master/README.md",
-    "keywords": ["r", "r-package", "rstats"]
+    "readme": "https://github.com/ropensci-archive/pkg1/blob/HEAD/README.md"
   },
   {
     "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
@@ -1102,8 +1096,7 @@
       "SystemRequirements": null
     },
     "fileSize": "0KB",
-    "readme": "https://github.com/ropensci-org/makeregistry/blob/master/README.md",
-    "keywords": ["r", "r-package", "rstats"]
+    "readme": "https://github.com/ropenscilabs/pkg1/blob/HEAD/README.md"
   },
   {
     "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
@@ -1260,7 +1253,6 @@
       "SystemRequirements": null
     },
     "fileSize": "0KB",
-    "readme": "https://github.com/ropensci-org/makeregistry/blob/master/README.md",
-    "keywords": ["r", "r-package", "rstats"]
+    "readme": "https://github.com/ropenscilabs/pkg1/blob/HEAD/README.md"
   }
 ]
