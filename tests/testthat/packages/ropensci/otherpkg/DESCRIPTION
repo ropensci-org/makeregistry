@@ -27,7 +27,7 @@ Imports:
 Remotes:
     ropensci/codemetar@dev
 RoxygenNote: 7.0.2
-URL: https://github.com/ropenscilabs/makeregistry
+URL: https://github.com/ropensci/makeregistry
 BugReports: https://github.com/ropenscilabs/makeregistry/issues
 Suggests: 
     testthat
