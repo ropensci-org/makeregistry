@@ -9,7 +9,7 @@ make_registry <- function() {
   old_cm <- "https://github.com/ropensci/roregistry/blob/gh-pages/raw_cm.json?raw=true"
 
   # cat("creating codemetas", sep = "\n")
-  codemeta <- makeregistry::create_codemetas(old_cm = old_cm)
+  codemeta <- create_codemetas(old_cm = old_cm)
 
   # cat("writing json", sep = "\n")
   jsonlite::write_json(
