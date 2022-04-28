@@ -9,17 +9,6 @@
     if (length(old_cm[purrr::map_chr(old_cm, "identifier") == pkg_name]) > 0) {
       old_entry <- old_cm[purrr::map_chr(old_cm, "identifier") == pkg_name][[1]]
 
-      local_pkg_codemeta <- file.exists(file.path(pkg, "codemeta.json"))
-
-      if (!local_pkg_codemeta) {
-        jsonlite::write_json(
-          old_entry,
-          path = file.path(pkg, "codemeta.json"),
-          pretty = TRUE,
-          auto_unbox = TRUE
-        )
-        codemeta_written <- TRUE
-      }
     } else {
       old_entry <- NULL
     }
@@ -28,29 +17,54 @@
   }
 
   info <- try(
-    codemetar::create_codemeta(
+    codemeta::create_codemeta(
       pkg = pkg,
       verbose = FALSE,
-      force_update = TRUE
+      file = NULL
     ),
     silent = TRUE
   )
 
-  if (codemeta_written) {
-    file.remove(file.path(pkg, "codemeta.json"))
-  }
-
-  if (!inherits(info, "try-error")) {
-    # for other repos, the URLs in DESCRIPTION have to be right
-    if (org %in% c("ropensci", "ropenscilabs", "ropensci-archive")) {
-      info$codeRepository <- paste0("https://github.com/",
-        org, "/", info$identifier)
-    }
-    return(info)
-  } else {
+  if (inherits(info, "try-error")) {
     print(toupper(pkg))
     return(old_entry)
   }
+
+  # for other repos, the URLs in DESCRIPTION have to be right
+  if (org %in% c("ropensci", "ropenscilabs", "ropensci-archive")) {
+    info$codeRepository <- paste0("https://github.com/",
+      org, "/", info$identifier)
+  }
+
+  if (!is.null(info$codeRepository)) {
+    info$readme <- sprintf("%s/blob/HEAD/README.md", info$codeRepository)
+
+    throwaway_readme <- withr::local_tempfile()
+    raw_readme <- sub("github", "raw.githubusercontent", info$readme)
+    raw_readme <- sub("blob/", "", raw_readme)
+    curl::curl_download(raw_readme, throwaway_readme)
+    badges <- codemetar::extract_badges(throwaway_readme)
+
+    review_url <- badges[grepl("ropensci/onboarding", badges$link)|grepl("ropensci/software-review", badges$link), "link"]
+
+    if (!is.null(review_url)) {
+      info$review <- list(
+        "@type" = "Review",
+        "url" = review_url,
+        "provider" = "https://ropensci.org"
+      )
+    }
+
+    info$developmentStatus <- badges[grepl("repostatus\\.org", badges$link)|grepl("lifecycle", badges$link), "link"]
+
+  }
+
+  runiv <- jsonlite::read_json(sprintf("https://ropensci.r-universe.dev/packages/%s", info$identifier))
+  if (length(runiv) > 0) {
+    info$keywords <- unlist(runiv[[length(runiv)]]$`_builder`$gitstats$topics)
+  }
+
+  purrr::compact(info)
 }
 
 create_cm <- memoise::memoise(.create_cm)
