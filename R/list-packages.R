@@ -21,7 +21,7 @@ build_ropensci_packages_json <- function(out_file = "packages.json") {
     previous <- jsonlite::read_json(out_file, simplifyVector = TRUE)
     message(sprintf("Found %d packages (old packages.json had %d packages)",
                     length(packages), nrow(previous)))
-    if(nrow(previous) - length(packages) > 10)
+    if(nrow(previous) - length(packages) > 15)
       stop("This does not seem right")
     verify_new_packages(previous, packages)
   }
