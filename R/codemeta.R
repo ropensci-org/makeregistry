@@ -25,7 +25,7 @@
     ),
     silent = TRUE
   )
-browser()
+
   if (inherits(info, "try-error")) {
     print(toupper(pkg))
     return(old_entry)
