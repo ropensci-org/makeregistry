@@ -27,6 +27,7 @@
   )
 
   if (inherits(info, "try-error")) {
+    print(info)
     print(toupper(pkg))
     return(old_entry)
   }
