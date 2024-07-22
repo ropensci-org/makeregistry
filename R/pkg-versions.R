@@ -5,6 +5,16 @@ registry_pkg_versions <- function () {
 
 }
 
+#' Main function to extract and collate data on package releases, both on
+#' GitHub and CRAN.
+#'
+#' @param org Name of GitHub organization for which data are to be extracted.
+#' @param n Number of entries returned from a single queries. Queries are run
+#' until all data are extracted, so this parameter has no effect, and should
+#' not be modified.
+#' @return A `data.frame` of package data.
+#'
+#' @noRd
 get_pkg_releases_data <- function (org = "ropensci", n = 100L) {
 
     q <- get_releases_query (org = org, n = n)
@@ -21,6 +31,12 @@ get_pkg_releases_data <- function (org = "ropensci", n = 100L) {
     return (repo_data_to_df (repo_data))
 }
 
+#' Convert GitHub graphql list data to a flat `data.frame`.
+#'
+#' @param repo_data A list returned directly from `gh::gh_gql`.
+#' @return The input data converted into a flat `data.frame`.
+#'
+#' @noRd
 repo_data_to_df <- function (repo_data) {
 
     do.call (rbind, lapply (repo_data, function (i) {
@@ -54,6 +70,16 @@ repo_data_to_df <- function (repo_data) {
     }))
 }
 
+#' Construct the GitHub graphql query to extract data on releases for an entire
+#' GitHub organization.
+#'
+#' @param org Name of GitHub organization for which data are to be extracted.
+#' @param n Number of entries returned from a single queries. Queries are run
+#' until all data are extracted, so this parameter has no effect, and should
+#' not be modified.
+#' @return A complex nested list of results.
+#'
+#' @noRd
 get_releases_query <- function (org = "ropensci", n = 100, end_cursor = NULL) {
 
     after_txt <- ""
