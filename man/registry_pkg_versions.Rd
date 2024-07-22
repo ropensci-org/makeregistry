@@ -4,7 +4,7 @@
 \alias{registry_pkg_versions}
 \title{Ensure CRAN versions are released on GitHUb}
 \usage{
-registry_pkg_versions()
+registry_pkg_versions(CRAN_only = TRUE)
 }
 \description{
 Ensure CRAN versions are released on GitHUb

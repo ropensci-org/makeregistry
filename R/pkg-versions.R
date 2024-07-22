@@ -1,8 +1,28 @@
+check_pkg_version_path <- function () {
+    cm_path <- normalizePath (file.path ("raw_cm.json"), mustWork = FALSE)
+
+    if (!file.exists (cm_path)) {
+        stop (
+            "This function can only be run in the ",
+            "output directory of 'roregistry', which ",
+            "must contain the 'raw_cm.json' file.",
+            call. = FALSE
+        )
+    }
+
+    return (cm_path)
+}
+
 #' Ensure CRAN versions are released on GitHUb
 #'
 #' @export
-registry_pkg_versions <- function () {
+registry_pkg_versions <- function (CRAN_only = TRUE) {
 
+    cm_path <- check_pkg_version_path ()
+
+    get_pkg_releases_data ("ropensci") |>
+        add_pkg_name (cm_path) |>
+        add_CRAN_version (CRAN_only = CRAN_only)
 }
 
 #' Main function to extract and collate data on package releases, both on
@@ -119,4 +139,43 @@ get_releases_query <- function (org = "ropensci", n = 100, end_cursor = NULL) {
     }")
 
     return (q)
+}
+
+#' Add actual package names to `repo_data`, which need not necessarily be
+#' identical to repository names.
+#'
+#' @param repo_data `data.frame` of repository data.
+#' @param cm_path Result of `check_pkg_version_path` function, as path to
+#' `raw_cm.json` file stored in `roregistry` repository.
+#' @return Input `data.frame` with additional column of "pkg_name" appended.
+#'
+#' @noRd
+add_pkg_name <- function (repo_data, cm_path) {
+
+    cm <- jsonlite::read_json (cm_path, simplifyVector = TRUE) |>
+        dplyr::select (identifier, codeRepository) |>
+        dplyr::rename (pkg_name = identifier, url = codeRepository)
+    dplyr::left_join (repo_data, cm, by = "url")
+}
+
+#' Add current CRAN version identifier to `repo_data`.
+#'
+#' @param repo_data `data.frame` of repository data.
+#' @param CRAN_only If `TRUE`, return only those rows of `repo_data` which
+#' correspond to packages which are or were on CRAN; otherwise return all data.
+#'
+#' @return Input `data.frame` with additional column of "Version" appended, and
+#' potentially including only those rows which describe packages on CRAN.
+#'
+#' @noRd
+add_CRAN_version <- function (repo_data, CRAN_only = TRUE) {
+
+    ap <- data.frame (available.packages ()) |>
+        dplyr::select (Package, Version) |>
+        dplyr::rename (pkg_name = Package)
+    repo_data <- dplyr::left_join (repo_data, ap, by = "pkg_name")
+    if (CRAN_only) {
+        repo_data <- dplyr::filter (repo_data, !is.na (Version))
+    }
+    return (repo_data)
 }
