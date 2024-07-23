@@ -20,7 +20,28 @@ registry_pkg_versions <- function (CRAN_only = TRUE) {
 
     cm_path <- check_pkg_version_path ()
 
-    get_pkg_releases_data ("ropensci") |>
+    # Code from list-packages.R to get all pkgs:
+    hosted_packages <- get_hosted_packages()
+    other_packages <- get_other_packages()
+    packages <- c(hosted_packages, other_packages)
+    packages <- packages[order(purrr::map_chr(packages, "package"))]
+    packages <- lapply (packages, function (i) i [c ("package", "url", "branch")])
+    packages <- data.frame (do.call (rbind, lapply (packages, unlist)))
+
+    ptn <- "^https\\:\\/\\/github\\.com\\/|\\/.*$"
+    packages$org <- gsub (ptn, "", packages$url)
+    packages$repo <- gsub ("^.*\\/", "", packages$url)
+    # All "official" packages are in "ropensci" only:
+    index <- which (grepl ("ropensci|r-lib", packages$org) & packages$org != "ropensci")
+    packages <- packages [-index, ]
+    packages_other <- packages [which (!packages$org == "ropensci"), c ("org", "repo")]
+
+    packages_other_dat <- apply (packages_other, 1, function (i) {
+        get_pkg_release_data (org = as.character (i [1]), repo = as.character (i [2]))
+    })
+    packages_other_dat <- do.call (rbind, packages_other_dat)
+
+    pkgs_all <- rbind (get_pkg_releases_data ("ropensci"), packages_other_dat) |>
         add_pkg_name (cm_path) |>
         add_CRAN_version (CRAN_only = CRAN_only)
 }
@@ -49,6 +70,14 @@ get_pkg_releases_data <- function (org = "ropensci", n = 100L) {
     }
 
     return (repo_data_to_df (repo_data))
+}
+
+get_pkg_release_data <- function (org = "ropensci", repo = "") {
+
+    q <- get_single_release_query (org = org, repo = repo)
+    dat <- gh::gh_gql (query = q)
+
+    repo_data_to_df (list (dat$data$repository))
 }
 
 #' Convert GitHub graphql list data to a flat `data.frame`.
@@ -133,6 +162,39 @@ get_releases_query <- function (org = "ropensci", n = 100, end_cursor = NULL) {
                             }
                         }
                     }
+                }
+            }
+        }
+    }")
+
+    return (q)
+}
+
+#' Modified version of `get_releases_query` for single repo only.
+#'
+#' @param org Name of GitHub organization for which data are to be extracted.
+#' @param repo Name of GitHub repository for which data are to be extracted.
+#' @return A complex nested list of results.
+#'
+#' @noRd
+get_single_release_query <- function (org = "ropensci", repo = "") {
+
+    q <- paste0 ("{
+        repository(owner:\"", org, "\", name:\"", repo, "\") {
+            name
+            url
+            releases(first: 1, orderBy: {field: CREATED_AT, direction: DESC}) {
+                nodes {
+                    author {
+                        email
+                        login
+                    }
+                    name
+                    createdAt
+                    isLatest
+                    isPrerelease
+                    publishedAt
+                    tagName
                 }
             }
         }
