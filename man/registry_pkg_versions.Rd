@@ -2,10 +2,19 @@
 % Please edit documentation in R/pkg-versions.R
 \name{registry_pkg_versions}
 \alias{registry_pkg_versions}
-\title{Ensure CRAN versions are released on GitHUb}
+\title{Extract data on releases of packages, both on CRAN and GitHub.}
 \usage{
 registry_pkg_versions(CRAN_only = TRUE)
 }
+\arguments{
+\item{CRAN_only}{If `TRUE`, return only those rows of `repo_data` which
+correspond to packages which are or were on CRAN; otherwise return all data.}
+}
+\value{
+A `data.frame` with one row for each package, and columns containing
+information on the package including dates and version numbers of GitHub and
+CRAN releases (if any).
+}
 \description{
-Ensure CRAN versions are released on GitHUb
+Extract data on releases of packages, both on CRAN and GitHub.
 }

@@ -1,3 +1,6 @@
+# Functions to extract version numbers of packages, both from CRAN and latest
+# GitHub releases.
+
 check_pkg_version_path <- function () {
     cm_path <- normalizePath (file.path ("raw_cm.json"), mustWork = FALSE)
 
@@ -13,7 +16,13 @@ check_pkg_version_path <- function () {
     return (cm_path)
 }
 
-#' Ensure CRAN versions are released on GitHUb
+#' Extract data on releases of packages, both on CRAN and GitHub.
+#'
+#' @param CRAN_only If `TRUE`, return only those rows of `repo_data` which
+#' correspond to packages which are or were on CRAN; otherwise return all data.
+#' @return A `data.frame` with one row for each package, and columns containing
+#' information on the package including dates and version numbers of GitHub and
+#' CRAN releases (if any).
 #'
 #' @export
 registry_pkg_versions <- function (CRAN_only = TRUE) {
