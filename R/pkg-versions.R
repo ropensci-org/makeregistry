@@ -241,7 +241,7 @@ add_pkg_name <- function (repo_data, cm_path) {
 #' @noRd
 add_CRAN_version <- function (repo_data, CRAN_only = TRUE) {
 
-    ap <- data.frame (available.packages ()) |>
+    ap <- data.frame (utils::available.packages ()) |>
         dplyr::select (Package, Version) |>
         dplyr::rename (pkg_name = Package)
     repo_data <- dplyr::left_join (repo_data, ap, by = "pkg_name")
