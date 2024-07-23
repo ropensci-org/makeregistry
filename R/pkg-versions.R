@@ -41,7 +41,7 @@ registry_pkg_versions <- function (CRAN_only = TRUE) {
     })
     packages_other_dat <- do.call (rbind, packages_other_dat)
 
-    pkgs_all <- rbind (get_pkg_releases_data ("ropensci"), packages_other_dat) |>
+    rbind (get_pkg_releases_data ("ropensci"), packages_other_dat) |>
         add_pkg_name (cm_path) |>
         add_CRAN_version (CRAN_only = CRAN_only)
 }
