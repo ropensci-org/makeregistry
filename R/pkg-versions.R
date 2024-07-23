@@ -223,6 +223,8 @@ get_single_release_query <- function (org = "ropensci", repo = "") {
 #' @noRd
 add_pkg_name <- function (repo_data, cm_path) {
 
+    identifier <- codeRepository <- NULL # suppress no visible binding msgs
+
     cm <- jsonlite::read_json (cm_path, simplifyVector = TRUE) |>
         dplyr::select (identifier, codeRepository) |>
         dplyr::rename (pkg_name = identifier, url = codeRepository)
@@ -240,6 +242,8 @@ add_pkg_name <- function (repo_data, cm_path) {
 #'
 #' @noRd
 add_CRAN_version <- function (repo_data, CRAN_only = TRUE) {
+
+    Package <- Version <- NULL # suppress no visible binding msgs
 
     ap <- data.frame (utils::available.packages ()) |>
         dplyr::select (Package, Version) |>
