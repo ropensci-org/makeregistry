@@ -66,7 +66,7 @@
 
   }
 
-  runiv <- jsonlite::read_json(sprintf("https://ropensci.r-universe.dev/packages/%s", info$identifier))
+  runiv <- jsonlite::read_json(sprintf("https://ropensci.r-universe.dev/api/packages/%s", info$identifier))
   if (length(runiv) > 0) {
     info$keywords <- unlist(runiv[[length(runiv)]]$`_builder`$gitstats$topics)
   }
