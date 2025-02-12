@@ -26,6 +26,23 @@ build_ropensci_packages_json <- function(out_file = "packages.json") {
     verify_new_packages(previous, packages)
   }
 
+  # Add peer-review metadata
+  reviews <- get_reviewed_packages()
+  packages <- lapply(packages, function(pkg){
+    review <- Find(function(x) x$pkgname == pkg$package, reviews)
+    if(length(review)){
+      pkg$metadata <- list(
+        review = list(
+          submitted = review$submitted,
+          iss_no = review$iss_no,
+          status = review$status,
+          version = review$version
+        )
+      )
+    }
+    return(pkg)
+  })
+
   jsonlite::write_json(
     packages,
     out_file,
@@ -123,4 +140,8 @@ get_other_packages <- function() {
   }
 
   purrr::map(others, format_other_repo)
+}
+
+get_reviewed_packages <- function(){
+  jsonlite::read_json('https://badges.ropensci.org/json/onboarded.json')
 }
