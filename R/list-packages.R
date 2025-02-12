@@ -33,10 +33,10 @@ build_ropensci_packages_json <- function(out_file = "packages.json") {
     if(length(review)){
       pkg$metadata <- list(
         review = list(
-          submitted = review$submitted,
-          iss_no = review$iss_no,
+          id = review$iss_no,
           status = review$status,
-          version = review$version
+          version = review$version,
+          url = sprintf('https://github.com/ropensci/software-review/issues/%s', review$iss_no)
         )
       )
     }
