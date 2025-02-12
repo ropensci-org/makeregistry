@@ -36,6 +36,7 @@ build_ropensci_packages_json <- function(out_file = "packages.json") {
           id = review$iss_no,
           status = review$status,
           version = review$version,
+          organization = 'rOpenSci Software Review',
           url = sprintf('https://github.com/ropensci/software-review/issues/%s', review$iss_no)
         )
       )
