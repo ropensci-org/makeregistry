@@ -6,3 +6,4 @@
 ^\.github$
 ^Makefile$
 .ropensci-staff
+^Dockerfile$
