@@ -5,7 +5,6 @@
 #' @export
 #' @importFrom utils download.file
 build_ropensci_packages_json <- function(out_file = "packages.json") {
-
   # packages from our organizations
   hosted_packages <- get_hosted_packages()
 
@@ -17,28 +16,50 @@ build_ropensci_packages_json <- function(out_file = "packages.json") {
   packages <- packages[order(purrr::map_chr(packages, "package"))]
 
   # Verify new packages
-  if(file.exists(out_file)){
+  if (file.exists(out_file)) {
     previous <- jsonlite::read_json(out_file, simplifyVector = TRUE)
-    message(sprintf("Found %d packages (old packages.json had %d packages)",
-                    length(packages), nrow(previous)))
-    if(nrow(previous) - length(packages) > 15)
+    message(sprintf(
+      "Found %d packages (old packages.json had %d packages)",
+      length(packages),
+      nrow(previous)
+    ))
+    if (nrow(previous) - length(packages) > 15) {
       stop("This does not seem right")
+    }
     verify_new_packages(previous, packages)
   }
 
   # Add peer-review metadata
   reviews <- get_reviewed_packages()
-  packages <- lapply(packages, function(pkg){
+  packages <- lapply(packages, function(pkg) {
     review <- Find(function(x) x$pkgname == pkg$package, reviews)
-    if(length(review)){
+    if (length(review)) {
       pkg$metadata <- list(
         review = list(
           id = review$iss_no,
           status = review$status,
           version = review$version,
           organization = 'rOpenSci Software Review',
-          url = sprintf('https://github.com/ropensci/software-review/issues/%s', review$iss_no)
+          url = sprintf(
+            'https://github.com/ropensci/software-review/issues/%s',
+            review$iss_no
+          )
         )
+      )
+    }
+    return(pkg)
+  })
+
+  # Add rOpenSci category
+  packages <- lapply(packages, function(pkg) {
+    categories <- ropensci_categories()
+    category <- categories[["ropensci_category"]][
+      categories[["name"]] == x[["package"]]
+    ]
+    if (length(category)) {
+      pkg$metadata <- c(
+        pkg$metadata,
+        ropensci_category = category
       )
     }
     return(pkg)
@@ -48,29 +69,34 @@ build_ropensci_packages_json <- function(out_file = "packages.json") {
     packages,
     out_file,
     auto_unbox = TRUE,
-    pretty= TRUE
+    pretty = TRUE
   )
-
 }
 
-verify_new_packages <- function(previous, packages){
-  new_packages <- Filter(function(x){
-    isFALSE(x$package %in% previous$package)
-  }, packages)
-  lapply(new_packages, function(pkg){
+verify_new_packages <- function(previous, packages) {
+  new_packages <- Filter(
+    function(x) {
+      isFALSE(x$package %in% previous$package)
+    },
+    packages
+  )
+  lapply(new_packages, function(pkg) {
     message("New package: ", pkg$package)
     descurl <- paste0(sub("\\.git$", "", pkg$url), '/raw/HEAD/DESCRIPTION')
     req <- curl::curl_fetch_memory(descurl)
-    if(req$status_code == 200){
+    if (req$status_code == 200) {
       message("Found DESCRIPTION in expected URL!")
     } else {
-      stop(sprintf('Failed to get DESCRIPTION (HTTP %d) %s',req$status_code, descurl))
+      stop(sprintf(
+        'Failed to get DESCRIPTION (HTTP %d) %s',
+        req$status_code,
+        descurl
+      ))
     }
   })
 }
 
 get_hosted_packages <- function() {
-
   github_organizations <- c("ropensci", "ropenscilabs")
 
   tmp <- withr::local_tempfile()
@@ -90,7 +116,7 @@ get_hosted_packages <- function() {
     repos <- repos[!purrr::map_lgl(repos, "fork")]
     repos <- repos[!purrr::map_lgl(repos, "private")]
     repos <- repos[!purrr::map_lgl(repos, "archived")]
-    repos <- repos[! (purrr::map_chr(repos, "name") %in% excludes)]
+    repos <- repos[!(purrr::map_chr(repos, "name") %in% excludes)]
 
     purrr::map(
       repos,
@@ -107,11 +133,9 @@ get_hosted_packages <- function() {
   github_organizations |>
     purrr::map(list_organization_repos, excludes = excludes) |>
     unlist(recursive = FALSE)
-
 }
 
 get_other_packages <- function() {
-
   others <- jsonlite::read_json(
     "https://ropensci.github.io/roregistry/info/not_transferred.json"
   )
@@ -133,16 +157,32 @@ get_other_packages <- function() {
       package = repo[["package"]],
       url = repo[["url"]]
     )
-    if(length(default_branch))
+    if (length(default_branch)) {
       out$branch = default_branch
-    if(length(repo$subdir))
+    }
+    if (length(repo$subdir)) {
       out$subdir = repo$subdir
+    }
     return(out)
   }
 
   purrr::map(others, format_other_repo)
 }
 
-get_reviewed_packages <- function(){
+get_reviewed_packages <- function() {
   jsonlite::read_json('https://badges.ropensci.org/json/onboarded.json')
 }
+
+.ropensci_categories <- function() {
+  # add categories
+  tmp <- withr::local_tempfile()
+  download.file(
+    "https://ropensci.github.io/roregistry/info/final_categories.csv",
+    tmp,
+    quiet = TRUE
+  )
+  readr::read_csv(tmp)
+}
+
+#' @importFrom memoise memoise
+ropensci_categories <- memoise::memoise(.ropensci_categories)
