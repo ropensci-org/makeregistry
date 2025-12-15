@@ -54,7 +54,7 @@ build_ropensci_packages_json <- function(out_file = "packages.json") {
   packages <- lapply(packages, function(pkg) {
     categories <- ropensci_categories()
     category <- categories[["ropensci_category"]][
-      categories[["name"]] == x[["package"]]
+      categories[["name"]] == pkg[["package"]]
     ]
     if (length(category)) {
       pkg$metadata <- c(
