@@ -6,10 +6,8 @@
 
   # Find older codemeta entry for this package if available
   if (!is.null(old_cm)) {
-
     if (length(old_cm[purrr::map_chr(old_cm, "identifier") == pkg_name]) > 0) {
       old_entry <- old_cm[purrr::map_chr(old_cm, "identifier") == pkg_name][[1]]
-
     } else {
       old_entry <- NULL
     }
@@ -34,8 +32,12 @@
 
   # for other repos, the URLs in DESCRIPTION have to be right
   if (org %in% c("ropensci", "ropenscilabs", "ropensci-archive")) {
-    info$codeRepository <- paste0("https://github.com/",
-      org, "/", info$identifier)
+    info$codeRepository <- paste0(
+      "https://github.com/",
+      org,
+      "/",
+      info$identifier
+    )
   }
 
   if (!is.null(info$codeRepository)) {
@@ -48,7 +50,11 @@
     if (!inherits(dl, "try-error")) {
       badges <- codemetar::extract_badges(throwaway_readme)
 
-      review_url <- badges[grepl("ropensci/onboarding", badges$link)|grepl("ropensci/software-review", badges$link), "link"]
+      review_url <- badges[
+        grepl("ropensci/onboarding", badges$link) |
+          grepl("ropensci/software-review", badges$link),
+        "link"
+      ]
       review_url <- sub("onboarding", "software-review", review_url)
 
       if (isTRUE(nzchar(review_url))) {
@@ -59,15 +65,22 @@
         )
       }
 
-      info$developmentStatus <- badges[grepl("repostatus\\.org", badges$link)|grepl("lifecycle", badges$link), "link"]
-
+      info$developmentStatus <- badges[
+        grepl("repostatus\\.org", badges$link) |
+          grepl("lifecycle", badges$link),
+        "link"
+      ]
     }
-
-
   }
 
-  runiv <- jsonlite::read_json(sprintf("https://ropensci.r-universe.dev/api/packages/%s", info$identifier))
-  if (length(runiv) > 0) {
+  runiv <- try(
+    jsonlite::read_json(sprintf(
+      "https://ropensci.r-universe.dev/api/packages/%s",
+      info$identifier
+    )),
+    silent = TRUE
+  )
+  if (!inherits(runiv, "try-error")) {
     info$keywords <- unlist(runiv[['_topics']])
   }
 
@@ -83,8 +96,8 @@ create_cm <- memoise::memoise(.create_cm)
 #'
 #' @return A JSON codemeta
 #' @export
-create_codemetas <- function(old_cm = NULL, folder = "repos"){
-  if(!is.null(old_cm)){
+create_codemetas <- function(old_cm = NULL, folder = "repos") {
+  if (!is.null(old_cm)) {
     old_cm <- jsonlite::read_json(old_cm)
     old_cm <- old_cm[lengths(old_cm) > 0]
   }
@@ -103,8 +116,10 @@ create_codemetas <- function(old_cm = NULL, folder = "repos"){
   packages <- dplyr::filter(folders, is_package)
 
   purrr::map2(
-    packages$folder, packages$org,
+    packages$folder,
+    packages$org,
     create_cm,
-    old_cm = old_cm, folder = folder
+    old_cm = old_cm,
+    folder = folder
   )
 }
