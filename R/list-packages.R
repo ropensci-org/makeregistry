@@ -57,10 +57,14 @@ build_ropensci_packages_json <- function(out_file = "packages.json") {
       categories[["name"]] == pkg[["package"]]
     ]
     if (length(category)) {
-      pkg$metadata <- c(
-        pkg$metadata,
-        ropensci_category = category
+      if (!is.null(pkg$metadata) {
+        pkg$metadata <- c(
+          pkg$metadata,
+          ropensci_category = category
       )
+      } else {
+        pkg$metadata <- list(ropensci_category = category)
+      }
     }
     return(pkg)
   })
