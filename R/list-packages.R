@@ -32,7 +32,7 @@ build_ropensci_packages_json <- function(out_file = "packages.json") {
   # Add peer-review metadata
   reviews <- get_reviewed_packages()
   packages <- lapply(packages, function(pkg) {
-    review <- Find(function(x) x$pkgname == pkg$package, reviews)
+    review <- Find(function(x) identical(x$pkgname, pkg$package), reviews)
     if (length(review)) {
       pkg$metadata <- list(
         review = list(
