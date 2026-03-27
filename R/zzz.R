@@ -19,3 +19,5 @@ is_package <- function(path, old_cm){
     }
   return(FALSE) # not a package in other cases (no old registry, or no entry in it)
 }
+
+null_na <- function(x) ifelse(is.null(x), NA_character_, x[1L])
