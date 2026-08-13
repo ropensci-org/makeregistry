@@ -181,7 +181,7 @@ get_reviewed_packages <- function() {
   # add categories
   tmp <- withr::local_tempfile()
   download.file(
-    "https://ropensci.github.io/roregistry/info/final_categories.csv",
+    "https://ropensci.github.io/ropensci.r-universe.dev/info/final_categories.csv",
     tmp,
     quiet = TRUE
   )
