@@ -105,7 +105,7 @@ get_hosted_packages <- function() {
 
   tmp <- withr::local_tempfile()
   download.file(
-    "https://ropensci.github.io/roregistry/info/exclude_list.txt",
+    "https://ropensci.github.io/ropensci.r-universe.dev/info/exclude_list.txt",
     tmp,
     quiet = TRUE
   )
@@ -141,7 +141,7 @@ get_hosted_packages <- function() {
 
 get_other_packages <- function() {
   others <- jsonlite::read_json(
-    "https://ropensci.github.io/roregistry/info/not_transferred.json"
+    "https://ropensci.github.io/ropensci.r-universe.dev/info/not_transferred.json"
   )
 
   format_other_repo <- function(repo) {
