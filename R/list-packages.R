@@ -127,8 +127,7 @@ get_hosted_packages <- function() {
       function(repo) {
         list(
           package = repo[["name"]],
-          url = repo[["html_url"]],
-          branch = repo[["default_branch"]]
+          url = repo[["html_url"]]
         )
       }
     )
@@ -140,37 +139,9 @@ get_hosted_packages <- function() {
 }
 
 get_other_packages <- function() {
-  others <- jsonlite::read_json(
+  jsonlite::read_json(
     "https://ropensci.github.io/ropensci.r-universe.dev/info/not_transferred.json"
   )
-
-  format_other_repo <- function(repo) {
-    if (grepl("github\\.com", repo[["url"]])) {
-      github_info <- remotes::parse_github_url(repo[["url"]])
-      gh_repo <- gh::gh(
-        "/repos/{owner}/{repo}",
-        owner = github_info$username,
-        repo = github_info$repo
-      )
-      default_branch <- gh_repo[["default_branch"]]
-    } else {
-      default_branch <- NULL
-    }
-
-    out <- list(
-      package = repo[["package"]],
-      url = repo[["url"]]
-    )
-    if (length(default_branch)) {
-      out$branch = default_branch
-    }
-    if (length(repo$subdir)) {
-      out$subdir = repo$subdir
-    }
-    return(out)
-  }
-
-  purrr::map(others, format_other_repo)
 }
 
 get_reviewed_packages <- function() {
